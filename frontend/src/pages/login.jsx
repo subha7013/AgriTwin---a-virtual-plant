@@ -1,98 +1,119 @@
 
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { useAuth } from "../context/AuthContext";
+import { Sprout, User, Lock, Leaf } from "lucide-react";
 
 function Login() {
-  const [email, setEmail] = useState("");
+  const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [role, setRole] = useState("user");
-
-  const { login } = useAuth();
+  const [message, setMessage] = useState("");
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    const userData = {
-      name: email.split("@")[0],
-      email,
-      role,
-    };
-
-    login(userData);
-
-    window.location.href = "/dashboard";
+    setMessage("Backend authentication is not connected yet.");
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-green-50 p-4">
-      <div className="bg-white w-full max-w-md rounded-2xl shadow-lg p-8">
-        <div className="text-center mb-6">
-          <h1 className="text-3xl font-bold text-green-700">
-            AgriTwin 🌱
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-green-100 via-green-50 to-lime-100 p-5">
+      <div className="w-full max-w-md bg-white rounded-3xl shadow-xl p-8 border border-green-100">
+
+        {/* Logo */}
+        <div className="text-center mb-8">
+          <h1 className="flex items-center justify-center gap-2 text-3xl font-bold text-green-800">
+            AgriTwin
+            <Sprout size={28} className="text-green-600" />
           </h1>
+
           <p className="text-gray-500 mt-2">
-            Sign in to your account
+            Smart Agriculture Monitoring System
+          </p>
+        </div>
+
+        <div className="mb-6">
+          <h2 className="text-2xl font-semibold text-gray-800">
+            Welcome Back!
+          </h2>
+
+          <p className="text-gray-500 text-sm mt-1">
+            Login to continue to your account
           </p>
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-5">
+
+          {/* Username */}
           <div>
-            <label className="block mb-2 font-medium">
-              Email Address
+            <label className="block text-gray-700 font-medium mb-2">
+              Username
             </label>
-            <input
-              type="email"
-              required
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              placeholder="Enter your email"
-              className="w-full border rounded-lg p-3 outline-green-600"
-            />
+
+            <div className="flex items-center border border-gray-200 rounded-xl px-3 focus-within:border-green-600">
+              <User size={19} className="text-green-600" />
+
+              <input
+                type="text"
+                required
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
+                placeholder="Enter your username"
+                className="w-full p-3 outline-none bg-transparent"
+              />
+            </div>
           </div>
 
+          {/* Password */}
           <div>
-            <label className="block mb-2 font-medium">
+            <label className="block text-gray-700 font-medium mb-2">
               Password
             </label>
-            <input
-              type="password"
-              required
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              placeholder="Enter your password"
-              className="w-full border rounded-lg p-3 outline-green-600"
-            />
-          </div>
 
-          <div>
-            <label className="block mb-2 font-medium">
-              Login As
-            </label>
-            <select
-              value={role}
-              onChange={(e) => setRole(e.target.value)}
-              className="w-full border rounded-lg p-3"
-            >
-              <option value="user">User</option>
-              <option value="admin">Admin</option>
-            </select>
+            <div className="flex items-center border border-gray-200 rounded-xl px-3 focus-within:border-green-600">
+              <Lock size={19} className="text-green-600" />
+
+              <input
+                type="password"
+                required
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                placeholder="Enter your password"
+                className="w-full p-3 outline-none bg-transparent"
+              />
+            </div>
           </div>
 
           <button
             type="submit"
-            className="w-full bg-green-700 text-white py-3 rounded-lg hover:bg-green-800"
+            className="w-full bg-green-700 hover:bg-green-800 text-white font-semibold py-3 rounded-xl shadow-md transition duration-200"
           >
             Login
           </button>
+
         </form>
 
-        <p className="text-center mt-6 text-gray-600">
-          Don't have an account?{" "}
-          <Link to="/register" className="text-green-700 font-semibold">
-            Register
-          </Link>
-        </p>
+        {message && (
+          <p className="text-center text-sm text-orange-600 mt-4">
+            {message}
+          </p>
+        )}
+
+        <div className="text-center mt-7">
+          <p className="text-gray-600 text-sm">
+            Don't have an account?{" "}
+            <Link
+              to="/register"
+              className="text-green-700 font-semibold hover:underline"
+            >
+              Register Now
+            </Link>
+          </p>
+        </div>
+
+        <div className="flex items-center justify-center gap-2 mt-6 text-green-700 text-sm">
+          <Leaf size={16} />
+          <span>Growing Smarter with AgriTwin</span>
+        </div>
+
       </div>
     </div>
   );

@@ -1,102 +1,110 @@
 
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import { Sprout, User, Lock, ShieldCheck } from "lucide-react";
 
 function Register() {
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
+  const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
+  const [role, setRole] = useState("user");
   const [message, setMessage] = useState("");
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    if (password !== confirmPassword) {
-      setMessage("Passwords do not match!");
-      return;
-    }
-
-    setMessage(
-      "Registration form is ready. Account creation will be enabled after backend integration."
-    );
+    setMessage("Registration will be available after backend integration.");
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-green-50 p-4">
-      <div className="bg-white w-full max-w-md rounded-2xl shadow-lg p-8">
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-green-100 via-green-50 to-lime-100 p-5">
+      <div className="w-full max-w-md bg-white rounded-3xl shadow-xl p-8 border border-green-100">
 
-        <div className="text-center mb-6">
-          <h1 className="text-3xl font-bold text-green-700">
-            AgriTwin 🌱
+        {/* Logo */}
+        <div className="text-center mb-7">
+          <h1 className="flex items-center justify-center gap-2 text-3xl font-bold text-green-800">
+            AgriTwin
+            <Sprout size={28} className="text-green-600" />
           </h1>
+
           <p className="text-gray-500 mt-2">
-            Create your account
+            Smart Agriculture Monitoring System
           </p>
         </div>
 
-        <form onSubmit={handleSubmit} className="space-y-4">
+        <h2 className="text-2xl font-semibold text-gray-800">
+          Create Account
+        </h2>
 
+        <p className="text-gray-500 text-sm mt-1 mb-6">
+          Join AgriTwin and manage your plants smartly
+        </p>
+
+        <form onSubmit={handleSubmit} className="space-y-5">
+
+          {/* Username */}
           <div>
-            <label className="block mb-2 font-medium">
-              Full Name
+            <label className="block text-gray-700 font-medium mb-2">
+              Username
             </label>
-            <input
-              type="text"
-              required
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-              placeholder="Enter your full name"
-              className="w-full border rounded-lg p-3 outline-green-600"
-            />
+
+            <div className="flex items-center border border-gray-200 rounded-xl px-3 focus-within:border-green-600">
+              <User size={19} className="text-green-600" />
+
+              <input
+                type="text"
+                required
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
+                placeholder="Enter your username"
+                className="w-full p-3 outline-none bg-transparent"
+              />
+            </div>
           </div>
 
+          {/* Password */}
           <div>
-            <label className="block mb-2 font-medium">
-              Email Address
-            </label>
-            <input
-              type="email"
-              required
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              placeholder="Enter your email"
-              className="w-full border rounded-lg p-3 outline-green-600"
-            />
-          </div>
-
-          <div>
-            <label className="block mb-2 font-medium">
+            <label className="block text-gray-700 font-medium mb-2">
               Password
             </label>
-            <input
-              type="password"
-              required
-              minLength={6}
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              placeholder="Create a password"
-              className="w-full border rounded-lg p-3 outline-green-600"
-            />
+
+            <div className="flex items-center border border-gray-200 rounded-xl px-3 focus-within:border-green-600">
+              <Lock size={19} className="text-green-600" />
+
+              <input
+                type="password"
+                required
+                minLength={6}
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                placeholder="Create a password"
+                className="w-full p-3 outline-none bg-transparent"
+              />
+            </div>
           </div>
 
+          {/* Role */}
           <div>
-            <label className="block mb-2 font-medium">
-              Confirm Password
+            <label className="block text-gray-700 font-medium mb-2">
+              Select Role
             </label>
-            <input
-              type="password"
-              required
-              value={confirmPassword}
-              onChange={(e) => setConfirmPassword(e.target.value)}
-              placeholder="Confirm your password"
-              className="w-full border rounded-lg p-3 outline-green-600"
-            />
+
+            <div className="flex items-center border border-gray-200 rounded-xl px-3 focus-within:border-green-600">
+              <ShieldCheck size={19} className="text-green-600" />
+
+              <select
+                value={role}
+                onChange={(e) => setRole(e.target.value)}
+                className="w-full p-3 outline-none bg-transparent"
+              >
+                <option value="user">User</option>
+                <option value="admin">Admin</option>
+              </select>
+            </div>
           </div>
 
           <button
             type="submit"
-            className="w-full bg-green-700 text-white py-3 rounded-lg hover:bg-green-800"
+            className="w-full bg-green-700 hover:bg-green-800 text-white font-semibold py-3 rounded-xl shadow-md transition duration-200"
           >
             Create Account
           </button>
@@ -104,16 +112,16 @@ function Register() {
         </form>
 
         {message && (
-          <p className="text-center text-sm text-green-700 mt-4">
+          <p className="text-center text-sm text-orange-600 mt-4">
             {message}
           </p>
         )}
 
-        <p className="text-center mt-6 text-gray-600">
+        <p className="text-center text-gray-600 text-sm mt-7">
           Already have an account?{" "}
           <Link
             to="/login"
-            className="text-green-700 font-semibold"
+            className="text-green-700 font-semibold hover:underline"
           >
             Login
           </Link>
