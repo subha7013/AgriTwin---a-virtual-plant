@@ -9,30 +9,95 @@ export const AuthProvider = ({ children }) => {
 
   // Restore logged-in user
   useEffect(() => {
-    const savedUser = localStorage.getItem("agritwin_user");
+    try {
+      const savedUser = localStorage.getItem("agritwin_user");
 
-    if (savedUser) {
-      setUser(JSON.parse(savedUser));
+      if (savedUser) {
+        setUser(JSON.parse(savedUser));
+      }
+    } catch {
+      localStorage.removeItem("agritwin_user");
     }
 
     setLoading(false);
   }, []);
 
-  // Login
-  const login = (userData, token) => {
-    localStorage.setItem("agritwin_user", JSON.stringify(userData));
+  // Register new demo account
+  const register = (username, password, role) => {
+    const accounts = JSON.parse(
+      localStorage.getItem("agritwin_accounts") || "[]"
+    );
 
-    if (token) {
-      localStorage.setItem("agritwin_token", token);
+    const exists = accounts.find(
+      (account) => account.username === username
+    );
+
+    if (exists) {
+      return {
+        success: false,
+        message: "Username already exists!",
+      };
     }
 
+    const newAccount = {
+      username,
+      password,
+      role,
+    };
+
+    accounts.push(newAccount);
+
+    localStorage.setItem(
+      "agritwin_accounts",
+      JSON.stringify(accounts)
+    );
+
+    return {
+      success: true,
+      message: "Registration successful!",
+    };
+  };
+
+  // Login using username and password
+  const login = (username, password) => {
+    const accounts = JSON.parse(
+      localStorage.getItem("agritwin_accounts") || "[]"
+    );
+
+    const account = accounts.find(
+      (item) =>
+        item.username === username &&
+        item.password === password
+    );
+
+    if (!account) {
+      return {
+        success: false,
+        message: "Invalid username or password!",
+      };
+    }
+
+    const userData = {
+      username: account.username,
+      role: account.role,
+    };
+
+    localStorage.setItem(
+      "agritwin_user",
+      JSON.stringify(userData)
+    );
+
     setUser(userData);
+
+    return {
+      success: true,
+      user: userData,
+    };
   };
 
   // Logout
   const logout = () => {
     localStorage.removeItem("agritwin_user");
-    localStorage.removeItem("agritwin_token");
     setUser(null);
   };
 
@@ -45,6 +110,7 @@ export const AuthProvider = ({ children }) => {
       value={{
         user,
         loading,
+        register,
         login,
         logout,
         isAdmin,
@@ -57,6 +123,4 @@ export const AuthProvider = ({ children }) => {
   );
 };
 
-export const useAuth = () => {
-  return useContext(AuthContext);
-};
+export const useAuth = () => useContext(AuthContext);

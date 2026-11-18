@@ -2,17 +2,34 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { Sprout, User, Lock, ShieldCheck } from "lucide-react";
+import { useAuth } from "../context/AuthContext";
 
 function Register() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [role, setRole] = useState("user");
   const [message, setMessage] = useState("");
+  const [success, setSuccess] = useState(false);
+
+  const { register } = useAuth();
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    setMessage("Registration will be available after backend integration.");
+    const result = register(
+      username.trim(),
+      password,
+      role
+    );
+
+    setMessage(result.message);
+    setSuccess(result.success);
+
+    if (result.success) {
+      setUsername("");
+      setPassword("");
+      setRole("user");
+    }
   };
 
   return (
@@ -112,7 +129,11 @@ function Register() {
         </form>
 
         {message && (
-          <p className="text-center text-sm text-orange-600 mt-4">
+          <p
+            className={`text-center text-sm mt-4 ${
+              success ? "text-green-700" : "text-red-600"
+            }`}
+          >
             {message}
           </p>
         )}

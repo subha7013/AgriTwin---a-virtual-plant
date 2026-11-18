@@ -1,17 +1,27 @@
 
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Sprout, User, Lock, Leaf } from "lucide-react";
+import { useAuth } from "../context/AuthContext";
 
 function Login() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [message, setMessage] = useState("");
 
+  const { login } = useAuth();
+  const navigate = useNavigate();
+
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    setMessage("Backend authentication is not connected yet.");
+    const result = login(username.trim(), password);
+
+    if (result.success) {
+      navigate("/dashboard");
+    } else {
+      setMessage(result.message);
+    }
   };
 
   return (
@@ -92,7 +102,7 @@ function Login() {
         </form>
 
         {message && (
-          <p className="text-center text-sm text-orange-600 mt-4">
+          <p className="text-center text-sm text-red-600 mt-4">
             {message}
           </p>
         )}
