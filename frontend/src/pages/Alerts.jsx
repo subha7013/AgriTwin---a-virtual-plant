@@ -11,7 +11,6 @@ import {
   Cloud,
   Leaf,
   Check,
-  Trash2,
   Clock,
   ShieldAlert,
 } from "lucide-react";

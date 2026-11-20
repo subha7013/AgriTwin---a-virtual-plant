@@ -1,104 +1,96 @@
+/* eslint-disable react-refresh/only-export-components */
 
 import { createContext, useContext, useEffect, useState } from "react";
+import * as authService from "../services/authService";
+import { clearSession, getErrorMessage } from "../services/api";
 
-const AuthContext = createContext();
+const AuthContext = createContext(null);
 
-export const AuthProvider = ({ children }) => {
-  const [user, setUser] = useState(null);
+function readStoredUser() {
+  try {
+    return JSON.parse(localStorage.getItem("agritwin_user"));
+  } catch {
+    return null;
+  }
+}
+
+function persistSession(session) {
+  localStorage.setItem("agritwin_access_token", session.accessToken);
+  localStorage.setItem("agritwin_refresh_token", session.refreshToken);
+  localStorage.setItem("agritwin_user", JSON.stringify(session.user));
+}
+
+export function AuthProvider({ children }) {
+  const [user, setUser] = useState(readStoredUser);
   const [loading, setLoading] = useState(true);
 
-  // Restore logged-in user
   useEffect(() => {
-    try {
-      const savedUser = localStorage.getItem("agritwin_user");
+    let active = true;
 
-      if (savedUser) {
-        setUser(JSON.parse(savedUser));
+    async function restoreSession() {
+      const hasTokens =
+        localStorage.getItem("agritwin_access_token") ||
+        localStorage.getItem("agritwin_refresh_token");
+
+      if (!hasTokens) {
+        if (active) setLoading(false);
+        return;
       }
-    } catch {
-      localStorage.removeItem("agritwin_user");
+
+      try {
+        const currentUser = await authService.me();
+        if (active) setUser(currentUser);
+      } catch (error) {
+        const status = error?.response?.status;
+
+        if (status === 401 || status === 403) {
+          clearSession();
+          if (active) setUser(null);
+        }
+      } finally {
+        if (active) setLoading(false);
+      }
     }
 
-    setLoading(false);
+    restoreSession();
+
+    return () => {
+      active = false;
+    };
   }, []);
 
-  // Register new demo account
-  const register = (username, password, role) => {
-    const accounts = JSON.parse(
-      localStorage.getItem("agritwin_accounts") || "[]"
-    );
-
-    const exists = accounts.find(
-      (account) => account.username === username
-    );
-
-    if (exists) {
-      return {
-        success: false,
-        message: "Username already exists!",
-      };
+  const login = async (username, password) => {
+    try {
+      const session = await authService.login({ username, password });
+      persistSession(session);
+      setUser(session.user);
+      return { success: true, user: session.user };
+    } catch (error) {
+      return { success: false, message: getErrorMessage(error) };
     }
-
-    const newAccount = {
-      username,
-      password,
-      role,
-    };
-
-    accounts.push(newAccount);
-
-    localStorage.setItem(
-      "agritwin_accounts",
-      JSON.stringify(accounts)
-    );
-
-    return {
-      success: true,
-      message: "Registration successful!",
-    };
   };
 
-  // Login using username and password
-  const login = (username, password) => {
-    const accounts = JSON.parse(
-      localStorage.getItem("agritwin_accounts") || "[]"
-    );
-
-    const account = accounts.find(
-      (item) =>
-        item.username === username &&
-        item.password === password
-    );
-
-    if (!account) {
+  const register = async (username, email, password) => {
+    try {
+      await authService.register({ username, email, password });
       return {
-        success: false,
-        message: "Invalid username or password!",
+        success: true,
+        message: "Registration successful! You can now login.",
       };
+    } catch (error) {
+      return { success: false, message: getErrorMessage(error) };
     }
-
-    const userData = {
-      username: account.username,
-      role: account.role,
-    };
-
-    localStorage.setItem(
-      "agritwin_user",
-      JSON.stringify(userData)
-    );
-
-    setUser(userData);
-
-    return {
-      success: true,
-      user: userData,
-    };
   };
 
-  // Logout
-  const logout = () => {
-    localStorage.removeItem("agritwin_user");
-    setUser(null);
+  const logout = async () => {
+    try {
+      await authService.logout();
+    } catch {
+      // The local session is cleared even if the server call fails.
+    } finally {
+      clearSession();
+      setUser(null);
+    }
   };
 
   const isAdmin = user?.role === "admin";
@@ -110,8 +102,8 @@ export const AuthProvider = ({ children }) => {
       value={{
         user,
         loading,
-        register,
         login,
+        register,
         logout,
         isAdmin,
         isUser,
@@ -121,6 +113,8 @@ export const AuthProvider = ({ children }) => {
       {children}
     </AuthContext.Provider>
   );
-};
+}
 
-export const useAuth = () => useContext(AuthContext);
+export function useAuth() {
+  return useContext(AuthContext);
+}

@@ -1,5 +1,6 @@
 
 import { NavLink } from "react-router-dom";
+import { useAuth } from "../context/AuthContext";
 import {
   LayoutDashboard,
   Sprout,
@@ -28,9 +29,10 @@ const menuItems = [
 ];
 
 function Sidebar({ isOpen = false, onClose }) {
-  const handleLogout = () => {
-    localStorage.removeItem("agritwin_user");
-    localStorage.removeItem("agritwin_token");
+  const { logout } = useAuth();
+
+  const handleLogout = async () => {
+    await logout();
     window.location.href = "/login";
   };
 

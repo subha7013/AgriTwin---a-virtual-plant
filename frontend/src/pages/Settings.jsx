@@ -17,7 +17,7 @@ import {
 function Settings() {
   const [name, setName] = useState("Saheli Singharoy");
   const [email, setEmail] = useState("saheli@example.com");
-  const [role, setRole] = useState("User");
+  const role = "User";
 
   const [emailNotifications, setEmailNotifications] = useState(true);
   const [diseaseAlerts, setDiseaseAlerts] = useState(true);

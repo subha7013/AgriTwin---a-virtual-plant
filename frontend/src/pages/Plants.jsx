@@ -1,150 +1,66 @@
-
-import { useState } from "react";
-import {
-  Sprout,
-  Search,
-  Leaf,
-  AlertTriangle,
-  Eye,
-  Plus,
-} from "lucide-react";
+import { useEffect, useState } from "react";
+import { Sprout, Search, Leaf, AlertTriangle, Eye } from "lucide-react";
+import { getDiseases } from "../services/plantService";
+import { getErrorMessage } from "../services/api";
 
 function Plants() {
   const [search, setSearch] = useState("");
+  const [diseases, setDiseases] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
 
-  const plants = [
-    {
-      id: 1,
-      name: "Healthy",
-      category: "Healthy Tomato Leaf",
-      health: "Healthy",
-      description:
-        "The tomato leaf is healthy and shows no visible disease symptoms.",
-      image:
-        "https://tomatoanswers.com/wp-content/uploads/2026/09/tomato-leaf-healthy-plantvillage.webp",
-    },
-    {
-      id: 2,
-      name: "Early Blight",
-      category: "Fungal Disease",
-      health: "Diseased",
-      description:
-        "Causes brown spots with circular ring patterns on tomato leaves.",
-      image:
-        "https://tomatoanswers.com/wp-content/uploads/2026/09/tomato-leaf-early-blight-plantvillage.webp",
-    },
-    {
-      id: 3,
-      name: "Late Blight",
-      category: "Fungal Disease",
-      health: "Diseased",
-      description:
-        "Causes dark, water-soaked patches on tomato leaves.",
-      image:
-        "https://tomatoanswers.com/wp-content/uploads/2026/09/tomato-leaf-late-blight-plantvillage.webp",
-    },
-    {
-      id: 4,
-      name: "Bacterial Spot",
-      category: "Bacterial Disease",
-      health: "Diseased",
-      description:
-        "Produces small dark spots on tomato leaves.",
-      image:
-        "https://tomatoanswers.com/wp-content/uploads/2026/09/tomato-leaf-bacterial-spot-plantvillage.webp",
-    },
-    {
-      id: 5,
-      name: "Septoria Leaf Spot",
-      category: "Fungal Disease",
-      health: "Diseased",
-      description:
-        "Appears as small circular spots with dark borders on leaves.",
-      image:
-        "https://tomatoanswers.com/wp-content/uploads/2026/09/tomato-leaf-septoria-plantvillage.webp",
-    },
-    {
-      id: 6,
-      name: "Leaf Mold",
-      category: "Fungal Disease",
-      health: "Diseased",
-      description:
-        "Creates yellow patches and mold growth on tomato leaves.",
-      image:
-        "https://tomatoanswers.com/wp-content/uploads/2026/09/tomato-leaf-leaf-mold-plantvillage.webp",
-    },
-    {
-      id: 7,
-      name: "Target Spot",
-      category: "Fungal Disease",
-      health: "Diseased",
-      description:
-        "Forms brown circular lesions with target-like patterns.",
-      image:
-        "https://tomatoanswers.com/wp-content/uploads/2026/09/tomato-leaf-target-spot-plantvillage.webp",
-    },
-    {
-      id: 8,
-      name: "Spider Mites",
-      category: "Pest Damage",
-      health: "Diseased",
-      description:
-        "Causes tiny yellow spots and damage to tomato leaves.",
-      image:
-        "https://tomatoanswers.com/wp-content/uploads/2026/09/tomato-leaf-spider-mites-plantvillage.webp",
-    },
-    {
-      id: 9,
-      name: "Tomato Mosaic Virus",
-      category: "Viral Disease",
-      health: "Diseased",
-      description:
-        "Causes mosaic-like light and dark green patterns on leaves.",
-      image:
-        "https://tomatoanswers.com/wp-content/uploads/2026/09/tomato-leaf-mosaic-plantvillage.webp",
-    },
-    {
-      id: 10,
-      name: "Tomato Yellow Leaf Curl Virus",
-      category: "Viral Disease",
-      health: "Diseased",
-      description:
-        "Causes yellowing and curling of tomato leaves.",
-      image:
-        "https://tomatoanswers.com/wp-content/uploads/2026/09/tomato-leaf-yellow-leaf-curl-plantvillage.webp",
-    },
-  ];
+  useEffect(() => {
+    let active = true;
 
-  const filteredPlants = plants.filter((plant) =>
-    plant.name.toLowerCase().includes(search.toLowerCase())
+    async function loadDiseases() {
+      try {
+        const data = await getDiseases();
+        if (active) setDiseases(data);
+      } catch (err) {
+        if (active) setError(getErrorMessage(err));
+      } finally {
+        if (active) setLoading(false);
+      }
+    }
+
+    loadDiseases();
+
+    return () => {
+      active = false;
+    };
+  }, []);
+
+  const plants = diseases.map((disease) => ({
+    id: disease._id,
+    name: disease.displayName,
+    category: disease.category,
+    health: disease.isHealthy ? "Healthy" : "Diseased",
+    description: disease.description,
+    image: disease.referenceImage,
+  }));
+
+  const term = search.trim().toLowerCase();
+
+  const filteredPlants = plants.filter(
+    (plant) =>
+      plant.name.toLowerCase().includes(term) ||
+      plant.category.toLowerCase().includes(term)
   );
 
-  const healthyCount = plants.filter(
-    (plant) => plant.health === "Healthy"
-  ).length;
-
-  const diseasedCount = plants.filter(
-    (plant) => plant.health === "Diseased"
-  ).length;
+  const healthyCount = plants.filter((plant) => plant.health === "Healthy").length;
+  const diseasedCount = plants.filter((plant) => plant.health === "Diseased").length;
 
   return (
     <div className="space-y-7">
 
       {/* Page Heading */}
-      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-        <div>
-          <h1 className="text-2xl sm:text-3xl font-bold text-gray-800">
-            My Plants 🌱
-          </h1>
-          <p className="text-gray-500 mt-2">
-            Explore tomato plants and their disease categories.
-          </p>
-        </div>
-
-        <button className="flex items-center justify-center gap-2 bg-green-700 hover:bg-green-800 text-white px-5 py-3 rounded-xl shadow-md transition">
-          <Plus size={19} />
-          Add New Plant
-        </button>
+      <div>
+        <h1 className="text-2xl sm:text-3xl font-bold text-gray-800">
+          My Plants 🌱
+        </h1>
+        <p className="text-gray-500 mt-2">
+          Explore tomato plants and their disease categories.
+        </p>
       </div>
 
       {/* Summary Cards */}
@@ -155,7 +71,7 @@ function Plants() {
             <div>
               <p className="text-gray-500 text-sm">Total Categories</p>
               <h2 className="text-3xl font-bold text-gray-800 mt-2">
-                {plants.length}
+                {loading ? "—" : plants.length}
               </h2>
             </div>
             <div className="p-3 bg-green-100 rounded-xl text-green-700">
@@ -169,7 +85,7 @@ function Plants() {
             <div>
               <p className="text-gray-500 text-sm">Healthy Categories</p>
               <h2 className="text-3xl font-bold text-green-700 mt-2">
-                {healthyCount}
+                {loading ? "—" : healthyCount}
               </h2>
             </div>
             <div className="p-3 bg-lime-100 rounded-xl text-lime-700">
@@ -183,7 +99,7 @@ function Plants() {
             <div>
               <p className="text-gray-500 text-sm">Disease Categories</p>
               <h2 className="text-3xl font-bold text-orange-600 mt-2">
-                {diseasedCount}
+                {loading ? "—" : diseasedCount}
               </h2>
             </div>
             <div className="p-3 bg-orange-100 rounded-xl text-orange-600">
@@ -209,6 +125,10 @@ function Plants() {
         </div>
       </div>
 
+      {error && (
+        <p className="rounded-xl bg-red-50 p-4 text-sm text-red-600">{error}</p>
+      )}
+
       {/* Disease Cards */}
       <div>
         <div className="flex items-center justify-between mb-5">
@@ -217,7 +137,7 @@ function Plants() {
           </h2>
 
           <span className="text-sm text-gray-500">
-            {filteredPlants.length} categories found
+            {loading ? "Loading..." : `${filteredPlants.length} categories found`}
           </span>
         </div>
 
@@ -229,11 +149,17 @@ function Plants() {
               className="bg-white rounded-2xl overflow-hidden shadow-sm border border-gray-100 hover:shadow-lg transition"
             >
               <div className="h-48 bg-green-50">
-                <img
-                  src={plant.image}
-                  alt={plant.name}
-                  className="w-full h-full object-cover"
-                />
+                {plant.image ? (
+                  <img
+                    src={plant.image}
+                    alt={plant.name}
+                    className="w-full h-full object-cover"
+                  />
+                ) : (
+                  <div className="w-full h-full flex items-center justify-center text-green-700">
+                    <Leaf size={42} />
+                  </div>
+                )}
               </div>
 
               <div className="p-5">
@@ -278,7 +204,7 @@ function Plants() {
 
         </div>
 
-        {filteredPlants.length === 0 && (
+        {!loading && filteredPlants.length === 0 && (
           <div className="bg-white rounded-2xl p-10 text-center text-gray-500">
             No disease categories found.
           </div>

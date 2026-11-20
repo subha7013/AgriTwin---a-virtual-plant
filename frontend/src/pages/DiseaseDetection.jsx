@@ -62,7 +62,7 @@ function DiseaseDetection() {
       setImage(null);
       setPreview("");
       setResult(false);
-    } catch (error) {
+    } catch {
       setCameraError(
         "Unable to access camera. Please allow camera permission in your browser."
       );

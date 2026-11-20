@@ -1,34 +1,33 @@
-
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { Sprout, User, Lock, ShieldCheck } from "lucide-react";
+import { Sprout, User, Lock, Mail } from "lucide-react";
 import { useAuth } from "../context/AuthContext";
 
 function Register() {
   const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [role, setRole] = useState("user");
   const [message, setMessage] = useState("");
   const [success, setSuccess] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
 
   const { register } = useAuth();
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    setMessage("");
+    setSubmitting(true);
 
-    const result = register(
-      username.trim(),
-      password,
-      role
-    );
+    const result = await register(username.trim(), email.trim(), password);
 
+    setSubmitting(false);
     setMessage(result.message);
     setSuccess(result.success);
 
     if (result.success) {
       setUsername("");
+      setEmail("");
       setPassword("");
-      setRole("user");
     }
   };
 
@@ -70,9 +69,30 @@ function Register() {
               <input
                 type="text"
                 required
+                minLength={3}
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
                 placeholder="Enter your username"
+                className="w-full p-3 outline-none bg-transparent"
+              />
+            </div>
+          </div>
+
+          {/* Email */}
+          <div>
+            <label className="block text-gray-700 font-medium mb-2">
+              Email
+            </label>
+
+            <div className="flex items-center border border-gray-200 rounded-xl px-3 focus-within:border-green-600">
+              <Mail size={19} className="text-green-600" />
+
+              <input
+                type="email"
+                required
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                placeholder="Enter your email"
                 className="w-full p-3 outline-none bg-transparent"
               />
             </div>
@@ -99,31 +119,12 @@ function Register() {
             </div>
           </div>
 
-          {/* Role */}
-          <div>
-            <label className="block text-gray-700 font-medium mb-2">
-              Select Role
-            </label>
-
-            <div className="flex items-center border border-gray-200 rounded-xl px-3 focus-within:border-green-600">
-              <ShieldCheck size={19} className="text-green-600" />
-
-              <select
-                value={role}
-                onChange={(e) => setRole(e.target.value)}
-                className="w-full p-3 outline-none bg-transparent"
-              >
-                <option value="user">User</option>
-                <option value="admin">Admin</option>
-              </select>
-            </div>
-          </div>
-
           <button
             type="submit"
-            className="w-full bg-green-700 hover:bg-green-800 text-white font-semibold py-3 rounded-xl shadow-md transition duration-200"
+            disabled={submitting}
+            className="w-full bg-green-700 hover:bg-green-800 disabled:bg-green-400 text-white font-semibold py-3 rounded-xl shadow-md transition duration-200"
           >
-            Create Account
+            {submitting ? "Creating account..." : "Create Account"}
           </button>
 
         </form>

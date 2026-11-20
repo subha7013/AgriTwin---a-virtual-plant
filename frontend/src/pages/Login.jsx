@@ -8,14 +8,19 @@ function Login() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [message, setMessage] = useState("");
+  const [submitting, setSubmitting] = useState(false);
 
   const { login } = useAuth();
   const navigate = useNavigate();
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    setMessage("");
+    setSubmitting(true);
 
-    const result = login(username.trim(), password);
+    const result = await login(username.trim(), password);
+
+    setSubmitting(false);
 
     if (result.success) {
       navigate("/dashboard");
@@ -94,9 +99,10 @@ function Login() {
 
           <button
             type="submit"
-            className="w-full bg-green-700 hover:bg-green-800 text-white font-semibold py-3 rounded-xl shadow-md transition duration-200"
+            disabled={submitting}
+            className="w-full bg-green-700 hover:bg-green-800 disabled:bg-green-400 text-white font-semibold py-3 rounded-xl shadow-md transition duration-200"
           >
-            Login
+            {submitting ? "Logging in..." : "Login"}
           </button>
 
         </form>

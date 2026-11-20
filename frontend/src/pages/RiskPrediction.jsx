@@ -11,8 +11,6 @@ import {
   Leaf,
   AlertTriangle,
   CheckCircle,
-  Activity,
-  TrendingUp,
   Info,
 } from "lucide-react";
 

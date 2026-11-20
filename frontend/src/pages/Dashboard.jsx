@@ -1,4 +1,4 @@
-
+import { useEffect, useState } from "react";
 import {
   Sprout,
   Leaf,
@@ -11,34 +11,73 @@ import {
   TrendingUp,
   ArrowUpRight,
 } from "lucide-react";
+import { getPlantSummary } from "../services/plantService";
+import { getErrorMessage } from "../services/api";
 
 function Dashboard() {
+  const [summary, setSummary] = useState({
+    total: 0,
+    healthy: 0,
+    diseased: 0,
+    unknown: 0,
+  });
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
+
+  useEffect(() => {
+    let active = true;
+
+    async function loadSummary() {
+      try {
+        const data = await getPlantSummary();
+        if (active) setSummary(data);
+      } catch (err) {
+        if (active) setError(getErrorMessage(err));
+      } finally {
+        if (active) setLoading(false);
+      }
+    }
+
+    loadSummary();
+
+    return () => {
+      active = false;
+    };
+  }, []);
+
+  const healthyPercent = summary.total
+    ? Math.round((summary.healthy / summary.total) * 100)
+    : 0;
+  const diseasedPercent = summary.total
+    ? Math.round((summary.diseased / summary.total) * 100)
+    : 0;
+
   const stats = [
     {
       title: "Total Plants",
-      value: "120",
-      change: "+12%",
+      value: loading ? "—" : summary.total,
+      change: "From your account",
       icon: Sprout,
       color: "bg-green-100 text-green-700",
     },
     {
       title: "Healthy Plants",
-      value: "95",
-      change: "+8%",
+      value: loading ? "—" : summary.healthy,
+      change: summary.total ? `${healthyPercent}% of total` : "No plants yet",
       icon: Leaf,
       color: "bg-lime-100 text-lime-700",
     },
     {
       title: "Diseased Plants",
-      value: "25",
-      change: "Needs attention",
+      value: loading ? "—" : summary.diseased,
+      change: summary.diseased ? "Needs attention" : "All clear",
       icon: AlertTriangle,
       color: "bg-orange-100 text-orange-600",
     },
     {
       title: "Active Sensors",
-      value: "12",
-      change: "All connected",
+      value: "—",
+      change: "Sensor module not connected",
       icon: Activity,
       color: "bg-sky-100 text-sky-700",
     },
@@ -47,28 +86,28 @@ function Dashboard() {
   const sensors = [
     {
       name: "Temperature",
-      value: "28°C",
+      value: "—",
       icon: Thermometer,
       color: "text-orange-500",
       bg: "bg-orange-50",
     },
     {
       name: "Soil Moisture",
-      value: "65%",
+      value: "—",
       icon: Droplets,
       color: "text-blue-500",
       bg: "bg-blue-50",
     },
     {
       name: "Humidity",
-      value: "72%",
+      value: "—",
       icon: Wind,
       color: "text-purple-500",
       bg: "bg-purple-50",
     },
     {
       name: "Sunlight",
-      value: "850 lux",
+      value: "—",
       icon: Sun,
       color: "text-yellow-500",
       bg: "bg-yellow-50",
@@ -115,9 +154,15 @@ function Dashboard() {
           </h2>
 
           <span className="text-xs text-gray-500">
-            Demo Data
+            {loading ? "Loading..." : "Live from your account"}
           </span>
         </div>
+
+        {error && (
+          <p className="mb-4 rounded-xl bg-red-50 p-3 text-sm text-red-600">
+            {error}
+          </p>
+        )}
 
         <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-5 w-full min-w-0">
           {stats.map((item) => {
@@ -177,12 +222,15 @@ function Dashboard() {
                 </span>
 
                 <span className="font-semibold text-green-700">
-                  79%
+                  {loading ? "—" : `${healthyPercent}%`}
                 </span>
               </div>
 
               <div className="w-full h-3 bg-gray-100 rounded-full overflow-hidden">
-                <div className="h-full w-[79%] bg-green-500 rounded-full"></div>
+                <div
+                  className="h-full bg-green-500 rounded-full"
+                  style={{ width: `${healthyPercent}%` }}
+                ></div>
               </div>
             </div>
 
@@ -193,12 +241,15 @@ function Dashboard() {
                 </span>
 
                 <span className="font-semibold text-orange-600">
-                  21%
+                  {loading ? "—" : `${diseasedPercent}%`}
                 </span>
               </div>
 
               <div className="w-full h-3 bg-gray-100 rounded-full overflow-hidden">
-                <div className="h-full w-[21%] bg-orange-400 rounded-full"></div>
+                <div
+                  className="h-full bg-orange-400 rounded-full"
+                  style={{ width: `${diseasedPercent}%` }}
+                ></div>
               </div>
             </div>
           </div>
@@ -207,7 +258,7 @@ function Dashboard() {
             <div className="bg-green-50 rounded-xl p-4 min-w-0">
               <p className="text-sm text-green-700">Healthy</p>
               <h3 className="text-2xl font-bold text-green-800 mt-1">
-                95
+                {loading ? "—" : summary.healthy}
               </h3>
             </div>
 
@@ -216,7 +267,7 @@ function Dashboard() {
                 Needs Attention
               </p>
               <h3 className="text-2xl font-bold text-orange-800 mt-1">
-                25
+                {loading ? "—" : summary.diseased}
               </h3>
             </div>
           </div>
@@ -229,7 +280,7 @@ function Dashboard() {
           </h2>
 
           <p className="text-sm text-gray-500 mt-1">
-            Sample sensor readings
+            Sensor readings will appear here once the sensors module is connected
           </p>
 
           <div className="grid grid-cols-2 gap-4 mt-6">
@@ -273,38 +324,16 @@ function Dashboard() {
           <AlertTriangle className="text-orange-500" size={24} />
         </div>
 
-        <div className="space-y-3">
-          <div className="flex items-center gap-3 bg-orange-50 p-4 rounded-xl">
-            <div className="p-2 bg-orange-100 rounded-lg shrink-0">
-              <AlertTriangle className="text-orange-600" size={20} />
-            </div>
+        <div className="py-10 text-center">
+          <AlertTriangle className="text-green-500 mx-auto" size={38} />
 
-            <div className="min-w-0">
-              <p className="text-sm font-semibold text-gray-800">
-                Disease detected
-              </p>
+          <h3 className="font-semibold text-gray-700 mt-4">
+            No alerts yet
+          </h3>
 
-              <p className="text-xs text-gray-500 mt-1">
-                Sample alert: Tomato plant requires attention.
-              </p>
-            </div>
-          </div>
-
-          <div className="flex items-center gap-3 bg-blue-50 p-4 rounded-xl">
-            <div className="p-2 bg-blue-100 rounded-lg shrink-0">
-              <Droplets className="text-blue-600" size={20} />
-            </div>
-
-            <div className="min-w-0">
-              <p className="text-sm font-semibold text-gray-800">
-                Soil moisture update
-              </p>
-
-              <p className="text-xs text-gray-500 mt-1">
-                Sample alert: Soil moisture is being monitored.
-              </p>
-            </div>
-          </div>
+          <p className="text-sm text-gray-500 mt-2">
+            Alerts will appear here once the alerts module is connected.
+          </p>
         </div>
       </div>
 
