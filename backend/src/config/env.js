@@ -1,12 +1,22 @@
-import path from "node:path";
-import { fileURLToPath } from "node:url";
 import dotenv from "dotenv";
+import path from "path";
+import fs from "fs";
+import { fileURLToPath } from "url";
 import { z } from "zod";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
-// Look in backend/.env, with fallback to current directory
-dotenv.config({ path: path.resolve(__dirname, "../../.env") });
-dotenv.config();
+const candidatePaths = [
+  path.resolve(process.cwd(), ".env"),
+  path.resolve(__dirname, "../../.env"),
+  path.resolve(__dirname, ".env"),
+];
+
+for (const candidate of candidatePaths) {
+  if (fs.existsSync(candidate)) {
+    dotenv.config({ path: candidate });
+    break;
+  }
+}
 
 const envSchema = z.object({
   NODE_ENV: z.enum(["development", "test", "production"]).default("development"),

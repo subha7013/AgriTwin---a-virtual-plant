@@ -54,7 +54,9 @@ export async function registerUser({ username, email, password }) {
 }
 
 export async function loginUser({ username, password }) {
-  const user = await User.findOne({ username });
+  const user = await User.findOne({
+    $or: [{ username }, { email: username.toLowerCase() }],
+  });
 
   if (!user) {
     throw ApiError.unauthorized("Invalid username or password");

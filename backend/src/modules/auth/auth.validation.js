@@ -5,7 +5,7 @@ const username = z
   .trim()
   .min(3, "Username must be at least 3 characters")
   .max(30, "Username must be at most 30 characters")
-  .regex(/^[a-zA-Z0-9_.-]+$/, "Username may only contain letters, numbers, dot, dash or underscore");
+  .regex(/^[a-zA-Z0-9_.\s-]+$/, "Username may only contain letters, numbers, spaces, dot, dash or underscore");
 
 const password = z
   .string()

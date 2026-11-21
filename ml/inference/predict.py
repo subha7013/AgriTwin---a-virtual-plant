@@ -33,8 +33,13 @@ def load_cached_model(model_type="mobilenetv2"):
     global _MODEL_CACHE
     if model_type not in _MODEL_CACHE:
         model_dir = os.path.join(os.path.dirname(__file__), "..", "models")
-        if model_type == "mobilenetv2":
-            model_path = os.path.join(model_dir, "mobilenetv2_best.keras")
+        if model_type in ["mobilenetv2", "default"]:
+            # Primary high-resolution classifier (256x256, preserves leaf curling & lesion detail)
+            high_res_path = os.path.join(model_dir, "mobilenetv2_best.keras")
+            phase2_path = os.path.join(model_dir, "model.keras")
+            model_path = high_res_path if os.path.exists(high_res_path) else phase2_path
+        elif model_type in ["phase2_128", "phase2"]:
+            model_path = os.path.join(model_dir, "model.keras")
         elif model_type == "custom_cnn":
             model_path = os.path.join(model_dir, "custom_cnn.keras")
         else:
@@ -47,13 +52,14 @@ def load_cached_model(model_type="mobilenetv2"):
         _MODEL_CACHE[model_type] = keras.models.load_model(model_path)
     return _MODEL_CACHE[model_type]
 
-def predict_disease(image, plant_id="TOMATO_001", model_type="mobilenetv2"):
+def predict_disease(image, plant_id="TOMATO_001", model_type="mobilenetv2", crop_ratio=0.85):
     """
     Standard AgriTwin disease classification inference pipeline.
     Supports:
-      - 'mobilenetv2' (Primary transfer-learning classifier)
+      - 'mobilenetv2' (Primary high-resolution transfer-learning classifier)
+      - 'phase2_128'  (Phase 2 baseline 128x128 classifier)
       - 'custom_cnn'  (Baseline classifier)
-      - 'ensemble'    (Weighted average of MobileNetV2 + Custom CNN for higher accuracy)
+      - 'ensemble'    (Weighted average of MobileNetV2 + Custom CNN)
     """
     try:
         meta = get_class_metadata()
@@ -67,11 +73,11 @@ def predict_disease(image, plant_id="TOMATO_001", model_type="mobilenetv2"):
             # Preprocess to each model's native resolution
             in_shape_mob = m_mob.input_shape
             size_mob = (in_shape_mob[1], in_shape_mob[2]) if in_shape_mob and in_shape_mob[1] is not None else (256, 256)
-            tensor_mob = preprocess_image(image, target_size=size_mob)
+            tensor_mob = preprocess_image(image, target_size=size_mob, crop_ratio=crop_ratio)
 
             in_shape_cnn = m_cnn.input_shape
             size_cnn = (in_shape_cnn[1], in_shape_cnn[2]) if in_shape_cnn and in_shape_cnn[1] is not None else (224, 224)
-            tensor_cnn = preprocess_image(image, target_size=size_cnn)
+            tensor_cnn = preprocess_image(image, target_size=size_cnn, crop_ratio=crop_ratio)
 
             p_mob = m_mob.predict(tensor_mob, verbose=0)[0]
             p_cnn = m_cnn.predict(tensor_cnn, verbose=0)[0]
@@ -84,10 +90,10 @@ def predict_disease(image, plant_id="TOMATO_001", model_type="mobilenetv2"):
             model = load_cached_model(model_type=model_type)
             in_shape = model.input_shape
             target_size = (in_shape[1], in_shape[2]) if in_shape and in_shape[1] is not None else (224, 224)
-            img_tensor = preprocess_image(image, target_size=target_size)
+            img_tensor = preprocess_image(image, target_size=target_size, crop_ratio=crop_ratio)
 
             preds = model.predict(img_tensor, verbose=0)[0]
-            model_label = "MobileNetV2" if model_type == "mobilenetv2" else "Custom CNN"
+            model_label = "MobileNetV2" if model_type in ["mobilenetv2", "phase2_128"] else "Custom CNN"
 
         pred_idx = int(np.argmax(preds))
         confidence = float(preds[pred_idx])
@@ -150,26 +156,31 @@ def format_prediction_output(result, image_path):
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="AgriTwin Disease Inference CLI")
     parser.add_argument("--image", "-i", type=str, default=None, help="Path to leaf image file")
-    parser.add_argument("--model", "-m", type=str, default="mobilenetv2", choices=["mobilenetv2", "custom_cnn", "ensemble"], help="Model to use")
+    parser.add_argument("--model", "-m", type=str, default="mobilenetv2", choices=["mobilenetv2", "phase2_128", "custom_cnn", "ensemble"], help="Model to use")
     parser.add_argument("--plant-id", "-p", type=str, default="TOMATO_001", help="Plant identifier")
+    parser.add_argument("--no-crop", action="store_true", help="Disable automatic Phase 4 center leaf cropping")
     parser.add_argument("--json", action="store_true", help="Print raw JSON output")
     args = parser.parse_args()
 
     image_path = args.image
     if image_path is None:
-        # Pick a sample image from the test set if none provided
-        test_dir = os.path.join(os.path.dirname(__file__), "..", "dataset", "processed", "test")
-        if os.path.exists(test_dir):
-            classes = [d for d in os.listdir(test_dir) if os.path.isdir(os.path.join(test_dir, d))]
-            sample_class = classes[1] # e.g. Early Blight
-            img_list = os.listdir(os.path.join(test_dir, sample_class))
-            image_path = os.path.join(test_dir, sample_class, img_list[0])
+        # Check clean_split/val first, then fallback to processed/test
+        val_clean = os.path.join(os.path.dirname(__file__), "..", "dataset", "clean_split", "val")
+        val_proc = os.path.join(os.path.dirname(__file__), "..", "dataset", "processed", "test")
+        sample_base = val_clean if os.path.exists(val_clean) else val_proc
+        
+        if os.path.exists(sample_base):
+            classes = [d for d in os.listdir(sample_base) if os.path.isdir(os.path.join(sample_base, d))]
+            sample_class = classes[1] if len(classes) > 1 else classes[0]
+            img_list = [f for f in os.listdir(os.path.join(sample_base, sample_class)) if f.lower().endswith(('.jpg', '.jpeg', '.png'))]
+            image_path = os.path.join(sample_base, sample_class, img_list[0])
             print(f"[INFO] No --image argument provided. Testing on sample: {image_path}")
         else:
-            print("[ERROR] No image specified and test directory not found.")
+            print("[ERROR] No image specified and validation directory not found.")
             sys.exit(1)
 
-    result = predict_disease(image_path, plant_id=args.plant_id, model_type=args.model)
+    crop_ratio = None if args.no_crop else 0.85
+    result = predict_disease(image_path, plant_id=args.plant_id, model_type=args.model, crop_ratio=crop_ratio)
 
     if args.json:
         print(json.dumps(result, indent=2))

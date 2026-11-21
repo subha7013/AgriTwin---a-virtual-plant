@@ -3,7 +3,7 @@ import os
 import numpy as np
 from PIL import Image
 
-def preprocess_image(image_input, target_size=(224, 224)):
+def preprocess_image(image_input, target_size=(224, 224), crop_ratio=None):
     """
     Standard preprocessing pipeline for AgriTwin model inference.
     Accepts:
@@ -12,7 +12,7 @@ def preprocess_image(image_input, target_size=(224, 224)):
       - PIL Image
       - Numpy array (H, W, C)
     Returns:
-      - numpy array of shape (1, 224, 224, 3), dtype float32
+      - numpy array of shape (1, target_size[0], target_size[1], 3), dtype float32
     """
     if isinstance(image_input, (str, os.PathLike)):
         img = Image.open(image_input)
@@ -28,6 +28,15 @@ def preprocess_image(image_input, target_size=(224, 224)):
     # Ensure 3 color channels RGB
     if img.mode != "RGB":
         img = img.convert("RGB")
+
+    # Center crop if requested (Phase 4 edge & background noise reduction)
+    if crop_ratio is not None and 0.0 < crop_ratio < 1.0:
+        w, h = img.size
+        if w > 300 and h > 300:
+            cw, ch = int(w * crop_ratio), int(h * crop_ratio)
+            left = (w - cw) // 2
+            top = (h - ch) // 2
+            img = img.crop((left, top, left + cw, top + ch))
 
     # Resize to model input dimensions
     img = img.resize(target_size, Image.Resampling.BILINEAR)
