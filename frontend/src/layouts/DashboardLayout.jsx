@@ -8,33 +8,29 @@ function DashboardLayout() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
   return (
-    <div className="min-h-screen w-full flex bg-[#F4F8F3]">
-
-      {/* Sidebar */}
+    <div className="flex min-h-screen w-full min-w-0 bg-[#F4F8F3]">
       <Sidebar
         isOpen={sidebarOpen}
         onClose={() => setSidebarOpen(false)}
       />
 
-      {/* Mobile Overlay */}
       {sidebarOpen && (
         <div
           onClick={() => setSidebarOpen(false)}
-          className="fixed inset-0 bg-black/40 z-40 lg:hidden"
+          className="fixed inset-0 z-40 bg-black/40 backdrop-blur-sm lg:hidden"
         />
       )}
 
-      {/* Main Content */}
-      <div className="flex-1 min-w-0 min-h-screen flex flex-col">
-
+      <div className="flex min-h-screen min-w-0 flex-1 flex-col">
         <Navbar
           onMenuClick={() => setSidebarOpen(!sidebarOpen)}
         />
 
-        <main className="flex-1 min-w-0 w-full p-4 sm:p-6 lg:p-8">
-          <Outlet />
+        <main className="min-w-0 w-full flex-1 px-4 py-5 sm:px-6 sm:py-7 lg:px-8 lg:py-8">
+          <div className="mx-auto w-full min-w-0 max-w-[1600px]">
+            <Outlet />
+          </div>
         </main>
-
       </div>
     </div>
   );

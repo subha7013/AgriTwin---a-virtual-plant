@@ -2,11 +2,16 @@
 import { useSearchParams, Link } from "react-router-dom";
 import {
   ArrowLeft,
+  ArrowUpRight,
   Leaf,
   AlertTriangle,
   Activity,
   ShieldCheck,
   Sprout,
+  CheckCircle2,
+  Bug,
+  Info,
+  Flower2,
 } from "lucide-react";
 
 const diseaseData = {
@@ -224,153 +229,262 @@ const diseaseData = {
 function PlantDetails() {
   const [searchParams] = useSearchParams();
   const diseaseName = searchParams.get("disease") || "Healthy";
-
   const disease = diseaseData[diseaseName] || diseaseData.Healthy;
+  const isHealthy = diseaseName === "Healthy";
+
+  const informationSections = [
+    {
+      title: "Symptoms",
+      subtitle: "Signs to look out for",
+      items: disease.symptoms,
+      icon: AlertTriangle,
+      color: "text-orange-600",
+      iconBg: "bg-orange-50",
+      numberBg: "bg-orange-50 text-orange-700",
+    },
+    {
+      title: "Causes",
+      subtitle: "Possible contributing factors",
+      items: disease.causes,
+      icon: Bug,
+      color: "text-blue-600",
+      iconBg: "bg-blue-50",
+      numberBg: "bg-blue-50 text-blue-700",
+    },
+    {
+      title: "Prevention",
+      subtitle: "Ways to protect your plants",
+      items: disease.prevention,
+      icon: ShieldCheck,
+      color: "text-emerald-700",
+      iconBg: "bg-emerald-50",
+      numberBg: "bg-emerald-50 text-emerald-700",
+    },
+  ];
 
   return (
-    <div className="space-y-7">
+    <div className="w-full min-w-0 space-y-8 pb-6">
 
+      {/* Back Navigation */}
       <Link
         to="/plants"
-        className="inline-flex items-center gap-2 text-green-700 hover:text-green-900 font-semibold"
+        className="group inline-flex items-center gap-2 rounded-xl border border-gray-200 bg-white px-4 py-2.5 text-sm font-semibold text-gray-600 shadow-sm transition hover:border-emerald-200 hover:bg-emerald-50 hover:text-emerald-800"
       >
-        <ArrowLeft size={19} />
+        <ArrowLeft size={18} className="transition-transform group-hover:-translate-x-1" />
         Back to Plants
       </Link>
 
-      <div>
-        <h1 className="text-2xl sm:text-3xl font-bold text-gray-800">
-          Plant Details 🌱
-        </h1>
-        <p className="text-gray-500 mt-2">
-          Detailed information about tomato leaf health and diseases.
-        </p>
-      </div>
+      {/* Page Heading */}
+      <section className="relative isolate w-full min-w-0 overflow-hidden rounded-[28px] bg-gradient-to-br from-[#073b2b] via-[#086044] to-[#159568] px-5 py-8 text-white shadow-xl shadow-green-950/10 sm:px-9 sm:py-10">
 
-      <div className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
+        <div className="pointer-events-none absolute -right-16 -top-20 h-64 w-64 rounded-full border-[30px] border-white/[0.06]" />
+
+        <div className="pointer-events-none absolute -bottom-24 right-36 h-64 w-64 rounded-full bg-lime-300/10 blur-3xl" />
+
+        <div className="pointer-events-none absolute right-8 top-8 hidden opacity-[0.08] sm:block">
+          <Flower2 size={180} strokeWidth={1} />
+        </div>
+
+        <div className="relative z-10 w-full min-w-0">
+
+          {/* Plant Health Label */}
+          <div className="mb-5 flex w-fit max-w-full items-center rounded-full border border-white/15 bg-white/10 px-4 py-2 text-left text-lime-100">
+            <span className="text-sm font-bold leading-6 tracking-normal">
+              PLANT HEALTH INFORMATION
+            </span>
+          </div>
+
+          <h1 className="text-3xl font-bold tracking-tight sm:text-4xl">
+            Plant Details
+          </h1>
+
+          <p className="mt-3 max-w-xl text-sm leading-7 text-green-50/85 sm:text-base">
+            Understand plant conditions, identify symptoms and explore useful prevention information for tomato crops.
+          </p>
+
+        </div>
+      </section>
+
+      {/* Main Plant Information */}
+      <section className="w-full min-w-0 overflow-hidden rounded-3xl border border-gray-100 bg-white shadow-sm">
 
         <div className="grid grid-cols-1 lg:grid-cols-2">
 
-          <div className="h-64 sm:h-80 lg:h-full min-h-[300px] bg-green-50">
+          {/* Plant Image */}
+          <div className="group relative flex min-h-[300px] items-center justify-center overflow-hidden bg-emerald-50 p-5 sm:min-h-[420px]">
+
             <img
               src={disease.image}
               alt={diseaseName}
-              className="w-full h-full object-cover"
+              className="relative z-10 h-auto max-h-[460px] w-full object-contain transition-transform duration-500 group-hover:scale-[1.03]"
             />
+
+            <div className="absolute bottom-5 left-5 z-20">
+              <span className="inline-flex items-center gap-2 rounded-full border border-white/70 bg-white/95 px-4 py-2 text-xs font-bold text-gray-800 shadow-lg">
+                <Sprout size={15} className="text-emerald-700" />
+                TOMATO PLANT
+              </span>
+            </div>
           </div>
 
-          <div className="p-6 sm:p-8 flex flex-col justify-center">
+          {/* Details */}
+          <div className="flex min-w-0 flex-col justify-center p-6 sm:p-9">
 
-            <span className={`w-fit text-sm font-semibold px-4 py-2 rounded-full ${
-              diseaseName === "Healthy"
-                ? "bg-green-100 text-green-700"
-                : "bg-orange-100 text-orange-700"
-            }`}>
-              {diseaseName === "Healthy" ? "Healthy" : "Disease Information"}
-            </span>
+            <div className="flex flex-wrap items-center gap-2">
+              <span
+                className={`inline-flex items-center gap-2 rounded-full px-3.5 py-2 text-xs font-bold ${
+                  isHealthy
+                    ? "bg-emerald-50 text-emerald-700"
+                    : "bg-orange-50 text-orange-700"
+                }`}
+              >
+                {isHealthy ? (
+                  <CheckCircle2 size={15} />
+                ) : (
+                  <AlertTriangle size={15} />
+                )}
+                {isHealthy ? "Healthy Plant" : "Disease Information"}
+              </span>
 
-            <h2 className="text-2xl sm:text-3xl font-bold text-gray-800 mt-5">
+              <span className="rounded-full bg-gray-100 px-3.5 py-2 text-xs font-semibold text-gray-600">
+                {disease.category}
+              </span>
+            </div>
+
+            <h2 className="mt-6 text-2xl font-bold leading-tight tracking-tight text-gray-800 sm:text-3xl">
               {diseaseName}
             </h2>
 
-            <p className="text-green-700 font-medium mt-2">
-              {disease.category}
-            </p>
-
-            <p className="text-gray-600 leading-7 mt-5">
+            <p className="mt-4 text-sm leading-7 text-gray-500">
               {disease.description}
             </p>
 
-            <div className="grid grid-cols-2 gap-3 mt-7">
+            <div className="mt-7 grid grid-cols-1 gap-3 sm:grid-cols-2">
 
-              <div className="bg-green-50 p-4 rounded-xl">
-                <Leaf className="text-green-700 mb-2" size={23} />
-                <p className="text-sm text-gray-500">Plant Type</p>
-                <p className="font-bold text-gray-800">Tomato</p>
+              <div className="rounded-2xl border border-emerald-100 bg-emerald-50/70 p-4">
+                <div className="mb-3 flex h-10 w-10 items-center justify-center rounded-xl bg-white text-emerald-700 shadow-sm">
+                  <Leaf size={21} />
+                </div>
+                <p className="text-xs font-medium text-gray-500">
+                  Plant Type
+                </p>
+                <p className="mt-1 font-bold text-gray-800">
+                  Tomato
+                </p>
               </div>
 
-              <div className="bg-orange-50 p-4 rounded-xl">
-                <Activity className="text-orange-600 mb-2" size={23} />
-                <p className="text-sm text-gray-500">Category</p>
-                <p className="font-bold text-gray-800">
+              <div className="rounded-2xl border border-sky-100 bg-sky-50/70 p-4">
+                <div className="mb-3 flex h-10 w-10 items-center justify-center rounded-xl bg-white text-sky-700 shadow-sm">
+                  <Activity size={21} />
+                </div>
+                <p className="text-xs font-medium text-gray-500">
+                  Category
+                </p>
+                <p className="mt-1 font-bold text-gray-800">
                   {disease.category}
                 </p>
               </div>
 
             </div>
 
+            <div className="mt-6 flex items-start gap-3 rounded-xl bg-gray-50 p-4">
+              <Info size={19} className="mt-0.5 shrink-0 text-emerald-700" />
+              <p className="text-xs leading-5 text-gray-500">
+                Review the information below to understand the symptoms, possible causes and prevention methods.
+              </p>
+            </div>
+
           </div>
+        </div>
+      </section>
+
+      {/* Detailed Information */}
+      <section>
+        <div className="mb-5">
+          <div className="flex items-center gap-2">
+            <span className="h-6 w-1 rounded-full bg-emerald-500" />
+            <h2 className="text-xl font-bold text-gray-800">
+              Detailed Information
+            </h2>
+          </div>
+
+          <p className="ml-3 mt-1 text-sm text-gray-500">
+            Important information about this plant condition
+          </p>
+        </div>
+
+        <div className="grid grid-cols-1 gap-5 md:grid-cols-3">
+          {informationSections.map((section) => {
+            const Icon = section.icon;
+
+            return (
+              <div
+                key={section.title}
+                className="group rounded-3xl border border-gray-100 bg-white p-6 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-emerald-100 hover:shadow-xl hover:shadow-emerald-900/[0.06]"
+              >
+                <div className="flex items-center gap-3">
+                  <div className={`rounded-2xl p-3 ${section.iconBg} ${section.color} transition-transform duration-300 group-hover:scale-110`}>
+                    <Icon size={23} />
+                  </div>
+
+                  <div>
+                    <h3 className="text-lg font-bold text-gray-800">
+                      {section.title}
+                    </h3>
+                    <p className="mt-0.5 text-xs text-gray-400">
+                      {section.subtitle}
+                    </p>
+                  </div>
+                </div>
+
+                <div className="my-5 h-px bg-gray-100" />
+
+                <ul className="space-y-4">
+                  {section.items.map((item, index) => (
+                    <li key={index} className="flex items-start gap-3">
+                      <span className={`flex h-6 w-6 shrink-0 items-center justify-center rounded-lg text-[11px] font-bold ${section.numberBg}`}>
+                        {index + 1}
+                      </span>
+
+                      <span className="pt-0.5 text-sm leading-6 text-gray-600">
+                        {item}
+                      </span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            );
+          })}
+        </div>
+      </section>
+
+      {/* Important Note */}
+      <div className="flex items-start gap-3 rounded-2xl border border-amber-100 bg-amber-50/70 p-5">
+        <div className="rounded-xl bg-white p-2 text-amber-600 shadow-sm">
+          <Info size={20} />
+        </div>
+
+        <div>
+          <h3 className="text-sm font-bold text-amber-900">
+            Important Note
+          </h3>
+          <p className="mt-1 text-xs leading-6 text-amber-800/80">
+            This information is for educational purposes. Confirm disease diagnosis before applying any treatment.
+          </p>
         </div>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
-
-        <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
-          <div className="flex items-center gap-3 mb-5">
-            <div className="p-3 bg-orange-100 text-orange-600 rounded-xl">
-              <AlertTriangle size={23} />
-            </div>
-            <h3 className="text-lg font-bold text-gray-800">
-              Symptoms
-            </h3>
-          </div>
-
-          <ul className="space-y-3">
-            {disease.symptoms.map((item, index) => (
-              <li key={index} className="flex gap-2 text-sm text-gray-600">
-                <span className="text-orange-500">•</span>
-                {item}
-              </li>
-            ))}
-          </ul>
-        </div>
-
-        <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
-          <div className="flex items-center gap-3 mb-5">
-            <div className="p-3 bg-blue-100 text-blue-600 rounded-xl">
-              <Sprout size={23} />
-            </div>
-            <h3 className="text-lg font-bold text-gray-800">
-              Causes
-            </h3>
-          </div>
-
-          <ul className="space-y-3">
-            {disease.causes.map((item, index) => (
-              <li key={index} className="flex gap-2 text-sm text-gray-600">
-                <span className="text-blue-500">•</span>
-                {item}
-              </li>
-            ))}
-          </ul>
-        </div>
-
-        <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
-          <div className="flex items-center gap-3 mb-5">
-            <div className="p-3 bg-green-100 text-green-700 rounded-xl">
-              <ShieldCheck size={23} />
-            </div>
-            <h3 className="text-lg font-bold text-gray-800">
-              Prevention
-            </h3>
-          </div>
-
-          <ul className="space-y-3">
-            {disease.prevention.map((item, index) => (
-              <li key={index} className="flex gap-2 text-sm text-gray-600">
-                <span className="text-green-600">•</span>
-                {item}
-              </li>
-            ))}
-          </ul>
-        </div>
-
+      {/* Bottom Back Button */}
+      <div className="flex justify-start">
+        <Link
+          to="/plants"
+          className="inline-flex items-center gap-2 rounded-xl bg-emerald-700 px-5 py-3 text-sm font-bold text-white shadow-md shadow-emerald-900/10 transition hover:bg-emerald-800 hover:shadow-lg"
+        >
+          <ArrowLeft size={18} />
+          Back to Plant Categories
+          <ArrowUpRight size={16} />
+        </Link>
       </div>
-
-      <p className="text-xs text-gray-400">
-        Note: This information is for educational purposes. Confirm disease
-        diagnosis before applying any treatment.
-      </p>
 
     </div>
   );

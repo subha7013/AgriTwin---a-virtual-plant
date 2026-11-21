@@ -11,74 +11,81 @@ import {
   Cloud,
   Leaf,
   Check,
-  Trash2,
   Clock,
   ShieldAlert,
+  ArrowUpRight,
+  Filter,
+  CircleCheck,
 } from "lucide-react";
 
 const initialAlerts = [
   {
     id: 1,
     title: "High Temperature Detected",
-    message: "Temperature has reached 32°C. Monitor the tomato plants carefully.",
+    message:
+      "Temperature has reached 32°C. Monitor the tomato plants carefully.",
     type: "Critical",
     category: "Temperature",
     time: "10 minutes ago",
     icon: Thermometer,
     color: "text-red-600",
-    bg: "bg-red-100",
+    bg: "bg-red-50",
     read: false,
     resolved: false,
   },
   {
     id: 2,
     title: "Low Soil Moisture",
-    message: "Soil moisture is currently 35%. Check the irrigation requirements.",
+    message:
+      "Soil moisture is currently 35%. Check the irrigation requirements.",
     type: "Warning",
     category: "Soil Moisture",
     time: "30 minutes ago",
     icon: Droplets,
     color: "text-orange-600",
-    bg: "bg-orange-100",
+    bg: "bg-orange-50",
     read: false,
     resolved: false,
   },
   {
     id: 3,
     title: "High Humidity Warning",
-    message: "Humidity is 82%. High humidity may encourage fungal disease development.",
+    message:
+      "Humidity is 82%. High humidity may encourage fungal disease development.",
     type: "Warning",
     category: "Humidity",
     time: "1 hour ago",
     icon: Cloud,
     color: "text-blue-600",
-    bg: "bg-blue-100",
+    bg: "bg-blue-50",
     read: true,
     resolved: false,
   },
   {
     id: 4,
     title: "Disease Risk Increased",
-    message: "The demo risk assessment indicates an elevated disease risk.",
+    message:
+      "The demo risk assessment indicates an elevated disease risk.",
     type: "Critical",
     category: "Disease Risk",
     time: "2 hours ago",
     icon: ShieldAlert,
     color: "text-red-600",
-    bg: "bg-red-100",
+    bg: "bg-red-50",
     read: false,
     resolved: false,
   },
   {
     id: 5,
     title: "Plant Health Reminder",
-    message: "Regularly inspect tomato leaves for unusual spots and symptoms.",
+    message:
+      "Regularly inspect tomato leaves for unusual spots and symptoms.",
     type: "Info",
     category: "Plant Health",
     time: "Yesterday",
     icon: Leaf,
     color: "text-green-600",
-    bg: "bg-green-100",
+    bg: "bg-green-50",
     read: true,
     resolved: true,
   },
@@ -107,8 +114,10 @@ function Alerts() {
   const filteredAlerts = alerts.filter((alert) => {
     if (filter === "All") return true;
     if (filter === "Unread") return !alert.read && !alert.resolved;
-    if (filter === "Critical") return alert.type === "Critical" && !alert.resolved;
-    if (filter === "Warning") return alert.type === "Warning" && !alert.resolved;
+    if (filter === "Critical")
+      return alert.type === "Critical" && !alert.resolved;
+    if (filter === "Warning")
+      return alert.type === "Warning" && !alert.resolved;
     if (filter === "Resolved") return alert.resolved;
 
     return true;
@@ -138,104 +147,163 @@ function Alerts() {
     );
   };
 
+  const summaryCards = [
+    {
+      title: "Unread Alerts",
+      value: unreadCount,
+      icon: Bell,
+      color: "text-blue-600",
+      bg: "bg-blue-50",
+      border: "border-blue-100",
+    },
+    {
+      title: "Critical Alerts",
+      value: criticalCount,
+      icon: AlertTriangle,
+      color: "text-red-600",
+      bg: "bg-red-50",
+      border: "border-red-100",
+    },
+    {
+      title: "Warning Alerts",
+      value: warningCount,
+      icon: Info,
+      color: "text-orange-600",
+      bg: "bg-orange-50",
+      border: "border-orange-100",
+    },
+    {
+      title: "Resolved Alerts",
+      value: resolvedCount,
+      icon: CheckCircle,
+      color: "text-green-700",
+      bg: "bg-green-50",
+      border: "border-green-100",
+    },
+  ];
+
   return (
-    <div className="space-y-7">
+    <div className="space-y-7 pb-6">
 
-      {/* Heading */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+      {/* Hero Section */}
+      <div className="relative overflow-hidden rounded-3xl bg-gradient-to-r from-green-950 via-green-800 to-emerald-700 p-6 text-white shadow-lg sm:p-8">
+        <div className="absolute -right-10 -top-16 h-64 w-64 rounded-full bg-white/5" />
+        <div className="absolute -bottom-24 right-36 h-56 w-56 rounded-full bg-white/5" />
 
-        <div>
-          <h1 className="text-2xl sm:text-3xl font-bold text-gray-800">
-            Alerts & Notifications 🔔
-          </h1>
+        <div className="relative z-10 flex flex-col gap-6 lg:flex-row lg:items-center lg:justify-between">
+          <div>
+            <div className="mb-4 flex w-fit items-center gap-2 rounded-full border border-white/20 bg-white/10 px-3 py-1.5 text-xs font-semibold text-green-100">
+              <Bell size={14} />
+              ALERT CENTER
+            </div>
 
-          <p className="text-gray-500 mt-2">
-            Monitor important warnings and updates about your tomato plants.
-          </p>
+            <h1 className="text-2xl font-bold sm:text-3xl lg:text-4xl">
+              Alerts & Notifications
+            </h1>
+
+            <p className="mt-3 max-w-xl text-sm leading-relaxed text-green-100 sm:text-base">
+              Stay informed about important warnings, environmental
+              conditions and tomato plant health updates.
+            </p>
+          </div>
+
+          <div className="flex items-center gap-4 rounded-2xl border border-white/15 bg-white/10 p-4 backdrop-blur-sm">
+            <div className="rounded-xl bg-white/15 p-3">
+              <Bell size={27} />
+            </div>
+            <div>
+              <p className="text-xs text-green-100">UNREAD NOTIFICATIONS</p>
+              <h2 className="mt-1 text-2xl font-bold">{unreadCount}</h2>
+              <p className="text-xs text-green-100">Require your attention</p>
+            </div>
+          </div>
         </div>
-
-        <button
-          onClick={markAllAsRead}
-          className="flex items-center justify-center gap-2 bg-green-700 hover:bg-green-800 text-white px-4 py-3 rounded-xl font-semibold text-sm"
-        >
-          <Check size={18} />
-          Mark All as Read
-        </button>
-
       </div>
 
       {/* Summary Cards */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-5">
+      <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 xl:grid-cols-4">
+        {summaryCards.map((item, index) => {
+          const Icon = item.icon;
 
-        <div className="bg-white p-5 rounded-2xl border border-gray-100 shadow-sm">
-          <div className="p-3 bg-blue-100 text-blue-700 rounded-xl w-fit">
-            <Bell size={24} />
-          </div>
-          <p className="text-sm text-gray-500 mt-4">
-            Unread Alerts
-          </p>
-          <h2 className="text-3xl font-bold text-gray-800 mt-1">
-            {unreadCount}
-          </h2>
-        </div>
+          return (
+            <div
+              key={index}
+              className={`group rounded-2xl border ${item.border} bg-white p-5 shadow-sm transition duration-300 hover:-translate-y-1 hover:shadow-md`}
+            >
+              <div className="flex items-center justify-between">
+                <div className={`rounded-xl p-3 ${item.bg} ${item.color}`}>
+                  <Icon size={24} />
+                </div>
 
-        <div className="bg-white p-5 rounded-2xl border border-gray-100 shadow-sm">
-          <div className="p-3 bg-red-100 text-red-600 rounded-xl w-fit">
-            <AlertTriangle size={24} />
-          </div>
-          <p className="text-sm text-gray-500 mt-4">
-            Critical Alerts
-          </p>
-          <h2 className="text-3xl font-bold text-gray-800 mt-1">
-            {criticalCount}
-          </h2>
-        </div>
+                <ArrowUpRight
+                  size={19}
+                  className="text-gray-300 transition group-hover:text-green-600"
+                />
+              </div>
 
-        <div className="bg-white p-5 rounded-2xl border border-gray-100 shadow-sm">
-          <div className="p-3 bg-orange-100 text-orange-600 rounded-xl w-fit">
-            <Info size={24} />
-          </div>
-          <p className="text-sm text-gray-500 mt-4">
-            Warning Alerts
-          </p>
-          <h2 className="text-3xl font-bold text-gray-800 mt-1">
-            {warningCount}
-          </h2>
-        </div>
+              <p className="mt-5 text-sm font-medium text-gray-500">
+                {item.title}
+              </p>
 
-        <div className="bg-white p-5 rounded-2xl border border-gray-100 shadow-sm">
-          <div className="p-3 bg-green-100 text-green-700 rounded-xl w-fit">
-            <CheckCircle size={24} />
-          </div>
-          <p className="text-sm text-gray-500 mt-4">
-            Resolved Alerts
-          </p>
-          <h2 className="text-3xl font-bold text-gray-800 mt-1">
-            {resolvedCount}
-          </h2>
-        </div>
+              <h2 className="mt-1 text-3xl font-bold text-gray-800">
+                {item.value}
+              </h2>
 
+              <p className={`mt-2 text-xs font-medium ${item.color}`}>
+                {item.title === "Unread Alerts"
+                  ? "Pending notifications"
+                  : item.title === "Critical Alerts"
+                  ? "Need attention"
+                  : item.title === "Warning Alerts"
+                  ? "Environmental warnings"
+                  : "Successfully resolved"}
+              </p>
+            </div>
+          );
+        })}
       </div>
 
-      {/* Alert List */}
-      <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-5 sm:p-6">
+      {/* Notifications Section */}
+      <div className="rounded-2xl border border-gray-100 bg-white p-5 shadow-sm sm:p-6">
 
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-
+        {/* Header */}
+        <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
           <div>
-            <h2 className="text-xl font-bold text-gray-800">
-              Recent Notifications
-            </h2>
+            <div className="flex items-center gap-2">
+              <div className="rounded-lg bg-green-50 p-2 text-green-700">
+                <Bell size={20} />
+              </div>
+              <h2 className="text-lg font-bold text-gray-800">
+                Recent Notifications
+              </h2>
+            </div>
 
-            <p className="text-sm text-gray-500 mt-1">
+            <p className="mt-2 text-sm text-gray-500">
               Review and manage your alerts.
             </p>
+          </div>
+
+          <button
+            onClick={markAllAsRead}
+            disabled={unreadCount === 0}
+            className="flex items-center justify-center gap-2 rounded-xl bg-green-700 px-4 py-3 text-sm font-semibold text-white transition hover:bg-green-800 disabled:cursor-not-allowed disabled:opacity-50"
+          >
+            <Check size={17} />
+            Mark All as Read
+          </button>
+        </div>
+
+        {/* Filter */}
+        <div className="mt-6 flex flex-col gap-3 border-b border-gray-100 pb-5 sm:flex-row sm:items-center sm:justify-between">
+          <div className="flex items-center gap-2 text-sm font-semibold text-gray-600">
+            <Filter size={17} className="text-green-700" />
+            Filter Notifications
           </div>
 
           <select
             value={filter}
             onChange={(e) => setFilter(e.target.value)}
-            className="border border-gray-200 rounded-xl px-4 py-2 text-sm outline-none focus:ring-2 focus:ring-green-500"
+            className="w-full rounded-xl border border-gray-200 bg-white px-4 py-2.5 text-sm font-medium text-gray-700 outline-none transition focus:border-green-500 focus:ring-2 focus:ring-green-100 sm:w-48"
           >
             <option value="All">All Alerts</option>
             <option value="Unread">Unread</option>
@@ -243,11 +311,10 @@ function Alerts() {
             <option value="Warning">Warning</option>
             <option value="Resolved">Resolved</option>
           </select>
-
         </div>
 
-        <div className="space-y-4 mt-6">
-
+        {/* Alert List */}
+        <div className="mt-5 space-y-4">
           {filteredAlerts.length > 0 ? (
             filteredAlerts.map((alert) => {
               const Icon = alert.icon;
@@ -255,71 +322,77 @@ function Alerts() {
               return (
                 <div
                   key={alert.id}
-                  className={`border rounded-2xl p-4 sm:p-5 transition ${
+                  className={`rounded-2xl border p-4 transition duration-200 hover:shadow-sm sm:p-5 ${
                     alert.resolved
                       ? "border-green-100 bg-green-50/40"
                       : !alert.read
                       ? "border-green-200 bg-green-50/30"
-                      : "border-gray-100 bg-white"
+                      : "border-gray-100 bg-white hover:border-green-100"
                   }`}
                 >
+                  <div className="flex flex-col gap-4 sm:flex-row">
 
-                  <div className="flex flex-col sm:flex-row gap-4">
-
-                    <div className={`p-3 rounded-xl w-fit h-fit ${alert.bg} ${alert.color}`}>
+                    {/* Alert Icon */}
+                    <div
+                      className={`h-fit w-fit shrink-0 rounded-xl p-3 ${alert.bg} ${alert.color}`}
+                    >
                       <Icon size={24} />
                     </div>
 
-                    <div className="flex-1 min-w-0">
-
+                    {/* Alert Content */}
+                    <div className="min-w-0 flex-1">
                       <div className="flex flex-wrap items-center gap-2">
-
-                        <h3 className="font-bold text-gray-800">
+                        <h3 className="text-sm font-bold text-gray-800 sm:text-base">
                           {alert.title}
                         </h3>
 
-                        <span className={`text-xs font-semibold px-2.5 py-1 rounded-full ${
-                          alert.type === "Critical"
-                            ? "bg-red-100 text-red-700"
-                            : alert.type === "Warning"
-                            ? "bg-orange-100 text-orange-700"
-                            : "bg-blue-100 text-blue-700"
-                        }`}>
+                        <span
+                          className={`rounded-full px-2.5 py-1 text-xs font-bold ${
+                            alert.type === "Critical"
+                              ? "bg-red-50 text-red-700"
+                              : alert.type === "Warning"
+                              ? "bg-orange-50 text-orange-700"
+                              : "bg-blue-50 text-blue-700"
+                          }`}
+                        >
                           {alert.type}
                         </span>
 
                         {alert.resolved && (
-                          <span className="text-xs font-semibold bg-green-100 text-green-700 px-2.5 py-1 rounded-full">
+                          <span className="flex items-center gap-1 rounded-full bg-green-100 px-2.5 py-1 text-xs font-bold text-green-700">
+                            <CircleCheck size={13} />
                             Resolved
                           </span>
                         )}
 
                         {!alert.read && !alert.resolved && (
-                          <span className="w-2 h-2 bg-green-600 rounded-full" />
+                          <span className="h-2 w-2 rounded-full bg-green-600" />
                         )}
-
                       </div>
 
-                      <p className="text-sm text-gray-600 mt-2 leading-6">
+                      <p className="mt-2 text-sm leading-relaxed text-gray-600">
                         {alert.message}
                       </p>
 
-                      <div className="flex flex-wrap items-center gap-3 mt-3 text-xs text-gray-400">
-                        <span>{alert.category}</span>
-                        <span>•</span>
+                      <div className="mt-3 flex flex-wrap items-center gap-3 text-xs text-gray-400">
+                        <span className="rounded-md bg-gray-100 px-2 py-1 font-medium text-gray-500">
+                          {alert.category}
+                        </span>
+
                         <span className="flex items-center gap-1">
                           <Clock size={13} />
                           {alert.time}
                         </span>
                       </div>
 
-                      <div className="flex flex-wrap gap-3 mt-4">
-
+                      {/* Actions */}
+                      <div className="mt-4 flex flex-wrap gap-3">
                         {!alert.read && !alert.resolved && (
                           <button
                             onClick={() => markAsRead(alert.id)}
-                            className="text-sm font-semibold text-blue-700 hover:text-blue-900"
+                            className="flex items-center gap-1.5 rounded-lg border border-blue-100 bg-white px-3 py-2 text-xs font-semibold text-blue-700 transition hover:bg-blue-50"
                           >
+                            <Check size={14} />
                             Mark as Read
                           </button>
                         )}
@@ -327,48 +400,58 @@ function Alerts() {
                         {!alert.resolved && (
                           <button
                             onClick={() => resolveAlert(alert.id)}
-                            className="text-sm font-semibold text-green-700 hover:text-green-900 flex items-center gap-1"
+                            className="flex items-center gap-1.5 rounded-lg border border-green-100 bg-white px-3 py-2 text-xs font-semibold text-green-700 transition hover:bg-green-50"
                           >
-                            <CheckCircle size={15} />
-                            Resolve
+                            <CheckCircle size={14} />
+                            Resolve Alert
                           </button>
                         )}
-
                       </div>
-
                     </div>
-
                   </div>
-
                 </div>
               );
             })
           ) : (
-            <div className="py-12 text-center">
-              <CheckCircle size={40} className="text-green-500 mx-auto" />
+            <div className="flex flex-col items-center justify-center py-14 text-center">
+              <div className="rounded-full bg-green-50 p-5 text-green-600">
+                <CheckCircle size={36} />
+              </div>
 
-              <h3 className="font-semibold text-gray-700 mt-4">
+              <h3 className="mt-4 font-bold text-gray-800">
                 No Alerts Found
               </h3>
 
-              <p className="text-sm text-gray-500 mt-2">
-                There are no notifications in this category.
+              <p className="mt-2 max-w-sm text-sm text-gray-500">
+                There are no notifications in this category. Try selecting
+                another filter.
               </p>
+
+              <button
+                onClick={() => setFilter("All")}
+                className="mt-4 rounded-xl bg-green-700 px-4 py-2 text-sm font-semibold text-white transition hover:bg-green-800"
+              >
+                View All Alerts
+              </button>
             </div>
           )}
-
         </div>
-
       </div>
 
-      {/* Demo Note */}
-      <div className="flex items-start gap-3 bg-yellow-50 border border-yellow-100 p-4 rounded-xl">
-        <Info className="text-yellow-700 shrink-0 mt-0.5" size={20} />
+      {/* Demo Notice */}
+      <div className="flex items-start gap-3 rounded-2xl border border-amber-200 bg-amber-50 p-4">
+        <Info size={20} className="mt-0.5 shrink-0 text-amber-700" />
 
-        <p className="text-sm text-yellow-800">
-          Note: These are sample notifications for frontend demonstration.
-          Real alerts will be generated from backend sensor data and AI analysis.
-        </p>
+        <div>
+          <h3 className="text-sm font-bold text-amber-900">
+            Demo Notifications
+          </h3>
+          <p className="mt-1 text-sm leading-relaxed text-amber-800">
+            These are sample notifications for frontend demonstration.
+            Actual alerts will require backend sensor data and integrated
+            disease analysis.
+          </p>
+        </div>
       </div>
 
     </div>

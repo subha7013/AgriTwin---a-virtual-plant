@@ -1,24 +1,49 @@
 
 import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import { Sprout, User, Lock, Leaf } from "lucide-react";
+import { Link, useNavigate, Navigate } from "react-router-dom";
+import {
+  Sprout,
+  User,
+  Lock,
+  Leaf,
+  Eye,
+  EyeOff,
+} from "lucide-react";
 import { useAuth } from "../context/AuthContext";
 
 function Login() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [message, setMessage] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
 
-  const { login } = useAuth();
+  const { login, loading, isAuthenticated } = useAuth();
   const navigate = useNavigate();
+
+  // Wait until saved login status is restored
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-green-50">
+        <p className="text-green-700 font-semibold">
+          Loading...
+        </p>
+      </div>
+    );
+  }
+
+  // Redirect already logged-in users
+  if (isAuthenticated) {
+    return <Navigate to="/dashboard" replace />;
+  }
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    setMessage("");
 
     const result = login(username.trim(), password);
 
     if (result.success) {
-      navigate("/dashboard");
+      navigate("/dashboard", { replace: true });
     } else {
       setMessage(result.message);
     }
@@ -40,6 +65,7 @@ function Login() {
           </p>
         </div>
 
+        {/* Heading */}
         <div className="mb-6">
           <h2 className="text-2xl font-semibold text-gray-800">
             Welcome Back!
@@ -82,16 +108,32 @@ function Login() {
               <Lock size={19} className="text-green-600" />
 
               <input
-                type="password"
+                type={showPassword ? "text" : "password"}
                 required
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 placeholder="Enter your password"
                 className="w-full p-3 outline-none bg-transparent"
               />
+
+              <button
+                type="button"
+                onClick={() => setShowPassword(!showPassword)}
+                className="text-gray-500 hover:text-green-700 p-1"
+                aria-label={
+                  showPassword ? "Hide password" : "Show password"
+                }
+              >
+                {showPassword ? (
+                  <EyeOff size={19} />
+                ) : (
+                  <Eye size={19} />
+                )}
+              </button>
             </div>
           </div>
 
+          {/* Login Button */}
           <button
             type="submit"
             className="w-full bg-green-700 hover:bg-green-800 text-white font-semibold py-3 rounded-xl shadow-md transition duration-200"
@@ -101,12 +143,14 @@ function Login() {
 
         </form>
 
+        {/* Error Message */}
         {message && (
           <p className="text-center text-sm text-red-600 mt-4">
             {message}
           </p>
         )}
 
+        {/* Register Link */}
         <div className="text-center mt-7">
           <p className="text-gray-600 text-sm">
             Don't have an account?{" "}
@@ -119,6 +163,7 @@ function Login() {
           </p>
         </div>
 
+        {/* Footer */}
         <div className="flex items-center justify-center gap-2 mt-6 text-green-700 text-sm">
           <Leaf size={16} />
           <span>Growing Smarter with AgriTwin</span>

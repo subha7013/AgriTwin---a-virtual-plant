@@ -9,6 +9,10 @@ import {
   RotateCcw,
   Microscope,
   CameraOff,
+  ShieldCheck,
+  Sparkles,
+  Image as ImageIcon,
+  ScanLine,
 } from "lucide-react";
 
 function DiseaseDetection() {
@@ -17,6 +21,7 @@ function DiseaseDetection() {
   const [image, setImage] = useState(null);
   const [result, setResult] = useState(false);
   const [cameraError, setCameraError] = useState("");
+  const [countdown, setCountdown] = useState(0);
 
   const videoRef = useRef(null);
   const canvasRef = useRef(null);
@@ -29,7 +34,33 @@ function DiseaseDetection() {
     }
   }, [stream]);
 
-  // Stop camera when page closes
+  // Five-second countdown
+  useEffect(() => {
+    if (!stream || preview) return;
+
+    setCountdown(5);
+
+    const interval = setInterval(() => {
+      setCountdown((previous) => {
+        if (previous <= 1) {
+          clearInterval(interval);
+          return 0;
+        }
+        return previous - 1;
+      });
+    }, 1000);
+
+    return () => clearInterval(interval);
+  }, [stream, preview]);
+
+  // Auto capture after countdown
+  useEffect(() => {
+    if (countdown === 0 && stream && !preview) {
+      captureImage();
+    }
+  }, [countdown, stream, preview]);
+
+  // Stop camera on unmount
   useEffect(() => {
     return () => {
       if (stream) {
@@ -52,16 +83,15 @@ function DiseaseDetection() {
 
       const cameraStream =
         await navigator.mediaDevices.getUserMedia({
-          video: {
-            facingMode: "environment",
-          },
+          video: { facingMode: "environment" },
           audio: false,
         });
 
-      setStream(cameraStream);
       setImage(null);
       setPreview("");
       setResult(false);
+      setCountdown(5);
+      setStream(cameraStream);
     } catch (error) {
       setCameraError(
         "Unable to access camera. Please allow camera permission in your browser."
@@ -76,6 +106,7 @@ function DiseaseDetection() {
     }
 
     setStream(null);
+    setCountdown(0);
   };
 
   // Capture Image
@@ -95,7 +126,10 @@ function DiseaseDetection() {
     context.drawImage(video, 0, 0, canvas.width, canvas.height);
 
     canvas.toBlob((blob) => {
-      if (!blob) return;
+      if (!blob) {
+        setCameraError("Unable to capture image. Please try again.");
+        return;
+      }
 
       const capturedFile = new File(
         [blob],
@@ -107,6 +141,7 @@ function DiseaseDetection() {
       setPreview(canvas.toDataURL("image/jpeg"));
       setResult(false);
       setCameraError("");
+      stopCamera();
     }, "image/jpeg");
   };
 
@@ -115,6 +150,7 @@ function DiseaseDetection() {
     setImage(null);
     setPreview("");
     setResult(false);
+    setCameraError("");
   };
 
   // Reset Everything
@@ -127,81 +163,133 @@ function DiseaseDetection() {
   };
 
   return (
-    <div className="space-y-7">
+    <div className="space-y-8 pb-6">
 
-      {/* Heading */}
-      <div>
-        <h1 className="text-2xl sm:text-3xl font-bold text-gray-800">
-          Disease Detection 🔬
-        </h1>
-        <p className="text-gray-500 mt-2">
-          Scan a tomato leaf using your camera to analyze plant health.
-        </p>
+      {/* Hero Section */}
+      <div className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-green-950 via-green-800 to-emerald-700 p-6 sm:p-8 lg:p-10 shadow-lg">
+        <div className="absolute -right-12 -top-16 h-64 w-64 rounded-full bg-white/5" />
+        <div className="absolute -bottom-24 right-32 h-64 w-64 rounded-full bg-emerald-300/10" />
+
+        <div className="relative z-10 flex flex-col lg:flex-row lg:items-center lg:justify-between gap-7">
+          <div className="max-w-2xl">
+            <div className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-3 py-1.5 text-xs font-semibold tracking-wide text-green-100">
+              <Sparkles size={14} />
+              SMART PLANT HEALTH
+            </div>
+
+            <h1 className="mt-5 text-3xl sm:text-4xl font-bold text-white">
+              Disease Detection
+            </h1>
+
+            <p className="mt-3 max-w-xl text-sm sm:text-base leading-7 text-green-100/90">
+              Scan your tomato leaf automatically using the camera
+              and prepare its image for disease analysis.
+            </p>
+
+            <div className="mt-6 flex flex-wrap gap-3">
+              <div className="flex items-center gap-2 rounded-xl bg-white/10 border border-white/10 px-4 py-2.5 text-sm text-white">
+                <Camera size={17} />
+                Auto Scanning
+              </div>
+              <div className="flex items-center gap-2 rounded-xl bg-white/10 border border-white/10 px-4 py-2.5 text-sm text-white">
+                <ScanLine size={17} />
+                Visual Scan Effect
+              </div>
+            </div>
+          </div>
+
+          <div className="hidden lg:flex h-36 w-36 shrink-0 items-center justify-center rounded-3xl border border-white/20 bg-white/10 shadow-inner">
+            <Microscope size={76} className="text-green-100" strokeWidth={1.2} />
+          </div>
+        </div>
       </div>
 
       {/* Information Cards */}
-      <div className="grid grid-cols-1 sm:grid-cols-3 gap-5">
+      <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-5">
 
-        <div className="bg-white p-5 rounded-2xl border border-gray-100 shadow-sm">
-          <div className="p-3 bg-green-100 text-green-700 rounded-xl w-fit">
-            <Leaf size={25} />
+        <div className="rounded-2xl border border-gray-100 bg-white p-5 shadow-sm transition-all hover:-translate-y-1 hover:shadow-md">
+          <div className="flex items-center justify-between">
+            <div className="rounded-xl bg-green-50 p-3 text-green-700">
+              <Leaf size={25} />
+            </div>
+            <span className="rounded-full bg-green-50 px-3 py-1 text-xs font-semibold text-green-700">
+              Supported
+            </span>
           </div>
-          <h3 className="font-bold text-gray-800 mt-4">
+          <h3 className="mt-5 font-bold text-gray-800 text-lg">
             Tomato Plant
           </h3>
-          <p className="text-sm text-gray-500 mt-1">
-            Supported plant type
+          <p className="mt-1 text-sm text-gray-500">
+            Supported plant type for leaf scanning.
           </p>
         </div>
 
-        <div className="bg-white p-5 rounded-2xl border border-gray-100 shadow-sm">
-          <div className="p-3 bg-blue-100 text-blue-700 rounded-xl w-fit">
-            <Microscope size={25} />
+        <div className="rounded-2xl border border-gray-100 bg-white p-5 shadow-sm transition-all hover:-translate-y-1 hover:shadow-md">
+          <div className="flex items-center justify-between">
+            <div className="rounded-xl bg-blue-50 p-3 text-blue-700">
+              <Microscope size={25} />
+            </div>
+            <span className="rounded-full bg-orange-50 px-3 py-1 text-xs font-semibold text-orange-700">
+              Pending
+            </span>
           </div>
-          <h3 className="font-bold text-gray-800 mt-4">
+          <h3 className="mt-5 font-bold text-gray-800 text-lg">
             AI Analysis
           </h3>
-          <p className="text-sm text-gray-500 mt-1">
-            ML model integration pending
+          <p className="mt-1 text-sm text-gray-500">
+            ML model integration is pending.
           </p>
         </div>
 
-        <div className="bg-white p-5 rounded-2xl border border-gray-100 shadow-sm">
-          <div className="p-3 bg-orange-100 text-orange-700 rounded-xl w-fit">
-            <ScanSearch size={25} />
+        <div className="rounded-2xl border border-gray-100 bg-white p-5 shadow-sm transition-all hover:-translate-y-1 hover:shadow-md sm:col-span-2 xl:col-span-1">
+          <div className="flex items-center justify-between">
+            <div className="rounded-xl bg-orange-50 p-3 text-orange-600">
+              <ScanSearch size={25} />
+            </div>
+            <span className="rounded-full bg-blue-50 px-3 py-1 text-xs font-semibold text-blue-700">
+              Available
+            </span>
           </div>
-          <h3 className="font-bold text-gray-800 mt-4">
+          <h3 className="mt-5 font-bold text-gray-800 text-lg">
             Disease Identification
           </h3>
-          <p className="text-sm text-gray-500 mt-1">
-            Tomato leaf disease analysis
+          <p className="mt-1 text-sm text-gray-500">
+            Tomato leaf disease analysis interface.
           </p>
         </div>
 
       </div>
 
-      {/* Camera and Result */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+      {/* Camera and Results */}
+      <div className="grid grid-cols-1 xl:grid-cols-2 gap-6">
 
         {/* Camera Section */}
-        <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-5 sm:p-6">
+        <div className="rounded-2xl border border-gray-100 bg-white p-5 sm:p-7 shadow-sm">
 
-          <h2 className="text-xl font-bold text-gray-800">
-            Scan Tomato Leaf
-          </h2>
+          <div className="flex items-start justify-between gap-3">
+            <div>
+              <h2 className="text-xl font-bold text-gray-800">
+                Scan Tomato Leaf
+              </h2>
+              <p className="mt-2 text-sm leading-6 text-gray-500">
+                Start the camera. It will automatically capture your leaf
+                image after five seconds.
+              </p>
+            </div>
 
-          <p className="text-sm text-gray-500 mt-2">
-            Open your camera and capture a clear image of the tomato leaf.
-          </p>
+            <div className="shrink-0 rounded-xl bg-green-50 p-3 text-green-700">
+              <Camera size={22} />
+            </div>
+          </div>
 
-          {/* Camera Preview */}
-          <div className="mt-6 min-h-64 bg-gray-900 rounded-2xl overflow-hidden flex items-center justify-center relative">
+          {/* Camera Viewfinder */}
+          <div className="relative mt-6 h-72 overflow-hidden rounded-2xl border border-gray-200 bg-gray-950 flex items-center justify-center">
 
             {preview ? (
               <img
                 src={preview}
                 alt="Captured tomato leaf"
-                className="w-full h-64 object-contain bg-black"
+                className="h-full w-full object-contain bg-black"
               />
             ) : stream ? (
               <video
@@ -209,203 +297,299 @@ function DiseaseDetection() {
                 autoPlay
                 playsInline
                 muted
-                className="w-full h-64 object-cover"
+                className="h-full w-full object-cover"
               />
             ) : (
-              <div className="text-center p-6">
-                <Camera size={45} className="text-white mx-auto" />
-                <p className="text-white font-semibold mt-4">
+              <div className="p-6 text-center">
+                <div className="mx-auto flex h-20 w-20 items-center justify-center rounded-2xl bg-white/10 text-green-100">
+                  <Camera size={42} />
+                </div>
+                <p className="mt-5 font-semibold text-white">
                   Camera is not started
                 </p>
-                <p className="text-gray-300 text-sm mt-2">
-                  Click Start Camera to begin scanning
+                <p className="mt-2 text-sm text-gray-400">
+                  Click Start Auto Scan to begin.
                 </p>
               </div>
             )}
 
+            {/* Dark scanning overlay */}
+            {stream && (
+              <>
+                <div className="absolute inset-0 pointer-events-none bg-green-900/10" />
+
+                {/* Scanning corners */}
+                <div className="absolute inset-5 pointer-events-none">
+                  <span className="absolute left-0 top-0 h-8 w-8 border-l-[3px] border-t-[3px] border-green-400 rounded-tl-lg" />
+                  <span className="absolute right-0 top-0 h-8 w-8 border-r-[3px] border-t-[3px] border-green-400 rounded-tr-lg" />
+                  <span className="absolute bottom-0 left-0 h-8 w-8 border-b-[3px] border-l-[3px] border-green-400 rounded-bl-lg" />
+                  <span className="absolute bottom-0 right-0 h-8 w-8 border-b-[3px] border-r-[3px] border-green-400 rounded-br-lg" />
+                </div>
+
+                {/* Moving scan line */}
+                <div className="absolute inset-x-5 top-5 bottom-5 pointer-events-none overflow-hidden">
+                  <div className="absolute left-0 right-0 h-1 bg-green-400 shadow-[0_0_12px_4px_rgba(74,222,128,0.8)] animate-leaf-scan" />
+                  <div className="absolute left-0 right-0 h-16 bg-gradient-to-b from-green-400/25 to-transparent animate-leaf-scan" />
+                </div>
+
+                {/* Live Badge */}
+                <div className="absolute left-4 top-4 flex items-center gap-2 rounded-full bg-black/70 px-3 py-1.5 text-xs font-semibold text-white">
+                  <span className="h-2 w-2 rounded-full bg-red-500 animate-pulse" />
+                  LIVE SCANNING
+                </div>
+
+                {/* Scanning Status */}
+                <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex items-center gap-2 whitespace-nowrap rounded-full border border-green-300/30 bg-black/75 px-4 py-2 text-xs font-bold tracking-widest text-green-300">
+                  <ScanLine size={15} className="animate-pulse" />
+                  SCANNING LEAF...
+                </div>
+
+                {/* Countdown */}
+                <div className="absolute right-4 top-4 rounded-xl border border-white/20 bg-black/70 px-3 py-2 text-center text-white">
+                  <p className="text-[9px] font-semibold tracking-wider text-green-300">
+                    CAPTURE IN
+                  </p>
+                  <p className="text-xl font-bold tabular-nums">
+                    {countdown}s
+                  </p>
+                </div>
+              </>
+            )}
+
+            {preview && (
+              <div className="absolute left-4 top-4 rounded-full bg-green-600/90 px-3 py-1.5 text-xs font-semibold text-white">
+                IMAGE CAPTURED
+              </div>
+            )}
           </div>
 
           <canvas ref={canvasRef} className="hidden" />
 
           {/* Camera Error */}
           {cameraError && (
-            <p className="text-sm text-red-600 bg-red-50 p-3 rounded-xl mt-4">
+            <div className="mt-4 flex items-start gap-2 rounded-xl border border-red-100 bg-red-50 p-3 text-sm text-red-700">
+              <AlertTriangle size={18} className="mt-0.5 shrink-0" />
               {cameraError}
-            </p>
+            </div>
           )}
 
-          {/* Camera Buttons */}
-          <div className="flex flex-wrap gap-3 mt-5">
+          {/* Buttons */}
+          <div className="mt-5 flex flex-wrap gap-3">
 
             {!stream && !preview && (
               <button
                 onClick={startCamera}
-                className="flex-1 flex items-center justify-center gap-2 bg-green-700 hover:bg-green-800 text-white py-3 px-4 rounded-xl font-semibold transition"
+                className="flex flex-1 min-w-[150px] items-center justify-center gap-2 rounded-xl bg-green-700 px-4 py-3 font-semibold text-white transition hover:bg-green-800"
               >
                 <Camera size={19} />
-                Start Camera
+                Start Auto Scan
               </button>
             )}
 
-            {stream && !preview && (
-              <>
-                <button
-                  onClick={captureImage}
-                  className="flex-1 flex items-center justify-center gap-2 bg-green-700 hover:bg-green-800 text-white py-3 px-4 rounded-xl font-semibold transition"
-                >
-                  <Camera size={19} />
-                  Capture Image
-                </button>
-
-                <button
-                  onClick={stopCamera}
-                  className="flex items-center justify-center gap-2 border border-gray-300 text-gray-600 px-4 py-3 rounded-xl font-semibold"
-                >
-                  <CameraOff size={18} />
-                  Stop
-                </button>
-              </>
+            {stream && (
+              <button
+                onClick={stopCamera}
+                className="flex flex-1 min-w-[150px] items-center justify-center gap-2 rounded-xl border border-red-200 bg-red-50 px-4 py-3 font-semibold text-red-600 transition hover:bg-red-100"
+              >
+                <CameraOff size={18} />
+                Cancel Scan
+              </button>
             )}
 
             {preview && (
               <button
                 onClick={retakeImage}
-                className="flex-1 flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-700 text-white py-3 px-4 rounded-xl font-semibold"
+                className="flex flex-1 min-w-[150px] items-center justify-center gap-2 rounded-xl bg-blue-600 px-4 py-3 font-semibold text-white transition hover:bg-blue-700"
               >
                 <RotateCcw size={18} />
-                Retake Image
+                Scan Again
               </button>
             )}
 
             <button
               onClick={handleReset}
-              className="flex items-center justify-center gap-2 border border-gray-300 text-gray-600 hover:bg-gray-50 px-5 py-3 rounded-xl font-semibold"
+              className="flex items-center justify-center gap-2 rounded-xl border border-gray-200 px-5 py-3 font-semibold text-gray-600 transition hover:bg-gray-50"
             >
               Reset
             </button>
 
           </div>
 
+          {/* Image Status */}
           {image && (
-            <div className="mt-4 flex items-center gap-3 bg-green-50 p-3 rounded-xl">
-              <CheckCircle className="text-green-700" size={22} />
-              <div>
-                <p className="text-sm font-semibold text-green-800">
+            <div className="mt-5 flex items-center gap-3 rounded-xl border border-green-100 bg-green-50 p-4">
+              <div className="rounded-full bg-green-100 p-2 text-green-700">
+                <CheckCircle size={21} />
+              </div>
+              <div className="min-w-0">
+                <p className="text-sm font-bold text-green-800">
                   Image Captured Successfully
                 </p>
-                <p className="text-xs text-gray-500">
-                  {(image.size / 1024).toFixed(1)} KB
+                <p className="mt-1 text-xs text-gray-500">
+                  {image.name} · {(image.size / 1024).toFixed(1)} KB
                 </p>
               </div>
             </div>
           )}
 
+          <div className="mt-5 flex items-start gap-2 rounded-xl bg-gray-50 p-4">
+            <ImageIcon size={18} className="mt-0.5 shrink-0 text-gray-500" />
+            <p className="text-xs leading-5 text-gray-500">
+              Keep the tomato leaf clearly visible and steady during
+              the automatic scanning process.
+            </p>
+          </div>
+
         </div>
 
-        {/* Result Section */}
-        <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-5 sm:p-6">
+        {/* Results Section */}
+        <div className="rounded-2xl border border-gray-100 bg-white p-5 sm:p-7 shadow-sm">
 
-          <h2 className="text-xl font-bold text-gray-800">
-            Detection Results
-          </h2>
+          <div className="flex items-start justify-between gap-3">
+            <div>
+              <h2 className="text-xl font-bold text-gray-800">
+                Detection Results
+              </h2>
+              <p className="mt-2 text-sm leading-6 text-gray-500">
+                Your image preparation and analysis status will appear here.
+              </p>
+            </div>
 
-          <p className="text-sm text-gray-500 mt-2">
-            Disease analysis results will appear here.
-          </p>
+            <div className="shrink-0 rounded-xl bg-orange-50 p-3 text-orange-600">
+              <ScanSearch size={22} />
+            </div>
+          </div>
 
           <div className="mt-6">
 
             {!result ? (
-              <div className="min-h-64 flex flex-col items-center justify-center bg-gray-50 rounded-2xl border border-dashed border-gray-200 text-center p-6">
-
-                <div className="p-4 bg-white rounded-full shadow-sm">
-                  <ScanSearch size={35} className="text-gray-400" />
+              <div className="flex min-h-72 flex-col items-center justify-center rounded-2xl border-2 border-dashed border-gray-200 bg-gray-50 p-6 text-center">
+                <div className="flex h-20 w-20 items-center justify-center rounded-full bg-white shadow-sm">
+                  <ScanSearch size={36} className="text-gray-400" />
                 </div>
 
-                <h3 className="font-semibold text-gray-700 mt-4">
+                <h3 className="mt-5 font-bold text-gray-700">
                   No Detection Results Yet
                 </h3>
 
-                <p className="text-sm text-gray-500 mt-2 max-w-xs">
+                <p className="mt-2 max-w-xs text-sm leading-6 text-gray-500">
                   Capture a tomato leaf image to prepare it for disease analysis.
                 </p>
 
+                {!image && (
+                  <span className="mt-4 rounded-full bg-gray-200 px-3 py-1 text-xs font-medium text-gray-600">
+                    Waiting for image
+                  </span>
+                )}
               </div>
             ) : (
               <div className="space-y-5">
-
-                <div className="bg-orange-50 border border-orange-100 rounded-2xl p-5">
-
+                <div className="rounded-2xl border border-orange-100 bg-orange-50 p-5">
                   <div className="flex items-center gap-3">
-                    <div className="p-3 bg-orange-100 text-orange-600 rounded-xl">
+                    <div className="rounded-xl bg-orange-100 p-3 text-orange-600">
                       <AlertTriangle size={25} />
                     </div>
 
                     <div>
-                      <p className="text-sm text-orange-700 font-semibold">
+                      <p className="text-sm font-semibold text-orange-700">
                         Image Captured Successfully
                       </p>
-                      <h3 className="text-lg font-bold text-gray-800 mt-1">
+                      <h3 className="mt-1 text-lg font-bold text-gray-800">
                         Ready for AI Analysis
                       </h3>
                     </div>
                   </div>
 
-                  <p className="text-sm text-gray-600 mt-4 leading-6">
+                  <p className="mt-4 text-sm leading-6 text-gray-600">
                     Your captured image is ready. Actual disease prediction
                     will be available after AI model and backend integration.
                   </p>
-
                 </div>
 
-                <div className="bg-gray-50 rounded-xl p-5 space-y-3">
-
-                  <div className="flex justify-between text-sm">
+                <div className="space-y-4 rounded-xl bg-gray-50 p-5">
+                  <div className="flex items-center justify-between gap-3 text-sm">
                     <span className="text-gray-500">Image Status</span>
-                    <span className="text-green-700 font-semibold">
-                      Uploaded
+                    <span className="font-semibold text-green-700">
+                      Captured
                     </span>
                   </div>
 
-                  <div className="flex justify-between text-sm">
+                  <div className="h-px bg-gray-200" />
+
+                  <div className="flex items-center justify-between gap-3 text-sm">
                     <span className="text-gray-500">AI Model</span>
-                    <span className="text-orange-600 font-semibold">
+                    <span className="font-semibold text-orange-600">
                       Not Connected
                     </span>
                   </div>
 
-                  <div className="flex justify-between text-sm">
+                  <div className="h-px bg-gray-200" />
+
+                  <div className="flex items-center justify-between gap-3 text-sm">
                     <span className="text-gray-500">Prediction</span>
-                    <span className="text-gray-600 font-semibold">
+                    <span className="font-semibold text-gray-600">
                       Awaiting Analysis
                     </span>
                   </div>
-
                 </div>
 
+                <div className="flex items-center gap-2 rounded-xl border border-blue-100 bg-blue-50 p-4 text-sm text-blue-800">
+                  <ShieldCheck size={19} className="shrink-0" />
+                  <span>Image is prepared for future model integration.</span>
+                </div>
               </div>
             )}
-
           </div>
 
-          {/* Detect Button */}
           <button
             disabled={!image}
             onClick={() => setResult(true)}
-            className="w-full mt-5 flex items-center justify-center gap-2 bg-green-700 hover:bg-green-800 disabled:bg-gray-300 text-white py-3 rounded-xl font-semibold transition"
+            className="mt-5 flex w-full items-center justify-center gap-2 rounded-xl bg-green-700 py-3.5 font-semibold text-white transition hover:bg-green-800 disabled:cursor-not-allowed disabled:bg-gray-300"
           >
             <ScanSearch size={19} />
-            Detect Disease
+            Prepare for Analysis
           </button>
 
-        </div>
+          <p className="mt-3 text-center text-xs text-gray-400">
+            Actual disease prediction is not active yet.
+          </p>
 
+        </div>
       </div>
 
-      <p className="text-xs text-gray-400">
-        Note: Camera capture is functional. Actual disease prediction and
-        confidence score require trained AI model integration.
-      </p>
+      {/* Footer Note */}
+      <div className="flex items-start gap-3 rounded-2xl border border-green-100 bg-green-50 p-4">
+        <ShieldCheck size={20} className="mt-0.5 shrink-0 text-green-700" />
+        <p className="text-xs leading-6 text-green-800">
+          <strong>Note:</strong> Automatic camera capture and visual scanning
+          animation are functional. Actual disease prediction and confidence
+          score require trained AI model and backend integration.
+        </p>
+      </div>
+
+      {/* Scanning Animation CSS */}
+      <style>{`
+        @keyframes leafScan {
+          0% {
+            top: 0%;
+            opacity: 0.3;
+          }
+          10% {
+            opacity: 1;
+          }
+          90% {
+            opacity: 1;
+          }
+          100% {
+            top: 100%;
+            opacity: 0.3;
+          }
+        }
+
+        .animate-leaf-scan {
+          animation: leafScan 2s linear infinite;
+        }
+      `}</style>
 
     </div>
   );

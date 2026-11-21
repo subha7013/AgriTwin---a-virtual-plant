@@ -1,20 +1,39 @@
 
 import { useState } from "react";
-import { Link } from "react-router-dom";
-import { Sprout, User, Lock, ShieldCheck } from "lucide-react";
+import { Link, useNavigate } from "react-router-dom";
+import {
+  Sprout,
+  User,
+  Lock,
+  ShieldCheck,
+  Eye,
+  EyeOff
+} from "lucide-react";
 import { useAuth } from "../context/AuthContext";
 
 function Register() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
   const [role, setRole] = useState("user");
   const [message, setMessage] = useState("");
   const [success, setSuccess] = useState(false);
 
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+
   const { register } = useAuth();
+  const navigate = useNavigate();
 
   const handleSubmit = (e) => {
     e.preventDefault();
+
+    // Password confirmation
+    if (password !== confirmPassword) {
+      setMessage("Passwords do not match!");
+      setSuccess(false);
+      return;
+    }
 
     const result = register(
       username.trim(),
@@ -28,12 +47,19 @@ function Register() {
     if (result.success) {
       setUsername("");
       setPassword("");
+      setConfirmPassword("");
       setRole("user");
+      setShowPassword(false);
+      setShowConfirmPassword(false);
+
+      // Redirect to Login page after successful registration
+      navigate("/login");
     }
   };
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-green-100 via-green-50 to-lime-100 p-5">
+
       <div className="w-full max-w-md bg-white rounded-3xl shadow-xl p-8 border border-green-100">
 
         {/* Logo */}
@@ -88,7 +114,7 @@ function Register() {
               <Lock size={19} className="text-green-600" />
 
               <input
-                type="password"
+                type={showPassword ? "text" : "password"}
                 required
                 minLength={6}
                 value={password}
@@ -96,6 +122,45 @@ function Register() {
                 placeholder="Create a password"
                 className="w-full p-3 outline-none bg-transparent"
               />
+
+              <button
+                type="button"
+                onClick={() => setShowPassword(!showPassword)}
+                className="text-gray-500 hover:text-green-700"
+                aria-label={showPassword ? "Hide password" : "Show password"}
+              >
+                {showPassword ? <EyeOff size={19} /> : <Eye size={19} />}
+              </button>
+            </div>
+          </div>
+
+          {/* Confirm Password */}
+          <div>
+            <label className="block text-gray-700 font-medium mb-2">
+              Confirm Password
+            </label>
+
+            <div className="flex items-center border border-gray-200 rounded-xl px-3 focus-within:border-green-600">
+              <Lock size={19} className="text-green-600" />
+
+              <input
+                type={showConfirmPassword ? "text" : "password"}
+                required
+                minLength={6}
+                value={confirmPassword}
+                onChange={(e) => setConfirmPassword(e.target.value)}
+                placeholder="Re-enter your password"
+                className="w-full p-3 outline-none bg-transparent"
+              />
+
+              <button
+                type="button"
+                onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                className="text-gray-500 hover:text-green-700"
+                aria-label={showConfirmPassword ? "Hide confirm password" : "Show confirm password"}
+              >
+                {showConfirmPassword ? <EyeOff size={19} /> : <Eye size={19} />}
+              </button>
             </div>
           </div>
 
@@ -119,6 +184,7 @@ function Register() {
             </div>
           </div>
 
+          {/* Submit */}
           <button
             type="submit"
             className="w-full bg-green-700 hover:bg-green-800 text-white font-semibold py-3 rounded-xl shadow-md transition duration-200"
@@ -128,6 +194,7 @@ function Register() {
 
         </form>
 
+        {/* Message */}
         {message && (
           <p
             className={`text-center text-sm mt-4 ${
@@ -138,6 +205,7 @@ function Register() {
           </p>
         )}
 
+        {/* Login Link */}
         <p className="text-center text-gray-600 text-sm mt-7">
           Already have an account?{" "}
           <Link
