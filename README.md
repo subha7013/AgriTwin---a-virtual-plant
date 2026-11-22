@@ -164,6 +164,7 @@ print(f'Average Brightness: {brightness:.1f} (Valid: 40-220)')
 | **Quick Test on Sample Leaf** | `python ml/inference/predict.py` |
 | **Test Specific Image** | `python ml/inference/predict.py --image "path/to/leaf.jpg"` |
 | **Test JSON Output** | `python ml/inference/predict.py --image "path/to/leaf.jpg" --json` |
+| **Test Risk Prediction** | `python ml/risk_prediction/predict_risk.py --temp 28 --humidity 82 --soil 45 --wetness 65` |
 | **Launch Jupyter Notebooks** | `jupyter notebook ml/notebooks` |
 
 ---
