@@ -3,7 +3,11 @@ import { env } from "./src/config/env.js";
 import { connectDB, disconnectDB } from "./src/config/db.js";
 import { logger } from "./src/config/logger.js";
 import { User } from "./src/models/User.js";
+import { Plant } from "./src/models/Plant.js";
 import { Disease } from "./src/models/Disease.js";
+import { Alert } from "./src/models/Alert.js";
+import { Telemetry } from "./src/models/Telemetry.js";
+import { UserSettings } from "./src/models/UserSettings.js";
 
 const IMAGE_BASE = "https://tomatoanswers.com/wp-content/uploads/2026/09";
 
@@ -270,12 +274,12 @@ async function seedAdmin() {
     } else {
       logger.info(`Admin "${env.ADMIN_USERNAME}" already exists`);
     }
-    return;
+    return existing;
   }
 
   const passwordHash = await bcrypt.hash(env.ADMIN_PASSWORD, env.BCRYPT_ROUNDS);
 
-  await User.create({
+  const newAdmin = await User.create({
     username: env.ADMIN_USERNAME,
     email: env.ADMIN_EMAIL,
     passwordHash,
@@ -283,14 +287,145 @@ async function seedAdmin() {
   });
 
   logger.info(`Admin created: ${env.ADMIN_USERNAME}`);
+  return newAdmin;
+}
+
+async function seedSamplePlants(adminUser) {
+  if (!adminUser) return;
+  const count = await Plant.countDocuments({ owner: adminUser._id });
+  if (count === 0) {
+    await Plant.create([
+      {
+        owner: adminUser._id,
+        name: "Greenhouse Roma Tomato #01",
+        species: "tomato",
+        variety: "Roma VF (Indeterminate)",
+        growthStage: "vegetative",
+        plantedAt: new Date(Date.now() - 35 * 24 * 60 * 60 * 1000),
+        health: "healthy",
+      },
+      {
+        owner: adminUser._id,
+        name: "Canopy Cherry Tomato #02",
+        species: "tomato",
+        variety: "Sweet 100",
+        growthStage: "flowering",
+        plantedAt: new Date(Date.now() - 48 * 24 * 60 * 60 * 1000),
+        health: "healthy",
+      },
+      {
+        owner: adminUser._id,
+        name: "Experimental Heirloom #03",
+        species: "tomato",
+        variety: "Brandywine",
+        growthStage: "fruiting",
+        plantedAt: new Date(Date.now() - 62 * 24 * 60 * 60 * 1000),
+        health: "diseased",
+      },
+    ]);
+    logger.info("Created 3 initial sample greenhouse crops in MongoDB");
+  }
+}
+
+async function seedAlerts(adminUser) {
+  if (!adminUser) return;
+  const count = await Alert.countDocuments({ user: adminUser._id });
+  if (count === 0) {
+    await Alert.create([
+      {
+        user: adminUser._id,
+        title: "High Temperature Detected",
+        message: "Temperature has reached 32°C. Monitor the tomato plants carefully.",
+        type: "Critical",
+        category: "Temperature",
+        read: false,
+        resolved: false,
+      },
+      {
+        user: adminUser._id,
+        title: "Low Soil Moisture",
+        message: "Soil moisture is currently 35%. Check the irrigation requirements.",
+        type: "Warning",
+        category: "Soil Moisture",
+        read: false,
+        resolved: false,
+      },
+      {
+        user: adminUser._id,
+        title: "High Humidity Warning",
+        message: "Humidity is 82%. High humidity may encourage fungal disease development.",
+        type: "Warning",
+        category: "Humidity",
+        read: true,
+        resolved: false,
+      },
+      {
+        user: adminUser._id,
+        title: "Plant Health Reminder",
+        message: "Regularly inspect tomato leaves for unusual spots and symptoms.",
+        type: "Info",
+        category: "Plant Health",
+        read: true,
+        resolved: true,
+      },
+    ]);
+    logger.info("Created initial sample alerts in MongoDB");
+  }
+}
+
+async function seedTelemetries() {
+  const count = await Telemetry.countDocuments();
+  if (count === 0) {
+    const hours = [
+      { offsetHours: 6, temp: 24, hum: 68, soil: 45, lux: 350 },
+      { offsetHours: 5, temp: 25, hum: 70, soil: 52, lux: 500 },
+      { offsetHours: 4, temp: 26, hum: 72, soil: 58, lux: 720 },
+      { offsetHours: 3, temp: 27, hum: 70, soil: 55, lux: 850 },
+      { offsetHours: 2, temp: 28, hum: 68, soil: 65, lux: 920 },
+      { offsetHours: 1, temp: 29, hum: 65, soil: 62, lux: 890 },
+      { offsetHours: 0, temp: 28, hum: 68, soil: 64, lux: 850 },
+    ];
+    const records = hours.map((h) => ({
+      nodeId: "ESP32_NODE_01",
+      temperature: h.temp,
+      humidity: h.hum,
+      soilMoisture: h.soil,
+      lightIntensity: h.lux,
+      leafWetness: Math.max(10, Math.round(h.hum * 0.4)),
+      recordedAt: new Date(Date.now() - h.offsetHours * 60 * 60 * 1000),
+    }));
+    await Telemetry.insertMany(records);
+    logger.info("Created initial telemetry streams in MongoDB");
+  }
+}
+
+async function seedUserSettings(adminUser) {
+  if (!adminUser) return;
+  const existing = await UserSettings.findOne({ user: adminUser._id });
+  if (!existing) {
+    await UserSettings.create({
+      user: adminUser._id,
+      emailNotifications: true,
+      diseaseAlerts: true,
+      sensorAlerts: true,
+      weeklyReports: false,
+      theme: "Light",
+      telemetryRefreshRateSeconds: 5,
+    });
+    logger.info("Created default user settings in MongoDB");
+  }
 }
 
 async function main() {
   try {
     await connectDB();
     await seedDiseases();
-    await seedAdmin();
-    logger.info("Seed complete");
+    const adminUser = await seedAdmin();
+    await seedSamplePlants(adminUser);
+    await seedAlerts(adminUser);
+    await seedTelemetries();
+    await seedUserSettings(adminUser);
+    logger.info("All collections seeded successfully in MongoDB");
   } catch (error) {
     logger.error("Seed failed", error);
     process.exitCode = 1;

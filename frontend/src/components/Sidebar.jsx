@@ -1,4 +1,3 @@
-
 import { NavLink } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import {
@@ -8,6 +7,7 @@ import {
   Network,
   Leaf,
   Brain,
+  Sliders,
   BarChart3,
   Bell,
   Settings,
@@ -22,7 +22,7 @@ const menuItems = [
   { name: "Digital Twin", path: "/digital-twin", icon: Network },
   { name: "Live Monitoring", path: "/live-monitoring", icon: Activity },
   { name: "Disease Detection", path: "/disease-detection", icon: Brain },
-  { name: "Risk Prediction", path: "/risk-prediction", icon: BarChart3 },
+  { name: "Risk Prediction", path: "/risk-prediction", icon: Sliders },
   { name: "Analytics", path: "/analytics", icon: BarChart3 },
   { name: "Alerts", path: "/alerts", icon: Bell },
   { name: "Settings", path: "/settings", icon: Settings },
@@ -38,44 +38,47 @@ function Sidebar({ isOpen = false, onClose }) {
 
   return (
     <aside
-      className={`fixed top-0 left-0 z-50 h-screen w-72 shrink-0 bg-gradient-to-b from-green-950 via-green-900 to-emerald-950 text-white flex flex-col shadow-2xl transition-transform duration-300 ${
+      className={`fixed top-0 left-0 z-50 h-screen w-64 shrink-0 bg-gradient-to-b from-green-950 via-green-900 to-emerald-950 text-white flex flex-col shadow-2xl transition-transform duration-300 ${
         isOpen ? "translate-x-0" : "-translate-x-full"
       } lg:sticky lg:top-0 lg:translate-x-0`}
     >
-      {/* Logo */}
-      <div className="flex items-center justify-between px-6 py-6 border-b border-white/10">
+      {/* Brand Header */}
+      <div className="flex items-center justify-between px-5 py-5 border-b border-white/10 shrink-0">
         <div className="flex items-center gap-3">
-          <div className="bg-lime-400 p-2 rounded-xl">
-            <Sprout size={27} className="text-green-950" />
+          <div className="bg-lime-400 p-2 rounded-xl text-green-950 shadow-md shrink-0">
+            <Sprout size={22} />
           </div>
 
           <div>
-            <h1 className="text-2xl font-bold tracking-wide">
-              AgriTwin
-            </h1>
-            <p className="text-xs text-green-300">
-              Smart Agriculture
+            <div className="flex items-center gap-1.5">
+              <h1 className="text-lg font-extrabold tracking-wide text-white">
+                AgriTwin
+              </h1>
+              <span className="text-[10px] font-bold px-1.5 py-0.5 rounded bg-white/10 text-lime-300">
+                v2.0
+              </span>
+            </div>
+            <p className="text-[11px] text-green-300/80 font-medium">
+              Precision Agriculture
             </p>
           </div>
         </div>
 
         <button
           onClick={onClose}
-          className="lg:hidden p-1 hover:bg-white/10 rounded-lg"
+          className="lg:hidden p-1.5 hover:bg-white/10 rounded-lg text-green-200"
+          aria-label="Close sidebar"
         >
-          <X size={22} />
+          <X size={18} />
         </button>
       </div>
 
-      {/* Navigation Heading */}
-      <div className="px-5 pt-6 pb-3">
-        <p className="text-xs font-semibold uppercase tracking-widest text-green-300">
+      {/* Navigation Menu */}
+      <nav className="flex-1 overflow-y-auto px-3 py-4 space-y-1">
+        <p className="px-3 pb-2 text-[10px] font-bold uppercase tracking-wider text-green-300/60">
           Main Menu
         </p>
-      </div>
 
-      {/* Navigation Items */}
-      <nav className="flex-1 overflow-y-auto px-4 pb-5 space-y-1">
         {menuItems.map((item) => {
           const Icon = item.icon;
 
@@ -85,39 +88,38 @@ function Sidebar({ isOpen = false, onClose }) {
               to={item.path}
               onClick={onClose}
               className={({ isActive }) =>
-                `flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-200 ${
+                `flex items-center gap-3 px-3 py-2.5 rounded-xl text-xs sm:text-sm font-semibold transition-colors duration-150 ${
                   isActive
-                    ? "bg-lime-400 text-green-950 font-semibold shadow-lg"
-                    : "text-green-100 hover:bg-white/10 hover:text-lime-300"
+                    ? "bg-lime-400 text-green-950 font-bold shadow-sm"
+                    : "text-green-100/90 hover:bg-white/10 hover:text-white"
                 }`
               }
             >
-              <Icon size={19} />
-              <span className="text-sm">{item.name}</span>
+              <Icon size={18} className="shrink-0" />
+              <span className="truncate">{item.name}</span>
             </NavLink>
           );
         })}
       </nav>
 
-      {/* Bottom Section */}
-      <div className="p-4 border-t border-white/10">
-        <div className="bg-white/10 rounded-xl p-4">
-          <div className="flex items-center gap-2 mb-2">
-            <Leaf size={18} className="text-lime-400" />
-            <p className="text-sm font-semibold">Grow Smarter</p>
+      {/* Footer & Logout */}
+      <div className="p-3 border-t border-white/10 shrink-0 space-y-2">
+        <div className="bg-white/10 rounded-xl px-3 py-2 border border-white/10">
+          <div className="flex items-center justify-between text-[11px] font-bold text-lime-300">
+            <span className="flex items-center gap-1.5">
+              <span className="w-2 h-2 rounded-full bg-lime-400 animate-pulse" />
+              Sensor Grid
+            </span>
+            <span className="text-green-200">Online</span>
           </div>
-
-          <p className="text-xs text-green-200 leading-relaxed">
-            Monitor your plants and manage crop health with AgriTwin.
-          </p>
         </div>
 
         <button
           onClick={handleLogout}
-          className="flex items-center gap-3 w-full px-4 py-3 mt-3 text-red-300 hover:bg-red-500/10 rounded-xl transition"
+          className="flex items-center justify-center gap-2 w-full py-2 px-3 text-xs font-bold text-red-300 hover:text-red-100 hover:bg-red-500/20 rounded-xl transition"
         >
-          <LogOut size={19} />
-          <span className="text-sm font-medium">Logout</span>
+          <LogOut size={15} />
+          <span>Sign Out</span>
         </button>
       </div>
     </aside>

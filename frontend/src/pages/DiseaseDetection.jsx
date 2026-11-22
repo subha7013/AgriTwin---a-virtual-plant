@@ -214,19 +214,19 @@ function DiseaseDetection() {
         </div>
 
         {/* Mode Toggle Tabs */}
-        <div className="flex bg-white p-1 rounded-xl border border-gray-200 shadow-sm w-fit self-start sm:self-auto">
+        <div className="flex bg-gray-100 p-1.5 rounded-2xl gap-1 w-fit self-start sm:self-auto border border-gray-200/60 shadow-xs">
           <button
             onClick={() => {
               setActiveTab("upload");
               stopCamera();
             }}
-            className={`flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-semibold transition ${
+            className={`flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-bold transition ${
               activeTab === "upload"
-                ? "bg-green-700 text-white shadow-sm"
+                ? "bg-green-700 text-white shadow-xs"
                 : "text-gray-600 hover:text-gray-900"
             }`}
           >
-            <Upload size={16} />
+            <Upload size={14} />
             Upload Photo
           </button>
           <button
@@ -234,13 +234,13 @@ function DiseaseDetection() {
               setActiveTab("camera");
               startCamera();
             }}
-            className={`flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-semibold transition ${
+            className={`flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-bold transition ${
               activeTab === "camera"
-                ? "bg-green-700 text-white shadow-sm"
+                ? "bg-green-700 text-white shadow-xs"
                 : "text-gray-600 hover:text-gray-900"
             }`}
           >
-            <Camera size={16} />
+            <Camera size={14} />
             Live Camera
           </button>
         </div>
@@ -447,16 +447,16 @@ function DiseaseDetection() {
             </div>
           ) : (
             /* Active Diagnostic Report Card */
-            <div className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
+            <div className="bg-white rounded-3xl shadow-sm border border-gray-100 overflow-hidden">
               {/* Status Banner */}
               <div
-                className={`p-6 border-b flex flex-col sm:flex-row sm:items-center justify-between gap-4 ${
+                className={`p-6 sm:p-7 border-b flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 ${
                   isHealthy
-                    ? "bg-gradient-to-r from-emerald-500/10 to-green-500/10 border-emerald-100"
-                    : "bg-gradient-to-r from-amber-500/10 to-red-500/10 border-amber-100"
+                    ? "bg-gradient-to-r from-emerald-500/10 via-green-500/10 to-teal-500/10 border-emerald-100"
+                    : "bg-gradient-to-r from-amber-500/10 via-orange-500/10 to-red-500/10 border-amber-100"
                 }`}
               >
-                <div className="flex items-center gap-3.5">
+                <div className="flex items-center gap-4">
                   <div
                     className={`p-3.5 rounded-2xl text-white shadow-sm shrink-0 ${
                       isHealthy ? "bg-emerald-600" : "bg-red-600"
@@ -466,22 +466,22 @@ function DiseaseDetection() {
                   </div>
                   <div>
                     <span
-                      className={`text-xs font-bold uppercase tracking-wider px-2.5 py-0.5 rounded-full ${
+                      className={`inline-block text-[11px] font-extrabold uppercase tracking-wider px-2.5 py-0.5 rounded-full mb-1 ${
                         isHealthy
-                          ? "bg-emerald-100 text-emerald-800"
-                          : "bg-red-100 text-red-800"
+                          ? "bg-emerald-100 text-emerald-800 border border-emerald-200"
+                          : "bg-red-100 text-red-800 border border-red-200"
                       }`}
                     >
                       {diagnosisResult.diseaseProfile?.category || (isHealthy ? "Healthy" : "Infection Detected")}
                     </span>
-                    <h2 className="text-xl sm:text-2xl font-black text-gray-900 mt-1">
+                    <h2 className="text-xl sm:text-2xl font-black text-gray-900 leading-snug">
                       {diagnosisResult.diagnosis.disease}
                     </h2>
                   </div>
                 </div>
 
-                <div className="sm:text-right bg-white/70 backdrop-blur-sm p-3 rounded-xl border border-white/80 shrink-0">
-                  <p className="text-xs font-semibold text-gray-500 uppercase tracking-wider">
+                <div className="bg-white/90 backdrop-blur-md px-4 py-3 rounded-2xl border border-gray-200/60 shadow-xs shrink-0 sm:text-right">
+                  <p className="text-[10px] font-bold text-gray-400 uppercase tracking-wider">
                     Model Confidence
                   </p>
                   <p
@@ -494,24 +494,24 @@ function DiseaseDetection() {
                 </div>
               </div>
 
-              <div className="p-6 space-y-6">
+              <div className="p-6 sm:p-7 space-y-6">
                 {/* Associated Plant Badge */}
                 {diagnosisResult.diagnosis.plantName && (
-                  <div className="flex items-center gap-2 p-3 bg-green-50 border border-green-100 rounded-xl text-xs text-green-900 font-medium">
-                    <Sprout size={16} className="text-green-700" />
+                  <div className="flex items-center gap-2.5 p-3.5 bg-green-50 border border-green-200/80 rounded-2xl text-xs text-green-900 font-semibold">
+                    <Sprout size={18} className="text-green-700 shrink-0" />
                     <span>
-                      Diagnosis automatically synced with plant:{" "}
-                      <strong>{diagnosisResult.diagnosis.plantName}</strong>
+                      Diagnosis automatically synced with crop profile:{" "}
+                      <strong className="underline decoration-green-600">{diagnosisResult.diagnosis.plantName}</strong>
                     </span>
                   </div>
                 )}
 
                 {/* Disease Description */}
                 <div>
-                  <h4 className="text-xs font-bold uppercase tracking-wider text-gray-400 mb-1">
+                  <h4 className="text-[11px] font-extrabold uppercase tracking-wider text-gray-400 mb-1.5">
                     Pathological Summary
                   </h4>
-                  <p className="text-sm text-gray-700 leading-relaxed">
+                  <p className="text-xs sm:text-sm text-gray-700 leading-relaxed font-medium">
                     {diagnosisResult.diseaseProfile?.description}
                   </p>
                 </div>
@@ -519,26 +519,26 @@ function DiseaseDetection() {
                 {/* Symptoms & Causes Grid */}
                 {(!isHealthy && diagnosisResult.diseaseProfile?.symptoms?.length > 0) && (
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    <div className="bg-gray-50/70 p-4 rounded-xl border border-gray-100">
-                      <h4 className="text-xs font-bold text-gray-800 flex items-center gap-1.5 mb-2.5">
-                        <FileText size={14} className="text-amber-600" />
+                    <div className="bg-amber-50/60 p-4 rounded-2xl border border-amber-200/70">
+                      <h4 className="text-xs font-black text-amber-950 flex items-center gap-2 mb-2.5">
+                        <FileText size={15} className="text-amber-700" />
                         Diagnostic Symptoms
                       </h4>
-                      <ul className="text-xs text-gray-600 space-y-1.5 list-disc list-inside">
+                      <ul className="text-xs text-amber-900 space-y-2 pl-4 list-disc font-medium leading-relaxed">
                         {diagnosisResult.diseaseProfile.symptoms.map((s, idx) => (
-                          <li key={idx} className="leading-5">{s}</li>
+                          <li key={idx}>{s}</li>
                         ))}
                       </ul>
                     </div>
 
-                    <div className="bg-gray-50/70 p-4 rounded-xl border border-gray-100">
-                      <h4 className="text-xs font-bold text-gray-800 flex items-center gap-1.5 mb-2.5">
-                        <HelpCircle size={14} className="text-blue-600" />
+                    <div className="bg-blue-50/60 p-4 rounded-2xl border border-blue-200/70">
+                      <h4 className="text-xs font-black text-blue-950 flex items-center gap-2 mb-2.5">
+                        <HelpCircle size={15} className="text-blue-700" />
                         Root Causes
                       </h4>
-                      <ul className="text-xs text-gray-600 space-y-1.5 list-disc list-inside">
+                      <ul className="text-xs text-blue-900 space-y-2 pl-4 list-disc font-medium leading-relaxed">
                         {diagnosisResult.diseaseProfile.causes.map((c, idx) => (
-                          <li key={idx} className="leading-5">{c}</li>
+                          <li key={idx}>{c}</li>
                         ))}
                       </ul>
                     </div>
@@ -546,16 +546,16 @@ function DiseaseDetection() {
                 )}
 
                 {/* Treatment & Prevention Action Plan */}
-                <div className="p-4 bg-emerald-50/50 border border-emerald-100/70 rounded-xl">
-                  <h4 className="text-xs font-bold text-emerald-900 flex items-center gap-1.5 mb-2.5">
-                    <ShieldAlert size={14} className="text-emerald-700" />
+                <div className="p-5 bg-emerald-50/70 border border-emerald-200/80 rounded-2xl">
+                  <h4 className="text-xs font-black text-emerald-950 flex items-center gap-2 mb-3">
+                    <ShieldAlert size={16} className="text-emerald-700" />
                     Agronomic Prevention & Treatment Recommendations
                   </h4>
-                  <ul className="text-xs text-emerald-800 space-y-2">
+                  <ul className="text-xs text-emerald-950 space-y-2.5 font-medium">
                     {diagnosisResult.diseaseProfile?.prevention?.map((p, idx) => (
-                      <li key={idx} className="flex items-start gap-2">
-                        <CheckCircle2 size={13} className="text-emerald-600 shrink-0 mt-0.5" />
-                        <span>{p}</span>
+                      <li key={idx} className="flex items-start gap-2.5">
+                        <CheckCircle2 size={15} className="text-emerald-600 shrink-0 mt-0.5" />
+                        <span className="leading-relaxed">{p}</span>
                       </li>
                     ))}
                   </ul>
@@ -563,23 +563,23 @@ function DiseaseDetection() {
 
                 {/* Probabilities Breakdown */}
                 {diagnosisResult.probabilities && Object.keys(diagnosisResult.probabilities).length > 0 && (
-                  <div>
-                    <h4 className="text-xs font-bold uppercase tracking-wider text-gray-400 mb-3">
+                  <div className="space-y-3 pt-2">
+                    <h4 className="text-[11px] font-extrabold uppercase tracking-wider text-gray-400">
                       Top Predicted Probabilities
                     </h4>
-                    <div className="space-y-2.5">
+                    <div className="space-y-3">
                       {Object.entries(diagnosisResult.probabilities)
                         .sort((a, b) => b[1] - a[1])
                         .slice(0, 4)
                         .map(([className, probVal]) => {
                           const pct = Math.round(probVal * 100);
                           return (
-                            <div key={className} className="space-y-1">
-                              <div className="flex justify-between text-xs font-medium text-gray-700">
+                            <div key={className} className="space-y-1.5">
+                              <div className="flex justify-between text-xs font-bold text-gray-700">
                                 <span>{className}</span>
-                                <span className="font-bold">{pct}%</span>
+                                <span className="font-extrabold text-gray-900">{pct}%</span>
                               </div>
-                              <div className="h-2 w-full bg-gray-100 rounded-full overflow-hidden">
+                              <div className="h-2.5 w-full bg-gray-100 rounded-full overflow-hidden">
                                 <div
                                   className={`h-full rounded-full transition-all duration-500 ${
                                     className.includes("Healthy")
@@ -597,11 +597,12 @@ function DiseaseDetection() {
                 )}
 
                 {/* Action Bar */}
-                <div className="pt-2 flex flex-wrap gap-3">
+                <div className="pt-2">
                   <button
                     onClick={handleReset}
-                    className="px-4 py-2 bg-gray-100 hover:bg-gray-200 text-gray-700 text-xs font-semibold rounded-xl transition"
+                    className="w-full py-3 px-4 bg-gray-100 hover:bg-gray-200 text-gray-800 text-xs font-bold rounded-xl transition flex items-center justify-center gap-2 cursor-pointer shadow-xs"
                   >
+                    <RotateCcw size={15} />
                     Scan Another Leaf
                   </button>
                 </div>

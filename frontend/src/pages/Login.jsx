@@ -100,11 +100,10 @@ function Login() {
           <button
             type="submit"
             disabled={submitting}
-            className="w-full bg-green-700 hover:bg-green-800 disabled:bg-green-400 text-white font-semibold py-3 rounded-xl shadow-md transition duration-200"
+            className="w-full bg-green-700 hover:bg-green-800 disabled:bg-green-400 text-white font-semibold py-3 rounded-xl shadow-md transition duration-200 cursor-pointer"
           >
             {submitting ? "Logging in..." : "Login"}
           </button>
-
         </form>
 
         {message && (

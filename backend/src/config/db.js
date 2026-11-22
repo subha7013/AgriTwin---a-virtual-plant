@@ -6,6 +6,7 @@ export async function connectDB() {
   mongoose.set("strictQuery", true);
 
   await mongoose.connect(env.MONGODB_URI, {
+    dbName: "agritwin",
     serverSelectionTimeoutMS: 10000,
   });
 
