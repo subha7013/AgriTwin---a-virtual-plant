@@ -251,12 +251,21 @@ function PlantDetails() {
 
         <div className="grid grid-cols-1 lg:grid-cols-2">
 
-          <div className="h-64 sm:h-80 lg:h-full min-h-[300px] bg-green-50">
+          <div className="h-64 sm:h-80 lg:h-full min-h-[300px] bg-gradient-to-br from-emerald-50 via-green-50 to-teal-50 relative flex items-center justify-center overflow-hidden">
             <img
               src={disease.image}
               alt={diseaseName}
-              className="w-full h-full object-cover"
+              className="w-full h-full object-cover relative z-10"
+              onError={(e) => {
+                e.currentTarget.style.display = "none";
+              }}
             />
+            <div className="absolute inset-0 flex flex-col items-center justify-center text-emerald-800/40">
+              <Leaf size={64} />
+              <span className="text-xs font-bold mt-2 text-emerald-800/60 uppercase tracking-widest">
+                {diseaseName} Reference
+              </span>
+            </div>
           </div>
 
           <div className="p-6 sm:p-8 flex flex-col justify-center">

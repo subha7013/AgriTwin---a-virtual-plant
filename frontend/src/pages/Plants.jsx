@@ -148,18 +148,21 @@ function Plants() {
               key={plant.id}
               className="bg-white rounded-2xl overflow-hidden shadow-sm border border-gray-100 hover:shadow-lg transition"
             >
-              <div className="h-48 bg-green-50">
-                {plant.image ? (
-                  <img
-                    src={plant.image}
-                    alt={plant.name}
-                    className="w-full h-full object-cover"
-                  />
-                ) : (
-                  <div className="w-full h-full flex items-center justify-center text-green-700">
-                    <Leaf size={42} />
-                  </div>
-                )}
+              <div className="h-48 bg-gradient-to-br from-emerald-50 via-green-50 to-teal-50 relative flex items-center justify-center overflow-hidden">
+                <img
+                  src={plant.image}
+                  alt={plant.name}
+                  className="w-full h-full object-cover"
+                  onError={(e) => {
+                    e.currentTarget.style.display = "none";
+                  }}
+                />
+                <div className="absolute inset-0 flex flex-col items-center justify-center text-emerald-800/40 pointer-events-none -z-0">
+                  <Leaf size={46} />
+                  <span className="text-[10px] font-bold mt-1 text-emerald-800/60 uppercase tracking-widest">
+                    Solanum lycopersicum
+                  </span>
+                </div>
               </div>
 
               <div className="p-5">

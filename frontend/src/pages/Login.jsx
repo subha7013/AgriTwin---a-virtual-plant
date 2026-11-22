@@ -100,11 +100,22 @@ function Login() {
           <button
             type="submit"
             disabled={submitting}
-            className="w-full bg-green-700 hover:bg-green-800 disabled:bg-green-400 text-white font-semibold py-3 rounded-xl shadow-md transition duration-200"
+            className="w-full bg-green-700 hover:bg-green-800 disabled:bg-green-400 text-white font-semibold py-3 rounded-xl shadow-md transition duration-200 cursor-pointer"
           >
             {submitting ? "Logging in..." : "Login"}
           </button>
 
+          <button
+            type="button"
+            onClick={() => {
+              setUsername("admin");
+              setPassword("Admin@123");
+            }}
+            className="w-full py-2 bg-emerald-50 hover:bg-emerald-100 text-emerald-800 border border-emerald-200/80 rounded-xl text-xs font-bold transition flex items-center justify-center gap-1.5 cursor-pointer"
+          >
+            <Sprout size={14} className="text-emerald-700" />
+            Fill Demo Credentials (admin / Admin@123)
+          </button>
         </form>
 
         {message && (

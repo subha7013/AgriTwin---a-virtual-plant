@@ -1,6 +1,6 @@
 
-import { useState } from "react";
-
+import { useState, useEffect } from "react";
+import { useAuth } from "../context/AuthContext";
 import {
   User,
   Bell,
@@ -15,9 +15,17 @@ import {
 } from "lucide-react";
 
 function Settings() {
-  const [name, setName] = useState("Saheli Singharoy");
-  const [email, setEmail] = useState("saheli@example.com");
-  const role = "User";
+  const { user } = useAuth();
+  const [name, setName] = useState(user?.name || user?.username || "AgriTwin Operator");
+  const [email, setEmail] = useState(user?.email || "admin@agritwin.local");
+  const role = user?.role || "Administrator";
+
+  useEffect(() => {
+    if (user) {
+      if (user.name || user.username) setName(user.name || user.username);
+      if (user.email) setEmail(user.email);
+    }
+  }, [user]);
 
   const [emailNotifications, setEmailNotifications] = useState(true);
   const [diseaseAlerts, setDiseaseAlerts] = useState(true);
