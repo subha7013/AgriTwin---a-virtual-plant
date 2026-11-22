@@ -48,7 +48,8 @@ def load_cached_model(model_type="mobilenetv2"):
         if not os.path.exists(model_path):
             raise FileNotFoundError(f"Model file not found at {model_path}. Please train model first.")
 
-        print(f"[INFO] Loading {model_type} from {model_path} into GPU cache...")
+        if not any(arg == "--json" for arg in sys.argv):
+            print(f"[INFO] Loading {model_type} from {model_path} into GPU cache...")
         _MODEL_CACHE[model_type] = keras.models.load_model(model_path)
     return _MODEL_CACHE[model_type]
 
@@ -98,6 +99,8 @@ def predict_disease(image, plant_id="TOMATO_001", model_type="mobilenetv2", crop
         pred_idx = int(np.argmax(preds))
         confidence = float(preds[pred_idx])
         predicted_disease = display_names[pred_idx]
+        class_directories = meta.get("class_directories", [])
+        class_raw = class_directories[pred_idx] if pred_idx < len(class_directories) else predicted_disease
 
         probabilities = {
             name: round(float(preds[i]), 4)
@@ -109,6 +112,7 @@ def predict_disease(image, plant_id="TOMATO_001", model_type="mobilenetv2", crop
             "plant_id": plant_id,
             "prediction": {
                 "disease": predicted_disease,
+                "class_raw": class_raw,
                 "confidence": round(confidence, 4)
             },
             "probabilities": probabilities,

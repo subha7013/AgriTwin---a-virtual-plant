@@ -1,27 +1,59 @@
-
 import { useState, useRef, useEffect } from "react";
 import {
   Camera,
   ScanSearch,
   Leaf,
   AlertTriangle,
-  CheckCircle,
+  CheckCircle2,
   RotateCcw,
   Microscope,
   CameraOff,
+  Upload,
+  Sparkles,
+  ShieldAlert,
+  HelpCircle,
+  FileText,
+  Loader2,
+  XCircle,
+  Sprout,
+  ArrowRight
 } from "lucide-react";
+import { detectDisease } from "../services/diseaseService";
+import { getPlants } from "../services/plantService";
+import { getErrorMessage } from "../services/api";
 
 function DiseaseDetection() {
+  const [activeTab, setActiveTab] = useState("upload"); // 'upload' | 'camera'
   const [stream, setStream] = useState(null);
   const [preview, setPreview] = useState("");
-  const [image, setImage] = useState(null);
-  const [result, setResult] = useState(false);
+  const [imageFile, setImageFile] = useState(null);
+  const [plants, setPlants] = useState([]);
+  const [selectedPlantId, setSelectedPlantId] = useState("");
+  const [analyzing, setAnalyzing] = useState(false);
+  const [diagnosisResult, setDiagnosisResult] = useState(null);
   const [cameraError, setCameraError] = useState("");
+  const [apiError, setApiError] = useState("");
 
   const videoRef = useRef(null);
   const canvasRef = useRef(null);
+  const fileInputRef = useRef(null);
 
-  // Connect camera stream to video
+  // Load plants on mount for association
+  useEffect(() => {
+    async function loadUserPlants() {
+      try {
+        const data = await getPlants();
+        if (data && data.plants) {
+          setPlants(data.plants);
+        }
+      } catch {
+        // Continue if unauthenticated or error
+      }
+    }
+    loadUserPlants();
+  }, []);
+
+  // Connect camera stream to video element
   useEffect(() => {
     if (videoRef.current && stream) {
       videoRef.current.srcObject = stream;
@@ -29,7 +61,7 @@ function DiseaseDetection() {
     }
   }, [stream]);
 
-  // Stop camera when page closes
+  // Clean up camera stream on unmount or tab switch
   useEffect(() => {
     return () => {
       if (stream) {
@@ -38,375 +70,546 @@ function DiseaseDetection() {
     };
   }, [stream]);
 
-  // Start Camera
   const startCamera = async () => {
     try {
       setCameraError("");
-
       if (!navigator.mediaDevices?.getUserMedia) {
-        setCameraError(
-          "Camera is not supported. Please use localhost or HTTPS."
-        );
+        setCameraError("Camera is not supported in this browser. Please use file upload.");
         return;
       }
 
-      const cameraStream =
-        await navigator.mediaDevices.getUserMedia({
-          video: {
-            facingMode: "environment",
-          },
-          audio: false,
-        });
+      const cameraStream = await navigator.mediaDevices.getUserMedia({
+        video: { facingMode: "environment" },
+        audio: false,
+      });
 
       setStream(cameraStream);
-      setImage(null);
+      setImageFile(null);
       setPreview("");
-      setResult(false);
+      setDiagnosisResult(null);
     } catch {
-      setCameraError(
-        "Unable to access camera. Please allow camera permission in your browser."
-      );
+      setCameraError("Unable to access camera. Please allow camera permissions in browser.");
     }
   };
 
-  // Stop Camera
   const stopCamera = () => {
     if (stream) {
       stream.getTracks().forEach((track) => track.stop());
+      setStream(null);
     }
-
-    setStream(null);
   };
 
-  // Capture Image
   const captureImage = () => {
     const video = videoRef.current;
     const canvas = canvasRef.current;
-
     if (!video || !canvas || !video.videoWidth) {
-      setCameraError("Camera is not ready. Please try again.");
+      setCameraError("Camera is not ready yet. Please wait a second.");
       return;
     }
 
     canvas.width = video.videoWidth;
     canvas.height = video.videoHeight;
-
-    const context = canvas.getContext("2d");
-    context.drawImage(video, 0, 0, canvas.width, canvas.height);
+    const ctx = canvas.getContext("2d");
+    ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
 
     canvas.toBlob((blob) => {
       if (!blob) return;
-
-      const capturedFile = new File(
-        [blob],
-        "tomato-leaf-capture.jpg",
-        { type: "image/jpeg" }
-      );
-
-      setImage(capturedFile);
+      const file = new File([blob], "leaf-camera-capture.jpg", { type: "image/jpeg" });
+      setImageFile(file);
       setPreview(canvas.toDataURL("image/jpeg"));
-      setResult(false);
+      setDiagnosisResult(null);
       setCameraError("");
-    }, "image/jpeg");
+      stopCamera();
+    }, "image/jpeg", 0.95);
   };
 
-  // Retake Image
-  const retakeImage = () => {
-    setImage(null);
-    setPreview("");
-    setResult(false);
+  const handleFileUpload = (e) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    if (!file.type.startsWith("image/")) {
+      setApiError("Please select a valid image file (JPG, PNG, or WEBP).");
+      return;
+    }
+
+    setApiError("");
+    setCameraError("");
+    setImageFile(file);
+    setDiagnosisResult(null);
+
+    const reader = new FileReader();
+    reader.onload = () => {
+      setPreview(reader.result);
+    };
+    reader.readAsDataURL(file);
   };
 
-  // Reset Everything
+  const handleDrop = (e) => {
+    e.preventDefault();
+    const file = e.dataTransfer.files?.[0];
+    if (file && file.type.startsWith("image/")) {
+      setApiError("");
+      setImageFile(file);
+      setDiagnosisResult(null);
+
+      const reader = new FileReader();
+      reader.onload = () => {
+        setPreview(reader.result);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
   const handleReset = () => {
     stopCamera();
-    setImage(null);
+    setImageFile(null);
     setPreview("");
-    setResult(false);
+    setDiagnosisResult(null);
     setCameraError("");
+    setApiError("");
+    if (fileInputRef.current) fileInputRef.current.value = "";
   };
 
+  const runDiagnosis = async () => {
+    if (!imageFile && !preview) return;
+
+    setAnalyzing(true);
+    setApiError("");
+
+    try {
+      let payload;
+      if (imageFile) {
+        payload = { imageFile, plantId: selectedPlantId || undefined };
+      } else {
+        payload = { imageBase64: preview, plantId: selectedPlantId || undefined };
+      }
+
+      const res = await detectDisease(payload);
+      setDiagnosisResult(res);
+    } catch (err) {
+      setApiError(getErrorMessage(err) || "Failed to analyze leaf image. Ensure ML backend is running.");
+    } finally {
+      setAnalyzing(false);
+    }
+  };
+
+  const isHealthy = diagnosisResult?.diagnosis?.isHealthy;
+
   return (
-    <div className="space-y-7">
+    <div className="space-y-6 sm:space-y-8 max-w-7xl mx-auto">
+      {/* Header */}
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+        <div>
+          <div className="flex items-center gap-2">
+            <span className="p-2 bg-green-100 text-green-700 rounded-xl">
+              <Microscope size={24} />
+            </span>
+            <h1 className="text-2xl sm:text-3xl font-extrabold text-gray-800 tracking-tight">
+              AI Disease Detection
+            </h1>
+          </div>
+          <p className="text-sm sm:text-base text-gray-500 mt-1.5">
+            Identify 10 tomato conditions with edge-optimized MobileNetV2 deep learning.
+          </p>
+        </div>
 
-      {/* Heading */}
-      <div>
-        <h1 className="text-2xl sm:text-3xl font-bold text-gray-800">
-          Disease Detection 🔬
-        </h1>
-        <p className="text-gray-500 mt-2">
-          Scan a tomato leaf using your camera to analyze plant health.
-        </p>
+        {/* Mode Toggle Tabs */}
+        <div className="flex bg-white p-1 rounded-xl border border-gray-200 shadow-sm w-fit self-start sm:self-auto">
+          <button
+            onClick={() => {
+              setActiveTab("upload");
+              stopCamera();
+            }}
+            className={`flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-semibold transition ${
+              activeTab === "upload"
+                ? "bg-green-700 text-white shadow-sm"
+                : "text-gray-600 hover:text-gray-900"
+            }`}
+          >
+            <Upload size={16} />
+            Upload Photo
+          </button>
+          <button
+            onClick={() => {
+              setActiveTab("camera");
+              startCamera();
+            }}
+            className={`flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-semibold transition ${
+              activeTab === "camera"
+                ? "bg-green-700 text-white shadow-sm"
+                : "text-gray-600 hover:text-gray-900"
+            }`}
+          >
+            <Camera size={16} />
+            Live Camera
+          </button>
+        </div>
       </div>
 
-      {/* Information Cards */}
-      <div className="grid grid-cols-1 sm:grid-cols-3 gap-5">
-
-        <div className="bg-white p-5 rounded-2xl border border-gray-100 shadow-sm">
-          <div className="p-3 bg-green-100 text-green-700 rounded-xl w-fit">
-            <Leaf size={25} />
+      {/* Main Grid */}
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 sm:gap-8 items-start">
+        {/* Left Column: Image Input & Capture (5 Cols) */}
+        <div className="lg:col-span-5 bg-white rounded-2xl shadow-sm border border-gray-100 p-5 sm:p-6 space-y-5">
+          <div className="flex items-center justify-between">
+            <h2 className="text-lg font-bold text-gray-800 flex items-center gap-2">
+              <Leaf size={18} className="text-green-600" />
+              Leaf Input
+            </h2>
+            {preview && (
+              <button
+                onClick={handleReset}
+                className="text-xs font-semibold text-gray-500 hover:text-red-600 transition flex items-center gap-1"
+              >
+                <RotateCcw size={13} />
+                Clear
+              </button>
+            )}
           </div>
-          <h3 className="font-bold text-gray-800 mt-4">
-            Tomato Plant
-          </h3>
-          <p className="text-sm text-gray-500 mt-1">
-            Supported plant type
-          </p>
-        </div>
 
-        <div className="bg-white p-5 rounded-2xl border border-gray-100 shadow-sm">
-          <div className="p-3 bg-blue-100 text-blue-700 rounded-xl w-fit">
-            <Microscope size={25} />
-          </div>
-          <h3 className="font-bold text-gray-800 mt-4">
-            AI Analysis
-          </h3>
-          <p className="text-sm text-gray-500 mt-1">
-            ML model integration pending
-          </p>
-        </div>
+          {/* Plant Selector */}
+          {plants.length > 0 && (
+            <div>
+              <label className="block text-xs font-semibold uppercase tracking-wider text-gray-500 mb-1.5">
+                Assign Diagnosis to Tracked Plant (Optional)
+              </label>
+              <select
+                value={selectedPlantId}
+                onChange={(e) => setSelectedPlantId(e.target.value)}
+                className="w-full text-sm border border-gray-200 rounded-xl p-2.5 bg-gray-50/50 text-gray-700 focus:outline-none focus:ring-2 focus:ring-green-600 transition"
+              >
+                <option value="">Do not assign to a plant (Instant check)</option>
+                {plants.map((p) => (
+                  <option key={p._id} value={p._id}>
+                    🌱 {p.name} ({p.variety || "Tomato"} - {p.health})
+                  </option>
+                ))}
+              </select>
+            </div>
+          )}
 
-        <div className="bg-white p-5 rounded-2xl border border-gray-100 shadow-sm">
-          <div className="p-3 bg-orange-100 text-orange-700 rounded-xl w-fit">
-            <ScanSearch size={25} />
-          </div>
-          <h3 className="font-bold text-gray-800 mt-4">
-            Disease Identification
-          </h3>
-          <p className="text-sm text-gray-500 mt-1">
-            Tomato leaf disease analysis
-          </p>
-        </div>
-
-      </div>
-
-      {/* Camera and Result */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-
-        {/* Camera Section */}
-        <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-5 sm:p-6">
-
-          <h2 className="text-xl font-bold text-gray-800">
-            Scan Tomato Leaf
-          </h2>
-
-          <p className="text-sm text-gray-500 mt-2">
-            Open your camera and capture a clear image of the tomato leaf.
-          </p>
-
-          {/* Camera Preview */}
-          <div className="mt-6 min-h-64 bg-gray-900 rounded-2xl overflow-hidden flex items-center justify-center relative">
-
+          {/* Viewport Box */}
+          <div className="relative rounded-2xl overflow-hidden bg-gray-950 aspect-[4/3] flex items-center justify-center border border-gray-200">
             {preview ? (
-              <img
-                src={preview}
-                alt="Captured tomato leaf"
-                className="w-full h-64 object-contain bg-black"
-              />
-            ) : stream ? (
-              <video
-                ref={videoRef}
-                autoPlay
-                playsInline
-                muted
-                className="w-full h-64 object-cover"
-              />
+              <div className="relative w-full h-full group">
+                <img
+                  src={preview}
+                  alt="Leaf preview"
+                  className="w-full h-full object-contain"
+                />
+                <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition flex items-center justify-center gap-3">
+                  <button
+                    onClick={handleReset}
+                    className="p-2.5 bg-white/90 text-gray-800 rounded-xl hover:bg-white transition text-xs font-semibold shadow"
+                  >
+                    Retake / Choose Another
+                  </button>
+                </div>
+              </div>
+            ) : activeTab === "camera" && stream ? (
+              <div className="relative w-full h-full">
+                <video
+                  ref={videoRef}
+                  autoPlay
+                  playsInline
+                  muted
+                  className="w-full h-full object-cover"
+                />
+                {/* Visual Leaf Alignment Reticle */}
+                <div className="absolute inset-8 border-2 border-dashed border-green-400/70 rounded-xl pointer-events-none flex items-center justify-center">
+                  <span className="text-[11px] font-medium text-green-300 bg-black/50 px-2.5 py-1 rounded-full backdrop-blur-sm">
+                    Center leaf blade inside frame
+                  </span>
+                </div>
+              </div>
+            ) : activeTab === "camera" ? (
+              <div className="text-center p-6 text-gray-400">
+                <CameraOff size={42} className="mx-auto mb-2 opacity-60 text-gray-400" />
+                <p className="text-sm font-medium text-gray-200">Camera Inactive</p>
+                <p className="text-xs text-gray-400 mt-1">Click start to activate camera scanner</p>
+                <button
+                  onClick={startCamera}
+                  className="mt-4 px-4 py-2 bg-green-700 hover:bg-green-800 text-white text-xs font-semibold rounded-xl transition"
+                >
+                  Start Camera
+                </button>
+              </div>
             ) : (
-              <div className="text-center p-6">
-                <Camera size={45} className="text-white mx-auto" />
-                <p className="text-white font-semibold mt-4">
-                  Camera is not started
+              /* Drag & Drop Upload Zone */
+              <div
+                onDragOver={(e) => e.preventDefault()}
+                onDrop={handleDrop}
+                onClick={() => fileInputRef.current?.click()}
+                className="w-full h-full flex flex-col items-center justify-center p-6 text-center cursor-pointer hover:bg-gray-900/60 transition group"
+              >
+                <input
+                  ref={fileInputRef}
+                  type="file"
+                  accept="image/*"
+                  onChange={handleFileUpload}
+                  className="hidden"
+                />
+                <div className="p-4 bg-gray-800 group-hover:bg-green-900/40 rounded-2xl text-green-400 mb-3 transition">
+                  <Upload size={32} />
+                </div>
+                <p className="text-sm font-semibold text-gray-200">
+                  Click to browse or drag & drop leaf
                 </p>
-                <p className="text-gray-300 text-sm mt-2">
-                  Click Start Camera to begin scanning
+                <p className="text-xs text-gray-400 mt-1">
+                  Supports JPG, PNG, WEBP (Max 25MB)
                 </p>
               </div>
             )}
-
           </div>
 
           <canvas ref={canvasRef} className="hidden" />
 
-          {/* Camera Error */}
-          {cameraError && (
-            <p className="text-sm text-red-600 bg-red-50 p-3 rounded-xl mt-4">
-              {cameraError}
-            </p>
-          )}
-
-          {/* Camera Buttons */}
-          <div className="flex flex-wrap gap-3 mt-5">
-
-            {!stream && !preview && (
+          {/* Camera Controls */}
+          {activeTab === "camera" && stream && !preview && (
+            <div className="flex gap-3">
               <button
-                onClick={startCamera}
-                className="flex-1 flex items-center justify-center gap-2 bg-green-700 hover:bg-green-800 text-white py-3 px-4 rounded-xl font-semibold transition"
+                onClick={captureImage}
+                className="flex-1 flex items-center justify-center gap-2 bg-green-700 hover:bg-green-800 text-white py-3 px-4 rounded-xl font-semibold shadow-sm transition text-sm"
               >
-                <Camera size={19} />
-                Start Camera
+                <Camera size={18} />
+                Capture Leaf
               </button>
-            )}
-
-            {stream && !preview && (
-              <>
-                <button
-                  onClick={captureImage}
-                  className="flex-1 flex items-center justify-center gap-2 bg-green-700 hover:bg-green-800 text-white py-3 px-4 rounded-xl font-semibold transition"
-                >
-                  <Camera size={19} />
-                  Capture Image
-                </button>
-
-                <button
-                  onClick={stopCamera}
-                  className="flex items-center justify-center gap-2 border border-gray-300 text-gray-600 px-4 py-3 rounded-xl font-semibold"
-                >
-                  <CameraOff size={18} />
-                  Stop
-                </button>
-              </>
-            )}
-
-            {preview && (
               <button
-                onClick={retakeImage}
-                className="flex-1 flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-700 text-white py-3 px-4 rounded-xl font-semibold"
+                onClick={stopCamera}
+                className="flex items-center justify-center gap-1.5 border border-gray-200 text-gray-600 hover:bg-gray-50 px-4 py-3 rounded-xl font-medium text-sm transition"
               >
-                <RotateCcw size={18} />
-                Retake Image
+                <CameraOff size={16} />
+                Stop
               </button>
-            )}
-
-            <button
-              onClick={handleReset}
-              className="flex items-center justify-center gap-2 border border-gray-300 text-gray-600 hover:bg-gray-50 px-5 py-3 rounded-xl font-semibold"
-            >
-              Reset
-            </button>
-
-          </div>
-
-          {image && (
-            <div className="mt-4 flex items-center gap-3 bg-green-50 p-3 rounded-xl">
-              <CheckCircle className="text-green-700" size={22} />
-              <div>
-                <p className="text-sm font-semibold text-green-800">
-                  Image Captured Successfully
-                </p>
-                <p className="text-xs text-gray-500">
-                  {(image.size / 1024).toFixed(1)} KB
-                </p>
-              </div>
             </div>
           )}
 
-        </div>
+          {cameraError && (
+            <div className="p-3 bg-red-50 text-red-700 text-xs rounded-xl flex items-start gap-2">
+              <AlertTriangle size={15} className="shrink-0 mt-0.5" />
+              <span>{cameraError}</span>
+            </div>
+          )}
 
-        {/* Result Section */}
-        <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-5 sm:p-6">
+          {apiError && (
+            <div className="p-3 bg-red-50 text-red-700 text-xs rounded-xl flex items-start gap-2">
+              <XCircle size={15} className="shrink-0 mt-0.5" />
+              <span>{apiError}</span>
+            </div>
+          )}
 
-          <h2 className="text-xl font-bold text-gray-800">
-            Detection Results
-          </h2>
-
-          <p className="text-sm text-gray-500 mt-2">
-            Disease analysis results will appear here.
-          </p>
-
-          <div className="mt-6">
-
-            {!result ? (
-              <div className="min-h-64 flex flex-col items-center justify-center bg-gray-50 rounded-2xl border border-dashed border-gray-200 text-center p-6">
-
-                <div className="p-4 bg-white rounded-full shadow-sm">
-                  <ScanSearch size={35} className="text-gray-400" />
-                </div>
-
-                <h3 className="font-semibold text-gray-700 mt-4">
-                  No Detection Results Yet
-                </h3>
-
-                <p className="text-sm text-gray-500 mt-2 max-w-xs">
-                  Capture a tomato leaf image to prepare it for disease analysis.
-                </p>
-
-              </div>
-            ) : (
-              <div className="space-y-5">
-
-                <div className="bg-orange-50 border border-orange-100 rounded-2xl p-5">
-
-                  <div className="flex items-center gap-3">
-                    <div className="p-3 bg-orange-100 text-orange-600 rounded-xl">
-                      <AlertTriangle size={25} />
-                    </div>
-
-                    <div>
-                      <p className="text-sm text-orange-700 font-semibold">
-                        Image Captured Successfully
-                      </p>
-                      <h3 className="text-lg font-bold text-gray-800 mt-1">
-                        Ready for AI Analysis
-                      </h3>
-                    </div>
-                  </div>
-
-                  <p className="text-sm text-gray-600 mt-4 leading-6">
-                    Your captured image is ready. Actual disease prediction
-                    will be available after AI model and backend integration.
-                  </p>
-
-                </div>
-
-                <div className="bg-gray-50 rounded-xl p-5 space-y-3">
-
-                  <div className="flex justify-between text-sm">
-                    <span className="text-gray-500">Image Status</span>
-                    <span className="text-green-700 font-semibold">
-                      Uploaded
-                    </span>
-                  </div>
-
-                  <div className="flex justify-between text-sm">
-                    <span className="text-gray-500">AI Model</span>
-                    <span className="text-orange-600 font-semibold">
-                      Not Connected
-                    </span>
-                  </div>
-
-                  <div className="flex justify-between text-sm">
-                    <span className="text-gray-500">Prediction</span>
-                    <span className="text-gray-600 font-semibold">
-                      Awaiting Analysis
-                    </span>
-                  </div>
-
-                </div>
-
-              </div>
-            )}
-
-          </div>
-
-          {/* Detect Button */}
+          {/* Diagnose Button */}
           <button
-            disabled={!image}
-            onClick={() => setResult(true)}
-            className="w-full mt-5 flex items-center justify-center gap-2 bg-green-700 hover:bg-green-800 disabled:bg-gray-300 text-white py-3 rounded-xl font-semibold transition"
+            disabled={!preview || analyzing}
+            onClick={runDiagnosis}
+            className="w-full flex items-center justify-center gap-2 bg-green-700 hover:bg-green-800 disabled:bg-gray-200 disabled:text-gray-400 text-white py-3.5 px-5 rounded-xl font-bold shadow-md shadow-green-900/10 transition text-sm sm:text-base cursor-pointer disabled:cursor-not-allowed"
           >
-            <ScanSearch size={19} />
-            Detect Disease
+            {analyzing ? (
+              <>
+                <Loader2 size={19} className="animate-spin text-white" />
+                Analyzing with MobileNetV2...
+              </>
+            ) : (
+              <>
+                <Sparkles size={19} />
+                Run AI Diagnosis
+              </>
+            )}
           </button>
-
         </div>
 
+        {/* Right Column: AI Clinical Diagnosis Results (7 Cols) */}
+        <div className="lg:col-span-7 space-y-6">
+          {!diagnosisResult ? (
+            <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-8 sm:p-12 text-center flex flex-col items-center justify-center min-h-[460px]">
+              <div className="p-5 bg-green-50 text-green-600 rounded-3xl mb-4">
+                <ScanSearch size={48} className="stroke-[1.5]" />
+              </div>
+              <h3 className="text-xl font-bold text-gray-800">
+                Awaiting Leaf Scan
+              </h3>
+              <p className="text-sm text-gray-500 mt-2 max-w-md">
+                Upload or capture a close-up photo of a tomato leaf. The neural network will analyze tissue symptoms, lesions, and chlorosis patterns.
+              </p>
+              <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 mt-8 w-full max-w-lg text-left">
+                <div className="p-3 bg-gray-50 rounded-xl border border-gray-100">
+                  <p className="text-[11px] font-semibold text-gray-400 uppercase">Input Shape</p>
+                  <p className="text-xs font-bold text-gray-700 mt-0.5">256 × 256 RGB</p>
+                </div>
+                <div className="p-3 bg-gray-50 rounded-xl border border-gray-100">
+                  <p className="text-[11px] font-semibold text-gray-400 uppercase">Backbone</p>
+                  <p className="text-xs font-bold text-gray-700 mt-0.5">MobileNetV2</p>
+                </div>
+                <div className="p-3 bg-gray-50 rounded-xl border border-gray-100 col-span-2 sm:col-span-1">
+                  <p className="text-[11px] font-semibold text-gray-400 uppercase">Quality Gate</p>
+                  <p className="text-xs font-bold text-gray-700 mt-0.5">Laplacian Blur & Exposure</p>
+                </div>
+              </div>
+            </div>
+          ) : (
+            /* Active Diagnostic Report Card */
+            <div className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
+              {/* Status Banner */}
+              <div
+                className={`p-6 border-b flex flex-col sm:flex-row sm:items-center justify-between gap-4 ${
+                  isHealthy
+                    ? "bg-gradient-to-r from-emerald-500/10 to-green-500/10 border-emerald-100"
+                    : "bg-gradient-to-r from-amber-500/10 to-red-500/10 border-amber-100"
+                }`}
+              >
+                <div className="flex items-center gap-3.5">
+                  <div
+                    className={`p-3.5 rounded-2xl text-white shadow-sm shrink-0 ${
+                      isHealthy ? "bg-emerald-600" : "bg-red-600"
+                    }`}
+                  >
+                    {isHealthy ? <CheckCircle2 size={28} /> : <AlertTriangle size={28} />}
+                  </div>
+                  <div>
+                    <span
+                      className={`text-xs font-bold uppercase tracking-wider px-2.5 py-0.5 rounded-full ${
+                        isHealthy
+                          ? "bg-emerald-100 text-emerald-800"
+                          : "bg-red-100 text-red-800"
+                      }`}
+                    >
+                      {diagnosisResult.diseaseProfile?.category || (isHealthy ? "Healthy" : "Infection Detected")}
+                    </span>
+                    <h2 className="text-xl sm:text-2xl font-black text-gray-900 mt-1">
+                      {diagnosisResult.diagnosis.disease}
+                    </h2>
+                  </div>
+                </div>
+
+                <div className="sm:text-right bg-white/70 backdrop-blur-sm p-3 rounded-xl border border-white/80 shrink-0">
+                  <p className="text-xs font-semibold text-gray-500 uppercase tracking-wider">
+                    Model Confidence
+                  </p>
+                  <p
+                    className={`text-2xl font-black ${
+                      isHealthy ? "text-emerald-700" : "text-amber-700"
+                    }`}
+                  >
+                    {diagnosisResult.diagnosis.confidencePct}
+                  </p>
+                </div>
+              </div>
+
+              <div className="p-6 space-y-6">
+                {/* Associated Plant Badge */}
+                {diagnosisResult.diagnosis.plantName && (
+                  <div className="flex items-center gap-2 p-3 bg-green-50 border border-green-100 rounded-xl text-xs text-green-900 font-medium">
+                    <Sprout size={16} className="text-green-700" />
+                    <span>
+                      Diagnosis automatically synced with plant:{" "}
+                      <strong>{diagnosisResult.diagnosis.plantName}</strong>
+                    </span>
+                  </div>
+                )}
+
+                {/* Disease Description */}
+                <div>
+                  <h4 className="text-xs font-bold uppercase tracking-wider text-gray-400 mb-1">
+                    Pathological Summary
+                  </h4>
+                  <p className="text-sm text-gray-700 leading-relaxed">
+                    {diagnosisResult.diseaseProfile?.description}
+                  </p>
+                </div>
+
+                {/* Symptoms & Causes Grid */}
+                {(!isHealthy && diagnosisResult.diseaseProfile?.symptoms?.length > 0) && (
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div className="bg-gray-50/70 p-4 rounded-xl border border-gray-100">
+                      <h4 className="text-xs font-bold text-gray-800 flex items-center gap-1.5 mb-2.5">
+                        <FileText size={14} className="text-amber-600" />
+                        Diagnostic Symptoms
+                      </h4>
+                      <ul className="text-xs text-gray-600 space-y-1.5 list-disc list-inside">
+                        {diagnosisResult.diseaseProfile.symptoms.map((s, idx) => (
+                          <li key={idx} className="leading-5">{s}</li>
+                        ))}
+                      </ul>
+                    </div>
+
+                    <div className="bg-gray-50/70 p-4 rounded-xl border border-gray-100">
+                      <h4 className="text-xs font-bold text-gray-800 flex items-center gap-1.5 mb-2.5">
+                        <HelpCircle size={14} className="text-blue-600" />
+                        Root Causes
+                      </h4>
+                      <ul className="text-xs text-gray-600 space-y-1.5 list-disc list-inside">
+                        {diagnosisResult.diseaseProfile.causes.map((c, idx) => (
+                          <li key={idx} className="leading-5">{c}</li>
+                        ))}
+                      </ul>
+                    </div>
+                  </div>
+                )}
+
+                {/* Treatment & Prevention Action Plan */}
+                <div className="p-4 bg-emerald-50/50 border border-emerald-100/70 rounded-xl">
+                  <h4 className="text-xs font-bold text-emerald-900 flex items-center gap-1.5 mb-2.5">
+                    <ShieldAlert size={14} className="text-emerald-700" />
+                    Agronomic Prevention & Treatment Recommendations
+                  </h4>
+                  <ul className="text-xs text-emerald-800 space-y-2">
+                    {diagnosisResult.diseaseProfile?.prevention?.map((p, idx) => (
+                      <li key={idx} className="flex items-start gap-2">
+                        <CheckCircle2 size={13} className="text-emerald-600 shrink-0 mt-0.5" />
+                        <span>{p}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+
+                {/* Probabilities Breakdown */}
+                {diagnosisResult.probabilities && Object.keys(diagnosisResult.probabilities).length > 0 && (
+                  <div>
+                    <h4 className="text-xs font-bold uppercase tracking-wider text-gray-400 mb-3">
+                      Top Predicted Probabilities
+                    </h4>
+                    <div className="space-y-2.5">
+                      {Object.entries(diagnosisResult.probabilities)
+                        .sort((a, b) => b[1] - a[1])
+                        .slice(0, 4)
+                        .map(([className, probVal]) => {
+                          const pct = Math.round(probVal * 100);
+                          return (
+                            <div key={className} className="space-y-1">
+                              <div className="flex justify-between text-xs font-medium text-gray-700">
+                                <span>{className}</span>
+                                <span className="font-bold">{pct}%</span>
+                              </div>
+                              <div className="h-2 w-full bg-gray-100 rounded-full overflow-hidden">
+                                <div
+                                  className={`h-full rounded-full transition-all duration-500 ${
+                                    className.includes("Healthy")
+                                      ? "bg-emerald-500"
+                                      : "bg-amber-500"
+                                  }`}
+                                  style={{ width: `${pct}%` }}
+                                />
+                              </div>
+                            </div>
+                          );
+                        })}
+                    </div>
+                  </div>
+                )}
+
+                {/* Action Bar */}
+                <div className="pt-2 flex flex-wrap gap-3">
+                  <button
+                    onClick={handleReset}
+                    className="px-4 py-2 bg-gray-100 hover:bg-gray-200 text-gray-700 text-xs font-semibold rounded-xl transition"
+                  >
+                    Scan Another Leaf
+                  </button>
+                </div>
+              </div>
+            </div>
+          )}
+        </div>
       </div>
-
-      <p className="text-xs text-gray-400">
-        Note: Camera capture is functional. Actual disease prediction and
-        confidence score require trained AI model integration.
-      </p>
-
     </div>
   );
 }
