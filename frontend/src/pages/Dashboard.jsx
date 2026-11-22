@@ -138,44 +138,44 @@ function Dashboard() {
     <div className="w-full min-w-0 space-y-6 sm:space-y-8 max-w-7xl mx-auto">
 
       {/* Welcome Banner */}
-      <div className="w-full min-w-0 bg-gradient-to-r from-green-900 via-emerald-800 to-teal-800 rounded-3xl p-6 sm:p-9 text-white shadow-xl relative overflow-hidden border border-emerald-700/40">
-        <div className="relative z-10 max-w-2xl">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 backdrop-blur-md text-xs font-semibold text-lime-300 border border-white/10 mb-3">
+      <div className="w-full bg-gradient-to-r from-green-900 via-emerald-800 to-teal-800 rounded-3xl p-6 sm:p-8 text-white shadow-xl relative overflow-hidden border border-emerald-700/40">
+        <div className="relative z-10 max-w-2xl flex flex-col gap-3">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 backdrop-blur-md text-xs font-semibold text-lime-300 border border-white/10 w-fit">
             <Sparkles size={14} />
             <span>Digital Twin · Precision Agriculture v2.0</span>
           </div>
 
-          <h1 className="text-2xl sm:text-4xl font-extrabold tracking-tight">
+          <h1 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold tracking-tight leading-tight">
             Smart Crop Intelligence & Monitoring
           </h1>
 
-          <p className="text-green-100/90 mt-2.5 text-sm sm:text-base leading-relaxed">
+          <p className="text-green-100/90 text-xs sm:text-sm leading-relaxed">
             Monitor real-time microclimate sensors, detect 10 foliar tomato diseases with MobileNetV2 AI, and simulate environmental pathogen risk before outbreaks occur.
           </p>
 
           {/* Quick Action Shortcut Pills */}
-          <div className="flex flex-wrap gap-3 mt-6">
+          <div className="flex flex-wrap gap-2.5 pt-2">
             <Link
               to="/disease-detection"
-              className="inline-flex items-center gap-2 bg-lime-400 hover:bg-lime-300 text-green-950 font-bold px-4 py-2.5 rounded-xl text-xs sm:text-sm shadow-md transition transform active:scale-95"
+              className="inline-flex items-center gap-2 bg-lime-400 hover:bg-lime-300 text-green-950 font-bold px-4 py-2.5 rounded-xl text-xs shadow-md transition active:scale-95"
             >
-              <ScanSearch size={16} />
+              <ScanSearch size={15} />
               Diagnose Leaf (AI Vision)
             </Link>
 
             <Link
               to="/risk-prediction"
-              className="inline-flex items-center gap-2 bg-white/15 hover:bg-white/25 text-white font-semibold px-4 py-2.5 rounded-xl text-xs sm:text-sm backdrop-blur-md border border-white/20 transition"
+              className="inline-flex items-center gap-2 bg-white/15 hover:bg-white/25 text-white font-semibold px-4 py-2.5 rounded-xl text-xs backdrop-blur-md border border-white/20 transition"
             >
-              <Sliders size={16} />
+              <Sliders size={15} />
               Simulate Outbreak Risk
             </Link>
 
             <Link
               to="/digital-twin"
-              className="inline-flex items-center gap-2 bg-white/15 hover:bg-white/25 text-white font-semibold px-4 py-2.5 rounded-xl text-xs sm:text-sm backdrop-blur-md border border-white/20 transition"
+              className="inline-flex items-center gap-2 bg-white/15 hover:bg-white/25 text-white font-semibold px-4 py-2.5 rounded-xl text-xs backdrop-blur-md border border-white/20 transition"
             >
-              <Network size={16} />
+              <Network size={15} />
               Digital Twin View
             </Link>
           </div>
@@ -183,8 +183,8 @@ function Dashboard() {
 
         {/* Decorative background watermark */}
         <Sprout
-          size={240}
-          className="absolute -right-12 -bottom-16 text-white/5 pointer-events-none select-none"
+          size={200}
+          className="absolute -right-10 -bottom-12 text-white/5 pointer-events-none select-none"
         />
       </div>
 

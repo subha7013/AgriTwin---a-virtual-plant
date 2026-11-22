@@ -7,6 +7,8 @@ import { fileURLToPath } from "url";
 import mongoose from "mongoose";
 import { Disease } from "../../models/Disease.js";
 import { Plant } from "../../models/Plant.js";
+import { Diagnosis } from "../../models/Diagnosis.js";
+import { RiskAssessment } from "../../models/RiskAssessment.js";
 import { ApiError } from "../../utils/ApiError.js";
 import { logger } from "../../config/logger.js";
 
@@ -253,6 +255,27 @@ export async function detectDiseaseService({ file, imageBase64, plantId, user })
         }
       } catch (plantErr) {
         logger.warn(`Could not update plant ${plantId}: ${plantErr.message}`);
+      }
+    }
+
+    // Persist diagnosis record to MongoDB
+    if (mongoose.connection.readyState === 1) {
+      try {
+        await Diagnosis.create({
+          user: user?._id || null,
+          plant: (plantId && plantId !== "unassigned") ? plantId : null,
+          disease: mlOutput.prediction.disease,
+          diseaseSlug: slug,
+          rawClass,
+          confidence: mlOutput.prediction.confidence,
+          isHealthy,
+          riskLevel: mlOutput.prediction.risk_level || (isHealthy ? "Low" : "High"),
+          model: mlOutput.model || "MobileNetV2",
+          probabilities: mlOutput.probabilities || {},
+        });
+        logger.info(`Persisted diagnosis to MongoDB for disease ${slug}`);
+      } catch (diagErr) {
+        logger.warn(`Could not persist diagnosis record: ${diagErr.message}`);
       }
     }
 
