@@ -78,16 +78,8 @@ export function clearSession() {
 }
 
 export function getErrorMessage(error) {
-  const err = error?.response?.data?.error;
-  if (err?.details && typeof err.details === "object") {
-    const messages = Object.entries(err.details)
-      .map(([field, msgs]) => `${field}: ${Array.isArray(msgs) ? msgs.join(", ") : msgs}`)
-      .join(" | ");
-    if (messages) return messages;
-  }
-
   return (
-    err?.message ||
+    error?.response?.data?.error?.message ||
     error?.response?.data?.message ||
     error?.message ||
     "Something went wrong"
