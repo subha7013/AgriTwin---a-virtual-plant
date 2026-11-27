@@ -1,0 +1,2 @@
+[2026-11-27T06:56:51.986Z] [INFO] MongoDB connected: ac-os5kuph-shard-00-02.sr5vrnr.mongodb.net/agritwin
+[2026-11-27T06:56:51.997Z] [INFO] AgriTwin API listening on http://localhost:5000

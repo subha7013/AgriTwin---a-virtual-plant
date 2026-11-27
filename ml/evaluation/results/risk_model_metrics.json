@@ -1,0 +1,40 @@
+{
+  "algorithm": "Random Forest",
+  "accuracy": 0.986,
+  "baseline_lr_accuracy": 0.748,
+  "feature_importances": [
+    {
+      "Feature": "temperature_c",
+      "Importance": 0.6066228442756023
+    },
+    {
+      "Feature": "relative_humidity_pct",
+      "Importance": 0.1524940264398063
+    },
+    {
+      "Feature": "leaf_wetness_pct",
+      "Importance": 0.12622499368442197
+    },
+    {
+      "Feature": "humidity_6h_avg",
+      "Importance": 0.05587020694397532
+    },
+    {
+      "Feature": "temp_6h_std",
+      "Importance": 0.03482070167862147
+    },
+    {
+      "Feature": "soil_moisture_pct",
+      "Importance": 0.015287025639702016
+    },
+    {
+      "Feature": "leaf_wetness_hours_last_12h",
+      "Importance": 0.008680201337870744
+    }
+  ],
+  "classes": [
+    "High",
+    "Low",
+    "Moderate"
+  ]
+}

@@ -1,0 +1,77 @@
+{
+  "val_accuracy": 0.9449,
+  "macro_f1": 0.9486,
+  "weighted_f1": 0.9455,
+  "weakest_class": {
+    "name": "Tomato___Target_Spot",
+    "f1_score": 0.8824,
+    "precision": 0.7895,
+    "recall": 1.0
+  },
+  "strongest_class": {
+    "name": "Tomato___Tomato_mosaic_virus",
+    "f1_score": 1.0
+  },
+  "per_class_metrics": {
+    "Tomato___Bacterial_spot": {
+      "precision": 0.9419,
+      "recall": 0.9818,
+      "f1_score": 0.9614,
+      "support": 165
+    },
+    "Tomato___Early_blight": {
+      "precision": 0.9597,
+      "recall": 0.838,
+      "f1_score": 0.8947,
+      "support": 142
+    },
+    "Tomato___Late_blight": {
+      "precision": 0.9935,
+      "recall": 0.9329,
+      "f1_score": 0.9623,
+      "support": 164
+    },
+    "Tomato___Leaf_Mold": {
+      "precision": 0.9839,
+      "recall": 0.8971,
+      "f1_score": 0.9385,
+      "support": 136
+    },
+    "Tomato___Septoria_leaf_spot": {
+      "precision": 0.9375,
+      "recall": 0.9202,
+      "f1_score": 0.9288,
+      "support": 163
+    },
+    "Tomato___Spider_mites Two-spotted_spider_mite": {
+      "precision": 0.9341,
+      "recall": 0.9571,
+      "f1_score": 0.9455,
+      "support": 163
+    },
+    "Tomato___Target_Spot": {
+      "precision": 0.7895,
+      "recall": 1.0,
+      "f1_score": 0.8824,
+      "support": 150
+    },
+    "Tomato___Tomato_Yellow_Leaf_Curl_Virus": {
+      "precision": 1.0,
+      "recall": 0.9667,
+      "f1_score": 0.9831,
+      "support": 150
+    },
+    "Tomato___Tomato_mosaic_virus": {
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1_score": 1.0,
+      "support": 50
+    },
+    "Tomato___healthy": {
+      "precision": 1.0,
+      "recall": 0.98,
+      "f1_score": 0.9899,
+      "support": 150
+    }
+  }
+}

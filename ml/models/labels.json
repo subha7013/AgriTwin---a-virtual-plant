@@ -1,0 +1,28 @@
+{
+  "model_version": "2.0.0-phase3-leak-free",
+  "backbone": "MobileNetV2 (ImageNet weights)",
+  "img_size": [
+    128,
+    128,
+    3
+  ],
+  "preprocessing": {
+    "scale": "1/127.5",
+    "offset": "-1.0",
+    "formula": "(pixel / 127.5) - 1.0",
+    "range": "[-1.0, 1.0]"
+  },
+  "num_classes": 10,
+  "classes": [
+    "Tomato___Bacterial_spot",
+    "Tomato___Early_blight",
+    "Tomato___Late_blight",
+    "Tomato___Leaf_Mold",
+    "Tomato___Septoria_leaf_spot",
+    "Tomato___Spider_mites Two-spotted_spider_mite",
+    "Tomato___Target_Spot",
+    "Tomato___Tomato_Yellow_Leaf_Curl_Virus",
+    "Tomato___Tomato_mosaic_virus",
+    "Tomato___healthy"
+  ]
+}

@@ -1,0 +1,5354 @@
+{
+  "generated_at": "2026-11-27T12:34:04.865742",
+  "environment": {
+    "backend": "http://localhost:5000/api/v1",
+    "ml_service": "http://localhost:8000"
+  },
+  "ml": {
+    "health": {
+      "status_code": 200,
+      "body": {
+        "status": "ready",
+        "model": "mobilenetv2",
+        "classes": 10
+      },
+      "latency_ms": 2063.98
+    }
+  },
+  "backend": {
+    "health": {
+      "status_code": 200,
+      "body": {
+        "success": true,
+        "data": {
+          "status": "ok",
+          "database": "connected",
+          "uptime": 907
+        }
+      },
+      "latency_ms": 6.0
+    },
+    "login": {
+      "status_code": 200,
+      "latency_ms": 336.65,
+      "success": true
+    },
+    "risk": {
+      "status_code": 201,
+      "risk_category": "Moderate Risk",
+      "risk_score": 39,
+      "input_telemetry": {
+        "temperature_c": 41,
+        "relative_humidity_pct": 65,
+        "soil_moisture_pct": 45,
+        "leaf_wetness_pct": 0
+      },
+      "recommendations": [
+        "Monitor Tomato Target Spot closely and consider treatment.",
+        "Provide shade to reduce heat stress."
+      ]
+    }
+  },
+  "classes": [
+    {
+      "class_dir": "Tomato___Bacterial_spot",
+      "image": "01a3cf3f-94c1-44d5-8972-8c509d62558e___GCREC_Bact.Sp 3396.JPG",
+      "status_code": 200,
+      "predicted": "Tomato Target Spot",
+      "expected": "Tomato Bacterial Spot",
+      "confidence": 0.4764,
+      "correct_class": false,
+      "latency_ms": 2376.7,
+      "top3": [
+        [
+          "Tomato Target Spot",
+          0.4764
+        ],
+        [
+          "Tomato Bacterial Spot",
+          0.4719
+        ],
+        [
+          "Tomato Septoria Leaf Spot",
+          0.0192
+        ]
+      ]
+    },
+    {
+      "class_dir": "Tomato___Bacterial_spot",
+      "image": "01a46cb5-d354-4f59-868e-e56186701541___GCREC_Bact.Sp 5638.JPG",
+      "status_code": 200,
+      "predicted": "Tomato Bacterial Spot",
+      "expected": "Tomato Bacterial Spot",
+      "confidence": 0.7589,
+      "correct_class": true,
+      "latency_ms": 2272.71,
+      "top3": [
+        [
+          "Tomato Bacterial Spot",
+          0.7589
+        ],
+        [
+          "Tomato Septoria Leaf Spot",
+          0.141
+        ],
+        [
+          "Tomato Target Spot",
+          0.0418
+        ]
+      ]
+    },
+    {
+      "class_dir": "Tomato___Bacterial_spot",
+      "image": "01d7f4fe-793f-4a9b-bc8b-8aa05200984f___GCREC_Bact.Sp 2984.JPG",
+      "status_code": 200,
+      "predicted": "Tomato Bacterial Spot",
+      "expected": "Tomato Bacterial Spot",
+      "confidence": 0.5625,
+      "correct_class": true,
+      "latency_ms": 2271.76,
+      "top3": [
+        [
+          "Tomato Bacterial Spot",
+          0.5625
+        ],
+        [
+          "Tomato Target Spot",
+          0.2378
+        ],
+        [
+          "Tomato Healthy",
+          0.1442
+        ]
+      ]
+    },
+    {
+      "class_dir": "Tomato___Bacterial_spot",
+      "image": "01d9fc8d-5083-468d-a583-885f33517cdd___GCREC_Bact.Sp 3422.JPG",
+      "status_code": 200,
+      "predicted": "Tomato Bacterial Spot",
+      "expected": "Tomato Bacterial Spot",
+      "confidence": 0.6306,
+      "correct_class": true,
+      "latency_ms": 2260.52,
+      "top3": [
+        [
+          "Tomato Bacterial Spot",
+          0.6306
+        ],
+        [
+          "Tomato Target Spot",
+          0.1924
+        ],
+        [
+          "Tomato Spider Mites",
+          0.0688
+        ]
+      ]
+    },
+    {
+      "class_dir": "Tomato___Bacterial_spot",
+      "image": "01e079ba-939a-4681-8983-db663f4a859b___GCREC_Bact.Sp 3029.JPG",
+      "status_code": 200,
+      "predicted": "Tomato Bacterial Spot",
+      "expected": "Tomato Bacterial Spot",
+      "confidence": 0.6436,
+      "correct_class": true,
+      "latency_ms": 2262.86,
+      "top3": [
+        [
+          "Tomato Bacterial Spot",
+          0.6436
+        ],
+        [
+          "Tomato Septoria Leaf Spot",
+          0.2757
+        ],
+        [
+          "Tomato Target Spot",
+          0.0276
+        ]
+      ]
+    },
+    {
+      "class_dir": "Tomato___Bacterial_spot",
+      "image": "01f13167-f508-4ef2-8720-4e973438f8fc___GCREC_Bact.Sp 5892.JPG",
+      "status_code": 200,
+      "predicted": "Tomato Septoria Leaf Spot",
+      "expected": "Tomato Bacterial Spot",
+      "confidence": 0.6353,
+      "correct_class": false,
+      "latency_ms": 2240.63,
+      "top3": [
+        [
+          "Tomato Septoria Leaf Spot",
+          0.6353
+        ],
+        [
+          "Tomato Bacterial Spot",
+          0.1397
+        ],
+        [
+          "Tomato Target Spot",
+          0.0833
+        ]
+      ]
+    },
+    {
+      "class_dir": "Tomato___Bacterial_spot",
+      "image": "0ab41c2e-c6fc-4ef1-9ffb-ce1b241d32be___GCREC_Bact.Sp 3426.JPG",
+      "status_code": 200,
+      "predicted": "Tomato Septoria Leaf Spot",
+      "expected": "Tomato Bacterial Spot",
+      "confidence": 0.601,
+      "correct_class": false,
+      "latency_ms": 2244.0,
+      "top3": [
+        [
+          "Tomato Septoria Leaf Spot",
+          0.601
+        ],
+        [
+          "Tomato Bacterial Spot",
+          0.2933
+        ],
+        [
+          "Tomato Target Spot",
+          0.0707
+        ]
+      ]
+    },
+    {
+      "class_dir": "Tomato___Bacterial_spot",
+      "image": "0ab54691-ba9f-4c1f-a69b-ec0501df4401___GCREC_Bact.Sp 3170.JPG",
+      "status_code": 200,
+      "predicted": "Tomato Bacterial Spot",
+      "expected": "Tomato Bacterial Spot",
+      "confidence": 0.4454,
+      "correct_class": true,
+      "latency_ms": 2245.39,
+      "top3": [
+        [
+          "Tomato Bacterial Spot",
+          0.4454
+        ],
+        [
+          "Tomato Target Spot",
+          0.2472
+        ],
+        [
+          "Tomato Septoria Leaf Spot",
+          0.2127
+        ]
+      ]
+    },
+    {
+      "class_dir": "Tomato___Bacterial_spot",
+      "image": "0ab9c705-f29e-45ac-b786-9549b3c38f16___GCREC_Bact.Sp 3223.JPG",
+      "status_code": 200,
+      "predicted": "Tomato Bacterial Spot",
+      "expected": "Tomato Bacterial Spot",
+      "confidence": 0.6131,
+      "correct_class": true,
+      "latency_ms": 2272.74,
+      "top3": [
+        [
+          "Tomato Bacterial Spot",
+          0.6131
+        ],
+        [
+          "Tomato Target Spot",
+          0.1574
+        ],
+        [
+          "Tomato Septoria Leaf Spot",
+          0.1224
+        ]
+      ]
+    },
+    {
+      "class_dir": "Tomato___Bacterial_spot",
+      "image": "0ac8c80f-6d67-46ee-b662-8265d9df9183___GCREC_Bact.Sp 6115.JPG",
+      "status_code": 200,
+      "predicted": "Tomato Septoria Leaf Spot",
+      "expected": "Tomato Bacterial Spot",
+      "confidence": 0.9148,
+      "correct_class": false,
+      "latency_ms": 2233.97,
+      "top3": [
+        [
+          "Tomato Septoria Leaf Spot",
+          0.9148
+        ],
+        [
+          "Tomato Target Spot",
+          0.0413
+        ],
+        [
+          "Tomato Mosaic Virus",
+          0.0207
+        ]
+      ]
+    },
+    {
+      "class_dir": "Tomato___Bacterial_spot",
+      "image": "0ad66523-0fca-464d-a6e9-ca2d629e8058___GCREC_Bact.Sp 5945.JPG",
+      "status_code": 200,
+      "predicted": "Tomato Bacterial Spot",
+      "expected": "Tomato Bacterial Spot",
+      "confidence": 0.5517,
+      "correct_class": true,
+      "latency_ms": 2222.19,
+      "top3": [
+        [
+          "Tomato Bacterial Spot",
+          0.5517
+        ],
+        [
+          "Tomato Target Spot",
+          0.3385
+        ],
+        [
+          "Tomato Septoria Leaf Spot",
+          0.0833
+        ]
+      ]
+    },
+    {
+      "class_dir": "Tomato___Bacterial_spot",
+      "image": "0ad88d7a-c14a-4ac9-8520-c11a0ade3a8f___UF.GRC_BS_Lab Leaf 0996.JPG",
+      "status_code": 200,
+      "predicted": "Tomato Septoria Leaf Spot",
+      "expected": "Tomato Bacterial Spot",
+      "confidence": 0.7273,
+      "correct_class": false,
+      "latency_ms": 2265.37,
+      "top3": [
+        [
+          "Tomato Septoria Leaf Spot",
+          0.7273
+        ],
+        [
+          "Tomato Target Spot",
+          0.1716
+        ],
+        [
+          "Tomato Bacterial Spot",
+          0.062
+        ]
+      ]
+    },
+    {
+      "class_dir": "Tomato___Bacterial_spot",
+      "image": "0afe3bbd-b18b-4c70-8fbd-072844e742a2___GCREC_Bact.Sp 3434.JPG",
+      "status_code": 200,
+      "predicted": "Tomato Septoria Leaf Spot",
+      "expected": "Tomato Bacterial Spot",
+      "confidence": 0.4943,
+      "correct_class": false,
+      "latency_ms": 2253.6,
+      "top3": [
+        [
+          "Tomato Septoria Leaf Spot",
+          0.4943
+        ],
+        [
+          "Tomato Bacterial Spot",
+          0.3911
+        ],
+        [
+          "Tomato Target Spot",
+          0.0412
+        ]
+      ]
+    },
+    {
+      "class_dir": "Tomato___Bacterial_spot",
+      "image": "0b13b997-9957-4029-b2a4-ef4a046eb088___UF.GRC_BS_Lab Leaf 0595.JPG",
+      "status_code": 200,
+      "predicted": "Tomato Septoria Leaf Spot",
+      "expected": "Tomato Bacterial Spot",
+      "confidence": 0.6774,
+      "correct_class": false,
+      "latency_ms": 2246.86,
+      "top3": [
+        [
+          "Tomato Septoria Leaf Spot",
+          0.6774
+        ],
+        [
+          "Tomato Early Blight",
+          0.1319
+        ],
+        [
+          "Tomato Bacterial Spot",
+          0.0878
+        ]
+      ]
+    },
+    {
+      "class_dir": "Tomato___Bacterial_spot",
+      "image": "0b233197-cd35-4031-80c2-610e7e3a046b___GCREC_Bact.Sp 6095.JPG",
+      "status_code": 200,
+      "predicted": "Tomato Target Spot",
+      "expected": "Tomato Bacterial Spot",
+      "confidence": 0.593,
+      "correct_class": false,
+      "latency_ms": 2258.97,
+      "top3": [
+        [
+          "Tomato Target Spot",
+          0.593
+        ],
+        [
+          "Tomato Septoria Leaf Spot",
+          0.2047
+        ],
+        [
+          "Tomato Bacterial Spot",
+          0.1329
+        ]
+      ]
+    },
+    {
+      "class_dir": "Tomato___Bacterial_spot",
+      "image": "0b37769a-a451-4507-a236-f46348e3a9ac___GCREC_Bact.Sp 3265.JPG",
+      "status_code": 200,
+      "predicted": "Tomato Bacterial Spot",
+      "expected": "Tomato Bacterial Spot",
+      "confidence": 0.6898,
+      "correct_class": true,
+      "latency_ms": 2256.43,
+      "top3": [
+        [
+          "Tomato Bacterial Spot",
+          0.6898
+        ],
+        [
+          "Tomato Septoria Leaf Spot",
+          0.2833
+        ],
+        [
+          "Tomato Target Spot",
+          0.0224
+        ]
+      ]
+    },
+    {
+      "class_dir": "Tomato___Bacterial_spot",
+      "image": "0bd31a6a-b084-48c0-b379-3062bde11162___GCREC_Bact.Sp 2974.JPG",
+      "status_code": 200,
+      "predicted": "Tomato Septoria Leaf Spot",
+      "expected": "Tomato Bacterial Spot",
+      "confidence": 0.4092,
+      "correct_class": false,
+      "latency_ms": 2295.4,
+      "top3": [
+        [
+          "Tomato Septoria Leaf Spot",
+          0.4092
+        ],
+        [
+          "Tomato Bacterial Spot",
+          0.2674
+        ],
+        [
+          "Tomato Healthy",
+          0.1121
+        ]
+      ]
+    },
+    {
+      "class_dir": "Tomato___Bacterial_spot",
+      "image": "0c09c121-e945-4b7e-acbf-dff4e0d01acb___GCREC_Bact.Sp 3379.JPG",
+      "status_code": 200,
+      "predicted": "Tomato Septoria Leaf Spot",
+      "expected": "Tomato Bacterial Spot",
+      "confidence": 0.9105,
+      "correct_class": false,
+      "latency_ms": 2243.87,
+      "top3": [
+        [
+          "Tomato Septoria Leaf Spot",
+          0.9105
+        ],
+        [
+          "Tomato Bacterial Spot",
+          0.0734
+        ],
+        [
+          "Tomato Early Blight",
+          0.0061
+        ]
+      ]
+    },
+    {
+      "class_dir": "Tomato___Bacterial_spot",
+      "image": "0c2ee2f1-e725-4031-96ea-57e3b8b626b3___GCREC_Bact.Sp 5645.JPG",
+      "status_code": 200,
+      "predicted": "Tomato Bacterial Spot",
+      "expected": "Tomato Bacterial Spot",
+      "confidence": 0.5178,
+      "correct_class": true,
+      "latency_ms": 2274.65,
+      "top3": [
+        [
+          "Tomato Bacterial Spot",
+          0.5178
+        ],
+        [
+          "Tomato Septoria Leaf Spot",
+          0.4283
+        ],
+        [
+          "Tomato Target Spot",
+          0.0332
+        ]
+      ]
+    },
+    {
+      "class_dir": "Tomato___Bacterial_spot",
+      "image": "0c32d6d5-bf5b-4904-8108-d7a901f2cb6b___UF.GRC_BS_Lab Leaf 8662.JPG",
+      "status_code": 200,
+      "predicted": "Tomato Bacterial Spot",
+      "expected": "Tomato Bacterial Spot",
+      "confidence": 0.906,
+      "correct_class": true,
+      "latency_ms": 2244.5,
+      "top3": [
+        [
+          "Tomato Bacterial Spot",
+          0.906
+        ],
+        [
+          "Tomato Septoria Leaf Spot",
+          0.0626
+        ],
+        [
+          "Tomato Target Spot",
+          0.0213
+        ]
+      ]
+    },
+    {
+      "class_dir": "Tomato___Early_blight",
+      "image": "1723454500377.jpg",
+      "status_code": 200,
+      "predicted": "Tomato Late Blight",
+      "expected": "Tomato Early Blight",
+      "confidence": 0.4481,
+      "correct_class": false,
+      "latency_ms": 2356.76,
+      "top3": [
+        [
+          "Tomato Late Blight",
+          0.4481
+        ],
+        [
+          "Tomato Septoria Leaf Spot",
+          0.2312
+        ],
+        [
+          "Tomato Target Spot",
+          0.1137
+        ]
+      ]
+    },
+    {
+      "class_dir": "Tomato___Early_blight",
+      "image": "1723454500422.jpg",
+      "status_code": 200,
+      "predicted": "Tomato Septoria Leaf Spot",
+      "expected": "Tomato Early Blight",
+      "confidence": 0.7375,
+      "correct_class": false,
+      "latency_ms": 2262.81,
+      "top3": [
+        [
+          "Tomato Septoria Leaf Spot",
+          0.7375
+        ],
+        [
+          "Tomato Early Blight",
+          0.2527
+        ],
+        [
+          "Tomato Late Blight",
+          0.0022
+        ]
+      ]
+    },
+    {
+      "class_dir": "Tomato___Early_blight",
+      "image": "1723454500504.jpg",
+      "status_code": 200,
+      "predicted": "Tomato Early Blight",
+      "expected": "Tomato Early Blight",
+      "confidence": 0.6071,
+      "correct_class": true,
+      "latency_ms": 2275.28,
+      "top3": [
+        [
+          "Tomato Early Blight",
+          0.6071
+        ],
+        [
+          "Tomato Late Blight",
+          0.1749
+        ],
+        [
+          "Tomato Yellow Leaf Curl Virus",
+          0.0737
+        ]
+      ]
+    },
+    {
+      "class_dir": "Tomato___Early_blight",
+      "image": "1723454500544.jpg",
+      "status_code": 200,
+      "predicted": "Tomato Early Blight",
+      "expected": "Tomato Early Blight",
+      "confidence": 0.5759,
+      "correct_class": true,
+      "latency_ms": 2247.86,
+      "top3": [
+        [
+          "Tomato Early Blight",
+          0.5759
+        ],
+        [
+          "Tomato Late Blight",
+          0.2062
+        ],
+        [
+          "Tomato Mosaic Virus",
+          0.1188
+        ]
+      ]
+    },
+    {
+      "class_dir": "Tomato___Early_blight",
+      "image": "1723454500624.jpg",
+      "status_code": 200,
+      "predicted": "Tomato Septoria Leaf Spot",
+      "expected": "Tomato Early Blight",
+      "confidence": 0.8876,
+      "correct_class": false,
+      "latency_ms": 2282.69,
+      "top3": [
+        [
+          "Tomato Septoria Leaf Spot",
+          0.8876
+        ],
+        [
+          "Tomato Early Blight",
+          0.085
+        ],
+        [
+          "Tomato Healthy",
+          0.0092
+        ]
+      ]
+    },
+    {
+      "class_dir": "Tomato___Early_blight",
+      "image": "1723454500704.jpg",
+      "status_code": 200,
+      "predicted": "Tomato Early Blight",
+      "expected": "Tomato Early Blight",
+      "confidence": 0.5875,
+      "correct_class": true,
+      "latency_ms": 2279.42,
+      "top3": [
+        [
+          "Tomato Early Blight",
+          0.5875
+        ],
+        [
+          "Tomato Septoria Leaf Spot",
+          0.1723
+        ],
+        [
+          "Tomato Yellow Leaf Curl Virus",
+          0.0978
+        ]
+      ]
+    },
+    {
+      "class_dir": "Tomato___Early_blight",
+      "image": "1723454500744.jpg",
+      "status_code": 200,
+      "predicted": "Tomato Septoria Leaf Spot",
+      "expected": "Tomato Early Blight",
+      "confidence": 0.8792,
+      "correct_class": false,
+      "latency_ms": 2266.51,
+      "top3": [
+        [
+          "Tomato Septoria Leaf Spot",
+          0.8792
+        ],
+        [
+          "Tomato Mosaic Virus",
+          0.0537
+        ],
+        [
+          "Tomato Early Blight",
+          0.0269
+        ]
+      ]
+    },
+    {
+      "class_dir": "Tomato___Early_blight",
+      "image": "1723454500786.jpg",
+      "status_code": 200,
+      "predicted": "Tomato Early Blight",
+      "expected": "Tomato Early Blight",
+      "confidence": 0.3356,
+      "correct_class": true,
+      "latency_ms": 2361.91,
+      "top3": [
+        [
+          "Tomato Early Blight",
+          0.3356
+        ],
+        [
+          "Tomato Late Blight",
+          0.2618
+        ],
+        [
+          "Tomato Healthy",
+          0.1818
+        ]
+      ]
+    },
+    {
+      "class_dir": "Tomato___Early_blight",
+      "image": "1723454500867.jpg",
+      "status_code": 200,
+      "predicted": "Tomato Septoria Leaf Spot",
+      "expected": "Tomato Early Blight",
+      "confidence": 0.6518,
+      "correct_class": false,
+      "latency_ms": 2248.92,
+      "top3": [
+        [
+          "Tomato Septoria Leaf Spot",
+          0.6518
+        ],
+        [
+          "Tomato Early Blight",
+          0.1814
+        ],
+        [
+          "Tomato Mosaic Virus",
+          0.0582
+        ]
+      ]
+    },
+    {
+      "class_dir": "Tomato___Early_blight",
+      "image": "1723454501033.jpg",
+      "status_code": 200,
+      "predicted": "Tomato Late Blight",
+      "expected": "Tomato Early Blight",
+      "confidence": 0.7009,
+      "correct_class": false,
+      "latency_ms": 2235.71,
+      "top3": [
+        [
+          "Tomato Late Blight",
+          0.7009
+        ],
+        [
+          "Tomato Early Blight",
+          0.091
+        ],
+        [
+          "Tomato Septoria Leaf Spot",
+          0.0811
+        ]
+      ]
+    },
+    {
+      "class_dir": "Tomato___Early_blight",
+      "image": "1723454501153.jpg",
+      "status_code": 200,
+      "predicted": "Tomato Septoria Leaf Spot",
+      "expected": "Tomato Early Blight",
+      "confidence": 0.4217,
+      "correct_class": false,
+      "latency_ms": 2274.03,
+      "top3": [
+        [
+          "Tomato Septoria Leaf Spot",
+          0.4217
+        ],
+        [
+          "Tomato Early Blight",
+          0.1734
+        ],
+        [
+          "Tomato Late Blight",
+          0.1569
+        ]
+      ]
+    },
+    {
+      "class_dir": "Tomato___Early_blight",
+      "image": "1723454501191.jpg",
+      "status_code": 200,
+      "predicted": "Tomato Early Blight",
+      "expected": "Tomato Early Blight",
+      "confidence": 0.5243,
+      "correct_class": true,
+      "latency_ms": 2285.39,
+      "top3": [
+        [
+          "Tomato Early Blight",
+          0.5243
+        ],
+        [
+          "Tomato Septoria Leaf Spot",
+          0.1538
+        ],
+        [
+          "Tomato Healthy",
+          0.0928
+        ]
+      ]
+    },
+    {
+      "class_dir": "Tomato___Early_blight",
+      "image": "1723454501228.jpg",
+      "status_code": 200,
+      "predicted": "Tomato Septoria Leaf Spot",
+      "expected": "Tomato Early Blight",
+      "confidence": 0.3107,
+      "correct_class": false,
+      "latency_ms": 2322.04,
+      "top3": [
+        [
+          "Tomato Septoria Leaf Spot",
+          0.3107
+        ],
+        [
+          "Tomato Late Blight",
+          0.1954
+        ],
+        [
+          "Tomato Early Blight",
+          0.1731
+        ]
+      ]
+    },
+    {
+      "class_dir": "Tomato___Early_blight",
+      "image": "1723454501266.jpg",
+      "status_code": 200,
+      "predicted": "Tomato Septoria Leaf Spot",
+      "expected": "Tomato Early Blight",
+      "confidence": 0.5749,
+      "correct_class": false,
+      "latency_ms": 2259.0,
+      "top3": [
+        [
+          "Tomato Septoria Leaf Spot",
+          0.5749
+        ],
+        [
+          "Tomato Late Blight",
+          0.2023
+        ],
+        [
+          "Tomato Mosaic Virus",
+          0.0567
+        ]
+      ]
+    },
+    {
+      "class_dir": "Tomato___Early_blight",
+      "image": "1723454501305.jpg",
+      "status_code": 200,
+      "predicted": "Tomato Early Blight",
+      "expected": "Tomato Early Blight",
+      "confidence": 0.6214,
+      "correct_class": true,
+      "latency_ms": 2236.03,
+      "top3": [
+        [
+          "Tomato Early Blight",
+          0.6214
+        ],
+        [
+          "Tomato Septoria Leaf Spot",
+          0.2105
+        ],
+        [
+          "Tomato Late Blight",
+          0.0454
+        ]
+      ]
+    },
+    {
+      "class_dir": "Tomato___Early_blight",
+      "image": "1723454501343.jpg",
+      "status_code": 200,
+      "predicted": "Tomato Late Blight",
+      "expected": "Tomato Early Blight",
+      "confidence": 0.8081,
+      "correct_class": false,
+      "latency_ms": 2295.65,
+      "top3": [
+        [
+          "Tomato Late Blight",
+          0.8081
+        ],
+        [
+          "Tomato Septoria Leaf Spot",
+          0.1118
+        ],
+        [
+          "Tomato Early Blight",
+          0.0425
+        ]
+      ]
+    },
+    {
+      "class_dir": "Tomato___Early_blight",
+      "image": "1723454501380.jpg",
+      "status_code": 200,
+      "predicted": "Tomato Early Blight",
+      "expected": "Tomato Early Blight",
+      "confidence": 0.6273,
+      "correct_class": true,
+      "latency_ms": 2289.21,
+      "top3": [
+        [
+          "Tomato Early Blight",
+          0.6273
+        ],
+        [
+          "Tomato Septoria Leaf Spot",
+          0.2212
+        ],
+        [
+          "Tomato Bacterial Spot",
+          0.0727
+        ]
+      ]
+    },
+    {
+      "class_dir": "Tomato___Early_blight",
+      "image": "1723454501420.jpg",
+      "status_code": 200,
+      "predicted": "Tomato Early Blight",
+      "expected": "Tomato Early Blight",
+      "confidence": 0.7074,
+      "correct_class": true,
+      "latency_ms": 2235.12,
+      "top3": [
+        [
+          "Tomato Early Blight",
+          0.7074
+        ],
+        [
+          "Tomato Septoria Leaf Spot",
+          0.1607
+        ],
+        [
+          "Tomato Bacterial Spot",
+          0.0488
+        ]
+      ]
+    },
+    {
+      "class_dir": "Tomato___Early_blight",
+      "image": "1723454501656.jpg",
+      "status_code": 200,
+      "predicted": "Tomato Septoria Leaf Spot",
+      "expected": "Tomato Early Blight",
+      "confidence": 0.8271,
+      "correct_class": false,
+      "latency_ms": 2317.93,
+      "top3": [
+        [
+          "Tomato Septoria Leaf Spot",
+          0.8271
+        ],
+        [
+          "Tomato Early Blight",
+          0.1068
+        ],
+        [
+          "Tomato Bacterial Spot",
+          0.0202
+        ]
+      ]
+    },
+    {
+      "class_dir": "Tomato___Early_blight",
+      "image": "1723454501694.jpg",
+      "status_code": 200,
+      "predicted": "Tomato Septoria Leaf Spot",
+      "expected": "Tomato Early Blight",
+      "confidence": 0.7772,
+      "correct_class": false,
+      "latency_ms": 2268.45,
+      "top3": [
+        [
+          "Tomato Septoria Leaf Spot",
+          0.7772
+        ],
+        [
+          "Tomato Mosaic Virus",
+          0.0715
+        ],
+        [
+          "Tomato Early Blight",
+          0.0675
+        ]
+      ]
+    },
+    {
+      "class_dir": "Tomato___Late_blight",
+      "image": "00ce4c63-9913-4b16-898c-29f99acf0dc3___RS_Late.B 4982.JPG",
+      "status_code": 200,
+      "predicted": "Tomato Mosaic Virus",
+      "expected": "Tomato Late Blight",
+      "confidence": 0.4779,
+      "correct_class": false,
+      "latency_ms": 2294.46,
+      "top3": [
+        [
+          "Tomato Mosaic Virus",
+          0.4779
+        ],
+        [
+          "Tomato Late Blight",
+          0.2053
+        ],
+        [
+          "Tomato Early Blight",
+          0.1661
+        ]
+      ]
+    },
+    {
+      "class_dir": "Tomato___Late_blight",
+      "image": "01a68044-9c5b-4658-a944-6108c6862ce7___GHLB Leaf 2.1 Day 16.JPG",
+      "status_code": 200,
+      "predicted": "Tomato Late Blight",
+      "expected": "Tomato Late Blight",
+      "confidence": 0.8931,
+      "correct_class": true,
+      "latency_ms": 2265.23,
+      "top3": [
+        [
+          "Tomato Late Blight",
+          0.8931
+        ],
+        [
+          "Tomato Bacterial Spot",
+          0.0461
+        ],
+        [
+          "Tomato Early Blight",
+          0.0157
+        ]
+      ]
+    },
+    {
+      "class_dir": "Tomato___Late_blight",
+      "image": "01c391d2-1b3a-4b58-b205-a75674bba6e9___GHLB2 Leaf 8824.JPG",
+      "status_code": 200,
+      "predicted": "Tomato Septoria Leaf Spot",
+      "expected": "Tomato Late Blight",
+      "confidence": 0.6034,
+      "correct_class": false,
+      "latency_ms": 2258.87,
+      "top3": [
+        [
+          "Tomato Septoria Leaf Spot",
+          0.6034
+        ],
+        [
+          "Tomato Late Blight",
+          0.333
+        ],
+        [
+          "Tomato Mosaic Virus",
+          0.039
+        ]
+      ]
+    },
+    {
+      "class_dir": "Tomato___Late_blight",
+      "image": "01cd2d73-c741-45a5-9610-a2cea2266b80___GHLB2 Leaf 121.JPG",
+      "status_code": 200,
+      "predicted": "Tomato Late Blight",
+      "expected": "Tomato Late Blight",
+      "confidence": 0.8714,
+      "correct_class": true,
+      "latency_ms": 2241.53,
+      "top3": [
+        [
+          "Tomato Late Blight",
+          0.8714
+        ],
+        [
+          "Tomato Target Spot",
+          0.0602
+        ],
+        [
+          "Tomato Septoria Leaf Spot",
+          0.0309
+        ]
+      ]
+    },
+    {
+      "class_dir": "Tomato___Late_blight",
+      "image": "01d9be0b-c5e7-49db-8cdf-46bd0ef2c6e7___RS_Late.B 7066.JPG",
+      "status_code": 200,
+      "predicted": "Tomato Late Blight",
+      "expected": "Tomato Late Blight",
+      "confidence": 0.9556,
+      "correct_class": true,
+      "latency_ms": 2279.43,
+      "top3": [
+        [
+          "Tomato Late Blight",
+          0.9556
+        ],
+        [
+          "Tomato Septoria Leaf Spot",
+          0.019
+        ],
+        [
+          "Tomato Target Spot",
+          0.0153
+        ]
+      ]
+    },
+    {
+      "class_dir": "Tomato___Late_blight",
+      "image": "01ebf21e-ef94-4c92-b007-0b26741c2fc8___GHLB2 Leaf 9075.JPG",
+      "status_code": 200,
+      "predicted": "Tomato Healthy",
+      "expected": "Tomato Late Blight",
+      "confidence": 0.4217,
+      "correct_class": false,
+      "latency_ms": 2229.42,
+      "top3": [
+        [
+          "Tomato Healthy",
+          0.4217
+        ],
+        [
+          "Tomato Septoria Leaf Spot",
+          0.2513
+        ],
+        [
+          "Tomato Late Blight",
+          0.1369
+        ]
+      ]
+    },
+    {
+      "class_dir": "Tomato___Late_blight",
+      "image": "01ece5a1-8398-4e68-a9e3-198c57b51b01___GHLB2 Leaf 8757.JPG",
+      "status_code": 200,
+      "predicted": "Tomato Late Blight",
+      "expected": "Tomato Late Blight",
+      "confidence": 0.4629,
+      "correct_class": true,
+      "latency_ms": 2252.36,
+      "top3": [
+        [
+          "Tomato Late Blight",
+          0.4629
+        ],
+        [
+          "Tomato Septoria Leaf Spot",
+          0.3412
+        ],
+        [
+          "Tomato Healthy",
+          0.0731
+        ]
+      ]
+    },
+    {
+      "class_dir": "Tomato___Late_blight",
+      "image": "0a39aa48-3f94-4696-9e43-ff4a93529dc3___RS_Late.B 5103.JPG",
+      "status_code": 200,
+      "predicted": "Tomato Late Blight",
+      "expected": "Tomato Late Blight",
+      "confidence": 0.4095,
+      "correct_class": true,
+      "latency_ms": 2238.27,
+      "top3": [
+        [
+          "Tomato Late Blight",
+          0.4095
+        ],
+        [
+          "Tomato Leaf Mold",
+          0.2561
+        ],
+        [
+          "Tomato Early Blight",
+          0.1207
+        ]
+      ]
+    },
+    {
+      "class_dir": "Tomato___Late_blight",
+      "image": "0a3f65fc-ef1c-4aed-b235-46bae4e5c0e7___GHLB2 Leaf 9065.JPG",
+      "status_code": 200,
+      "predicted": "Tomato Late Blight",
+      "expected": "Tomato Late Blight",
+      "confidence": 0.9802,
+      "correct_class": true,
+      "latency_ms": 2271.35,
+      "top3": [
+        [
+          "Tomato Late Blight",
+          0.9802
+        ],
+        [
+          "Tomato Spider Mites",
+          0.0071
+        ],
+        [
+          "Tomato Yellow Leaf Curl Virus",
+          0.0048
+        ]
+      ]
+    },
+    {
+      "class_dir": "Tomato___Late_blight",
+      "image": "0a4b3cde-c83a-4c83-b037-010369738152___RS_Late.B 6985.JPG",
+      "status_code": 200,
+      "predicted": "Tomato Late Blight",
+      "expected": "Tomato Late Blight",
+      "confidence": 0.9022,
+      "correct_class": true,
+      "latency_ms": 2257.38,
+      "top3": [
+        [
+          "Tomato Late Blight",
+          0.9022
+        ],
+        [
+          "Tomato Leaf Mold",
+          0.0722
+        ],
+        [
+          "Tomato Septoria Leaf Spot",
+          0.0139
+        ]
+      ]
+    },
+    {
+      "class_dir": "Tomato___Late_blight",
+      "image": "0a6203b9-ced0-4934-ae23-4a7d2e2e2fdd___RS_Late.B 6424.JPG",
+      "status_code": 200,
+      "predicted": "Tomato Late Blight",
+      "expected": "Tomato Late Blight",
+      "confidence": 0.9934,
+      "correct_class": true,
+      "latency_ms": 2219.17,
+      "top3": [
+        [
+          "Tomato Late Blight",
+          0.9934
+        ],
+        [
+          "Tomato Mosaic Virus",
+          0.0015
+        ],
+        [
+          "Tomato Septoria Leaf Spot",
+          0.0013
+        ]
+      ]
+    },
+    {
+      "class_dir": "Tomato___Late_blight",
+      "image": "0a8967d4-bb72-4fe4-8096-55fc57437557___RS_Late.B 6974.JPG",
+      "status_code": 200,
+      "predicted": "Tomato Late Blight",
+      "expected": "Tomato Late Blight",
+      "confidence": 0.8327,
+      "correct_class": true,
+      "latency_ms": 2255.55,
+      "top3": [
+        [
+          "Tomato Late Blight",
+          0.8327
+        ],
+        [
+          "Tomato Target Spot",
+          0.105
+        ],
+        [
+          "Tomato Septoria Leaf Spot",
+          0.0233
+        ]
+      ]
+    },
+    {
+      "class_dir": "Tomato___Late_blight",
+      "image": "0ab172fa-ac7b-4a3e-90c8-0708703eb3bb___RS_Late.B 5572.JPG",
+      "status_code": 200,
+      "predicted": "Tomato Late Blight",
+      "expected": "Tomato Late Blight",
+      "confidence": 0.9883,
+      "correct_class": true,
+      "latency_ms": 2279.84,
+      "top3": [
+        [
+          "Tomato Late Blight",
+          0.9883
+        ],
+        [
+          "Tomato Septoria Leaf Spot",
+          0.0058
+        ],
+        [
+          "Tomato Early Blight",
+          0.0028
+        ]
+      ]
+    },
+    {
+      "class_dir": "Tomato___Late_blight",
+      "image": "0ab1cab4-a0c9-4323-9a64-cdafa4342a9b___GHLB2 Leaf 8918.JPG",
+      "status_code": 200,
+      "predicted": "Tomato Late Blight",
+      "expected": "Tomato Late Blight",
+      "confidence": 0.9302,
+      "correct_class": true,
+      "latency_ms": 2252.41,
+      "top3": [
+        [
+          "Tomato Late Blight",
+          0.9302
+        ],
+        [
+          "Tomato Septoria Leaf Spot",
+          0.023
+        ],
+        [
+          "Tomato Leaf Mold",
+          0.021
+        ]
+      ]
+    },
+    {
+      "class_dir": "Tomato___Late_blight",
+      "image": "0ab391bd-e5ba-479c-919b-3aa9a94f66db___GHLB2 Leaf 8934.JPG",
+      "status_code": 200,
+      "predicted": "Tomato Late Blight",
+      "expected": "Tomato Late Blight",
+      "confidence": 0.5117,
+      "correct_class": true,
+      "latency_ms": 2246.99,
+      "top3": [
+        [
+          "Tomato Late Blight",
+          0.5117
+        ],
+        [
+          "Tomato Septoria Leaf Spot",
+          0.4374
+        ],
+        [
+          "Tomato Healthy",
+          0.0184
+        ]
+      ]
+    },
+    {
+      "class_dir": "Tomato___Late_blight",
+      "image": "0ac3df5b-d713-42ef-b0ad-20b5410237ad___RS_Late.B 4969.JPG",
+      "status_code": 200,
+      "predicted": "Tomato Late Blight",
+      "expected": "Tomato Late Blight",
+      "confidence": 0.7218,
+      "correct_class": true,
+      "latency_ms": 2271.01,
+      "top3": [
+        [
+          "Tomato Late Blight",
+          0.7218
+        ],
+        [
+          "Tomato Leaf Mold",
+          0.163
+        ],
+        [
+          "Tomato Early Blight",
+          0.058
+        ]
+      ]
+    },
+    {
+      "class_dir": "Tomato___Late_blight",
+      "image": "0b137624-885b-4d9b-b9e6-330c6681de4b___GHLB2 Leaf 8848.JPG",
+      "status_code": 200,
+      "predicted": "Tomato Late Blight",
+      "expected": "Tomato Late Blight",
+      "confidence": 0.911,
+      "correct_class": true,
+      "latency_ms": 2253.02,
+      "top3": [
+        [
+          "Tomato Late Blight",
+          0.911
+        ],
+        [
+          "Tomato Septoria Leaf Spot",
+          0.0475
+        ],
+        [
+          "Tomato Healthy",
+          0.0185
+        ]
+      ]
+    },
+    {
+      "class_dir": "Tomato___Late_blight",
+      "image": "0b33d7a7-d017-4857-845a-874a004ccd26___RS_Late.B 4970.JPG",
+      "status_code": 200,
+      "predicted": "Tomato Late Blight",
+      "expected": "Tomato Late Blight",
+      "confidence": 0.529,
+      "correct_class": true,
+      "latency_ms": 2270.61,
+      "top3": [
+        [
+          "Tomato Late Blight",
+          0.529
+        ],
+        [
+          "Tomato Leaf Mold",
+          0.3471
+        ],
+        [
+          "Tomato Early Blight",
+          0.0536
+        ]
+      ]
+    },
+    {
+      "class_dir": "Tomato___Late_blight",
+      "image": "0b3c7107-cef9-455e-8fa0-30039b9fc206___RS_Late.B 5038.JPG",
+      "status_code": 200,
+      "predicted": "Tomato Late Blight",
+      "expected": "Tomato Late Blight",
+      "confidence": 0.9467,
+      "correct_class": true,
+      "latency_ms": 2239.0,
+      "top3": [
+        [
+          "Tomato Late Blight",
+          0.9467
+        ],
+        [
+          "Tomato Target Spot",
+          0.0183
+        ],
+        [
+          "Tomato Early Blight",
+          0.0157
+        ]
+      ]
+    },
+    {
+      "class_dir": "Tomato___Late_blight",
+      "image": "0b52ebed-e711-41f2-bfd1-af73410b370e___RS_Late.B 5463.JPG",
+      "status_code": 200,
+      "predicted": "Tomato Late Blight",
+      "expected": "Tomato Late Blight",
+      "confidence": 0.9216,
+      "correct_class": true,
+      "latency_ms": 2254.89,
+      "top3": [
+        [
+          "Tomato Late Blight",
+          0.9216
+        ],
+        [
+          "Tomato Leaf Mold",
+          0.0373
+        ],
+        [
+          "Tomato Early Blight",
+          0.0267
+        ]
+      ]
+    },
+    {
+      "class_dir": "Tomato___Leaf_Mold",
+      "image": "1723454500586.jpg",
+      "status_code": 200,
+      "predicted": "Tomato Early Blight",
+      "expected": "Tomato Leaf Mold",
+      "confidence": 0.7172,
+      "correct_class": false,
+      "latency_ms": 2237.22,
+      "top3": [
+        [
+          "Tomato Early Blight",
+          0.7172
+        ],
+        [
+          "Tomato Late Blight",
+          0.1031
+        ],
+        [
+          "Tomato Septoria Leaf Spot",
+          0.0802
+        ]
+      ]
+    },
+    {
+      "class_dir": "Tomato___Leaf_Mold",
+      "image": "1723454500663.jpg",
+      "status_code": 200,
+      "predicted": "Tomato Early Blight",
+      "expected": "Tomato Leaf Mold",
+      "confidence": 0.7631,
+      "correct_class": false,
+      "latency_ms": 2278.75,
+      "top3": [
+        [
+          "Tomato Early Blight",
+          0.7631
+        ],
+        [
+          "Tomato Septoria Leaf Spot",
+          0.0626
+        ],
+        [
+          "Tomato Yellow Leaf Curl Virus",
+          0.0591
+        ]
+      ]
+    },
+    {
+      "class_dir": "Tomato___Leaf_Mold",
+      "image": "1723454501459.jpg",
+      "status_code": 200,
+      "predicted": "Tomato Septoria Leaf Spot",
+      "expected": "Tomato Leaf Mold",
+      "confidence": 0.954,
+      "correct_class": false,
+      "latency_ms": 2289.85,
+      "top3": [
+        [
+          "Tomato Septoria Leaf Spot",
+          0.954
+        ],
+        [
+          "Tomato Early Blight",
+          0.0116
+        ],
+        [
+          "Tomato Mosaic Virus",
+          0.0114
+        ]
+      ]
+    },
+    {
+      "class_dir": "Tomato___Leaf_Mold",
+      "image": "1723454501893.jpg",
+      "status_code": 200,
+      "predicted": "Tomato Early Blight",
+      "expected": "Tomato Leaf Mold",
+      "confidence": 0.3896,
+      "correct_class": false,
+      "latency_ms": 2262.33,
+      "top3": [
+        [
+          "Tomato Early Blight",
+          0.3896
+        ],
+        [
+          "Tomato Septoria Leaf Spot",
+          0.3799
+        ],
+        [
+          "Tomato Mosaic Virus",
+          0.0817
+        ]
+      ]
+    },
+    {
+      "class_dir": "Tomato___Leaf_Mold",
+      "image": "1723454501933.jpg",
+      "status_code": 200,
+      "predicted": "Tomato Yellow Leaf Curl Virus",
+      "expected": "Tomato Leaf Mold",
+      "confidence": 0.3488,
+      "correct_class": false,
+      "latency_ms": 2269.18,
+      "top3": [
+        [
+          "Tomato Yellow Leaf Curl Virus",
+          0.3488
+        ],
+        [
+          "Tomato Mosaic Virus",
+          0.2096
+        ],
+        [
+          "Tomato Late Blight",
+          0.1636
+        ]
+      ]
+    },
+    {
+      "class_dir": "Tomato___Leaf_Mold",
+      "image": "1723454502721.jpg",
+      "status_code": 200,
+      "predicted": "Tomato Septoria Leaf Spot",
+      "expected": "Tomato Leaf Mold",
+      "confidence": 0.4233,
+      "correct_class": false,
+      "latency_ms": 2261.73,
+      "top3": [
+        [
+          "Tomato Septoria Leaf Spot",
+          0.4233
+        ],
+        [
+          "Tomato Leaf Mold",
+          0.1926
+        ],
+        [
+          "Tomato Mosaic Virus",
+          0.1207
+        ]
+      ]
+    },
+    {
+      "class_dir": "Tomato___Leaf_Mold",
+      "image": "1723454503004.jpg",
+      "status_code": 200,
+      "predicted": "Tomato Septoria Leaf Spot",
+      "expected": "Tomato Leaf Mold",
+      "confidence": 0.7095,
+      "correct_class": false,
+      "latency_ms": 2257.74,
+      "top3": [
+        [
+          "Tomato Septoria Leaf Spot",
+          0.7095
+        ],
+        [
+          "Tomato Mosaic Virus",
+          0.0824
+        ],
+        [
+          "Tomato Early Blight",
+          0.0523
+        ]
+      ]
+    },
+    {
+      "class_dir": "Tomato___Leaf_Mold",
+      "image": "1723454503045.jpg",
+      "status_code": 200,
+      "predicted": "Tomato Mosaic Virus",
+      "expected": "Tomato Leaf Mold",
+      "confidence": 0.4592,
+      "correct_class": false,
+      "latency_ms": 2320.33,
+      "top3": [
+        [
+          "Tomato Mosaic Virus",
+          0.4592
+        ],
+        [
+          "Tomato Healthy",
+          0.2777
+        ],
+        [
+          "Tomato Late Blight",
+          0.0997
+        ]
+      ]
+    },
+    {
+      "class_dir": "Tomato___Leaf_Mold",
+      "image": "1723454503121.jpg",
+      "status_code": 200,
+      "predicted": "Tomato Septoria Leaf Spot",
+      "expected": "Tomato Leaf Mold",
+      "confidence": 0.4792,
+      "correct_class": false,
+      "latency_ms": 2296.9,
+      "top3": [
+        [
+          "Tomato Septoria Leaf Spot",
+          0.4792
+        ],
+        [
+          "Tomato Healthy",
+          0.1388
+        ],
+        [
+          "Tomato Bacterial Spot",
+          0.1263
+        ]
+      ]
+    },
+    {
+      "class_dir": "Tomato___Leaf_Mold",
+      "image": "1723454503368.jpg",
+      "status_code": 200,
+      "predicted": "Tomato Septoria Leaf Spot",
+      "expected": "Tomato Leaf Mold",
+      "confidence": 0.5358,
+      "correct_class": false,
+      "latency_ms": 2292.98,
+      "top3": [
+        [
+          "Tomato Septoria Leaf Spot",
+          0.5358
+        ],
+        [
+          "Tomato Early Blight",
+          0.2945
+        ],
+        [
+          "Tomato Healthy",
+          0.0674
+        ]
+      ]
+    },
+    {
+      "class_dir": "Tomato___Leaf_Mold",
+      "image": "1723454503489.jpg",
+      "status_code": 200,
+      "predicted": "Tomato Septoria Leaf Spot",
+      "expected": "Tomato Leaf Mold",
+      "confidence": 0.6093,
+      "correct_class": false,
+      "latency_ms": 2281.88,
+      "top3": [
+        [
+          "Tomato Septoria Leaf Spot",
+          0.6093
+        ],
+        [
+          "Tomato Bacterial Spot",
+          0.1489
+        ],
+        [
+          "Tomato Late Blight",
+          0.1033
+        ]
+      ]
+    },
+    {
+      "class_dir": "Tomato___Leaf_Mold",
+      "image": "1723454503528.jpg",
+      "status_code": 200,
+      "predicted": "Tomato Septoria Leaf Spot",
+      "expected": "Tomato Leaf Mold",
+      "confidence": 0.6961,
+      "correct_class": false,
+      "latency_ms": 2266.13,
+      "top3": [
+        [
+          "Tomato Septoria Leaf Spot",
+          0.6961
+        ],
+        [
+          "Tomato Healthy",
+          0.1422
+        ],
+        [
+          "Tomato Early Blight",
+          0.0444
+        ]
+      ]
+    },
+    {
+      "class_dir": "Tomato___Leaf_Mold",
+      "image": "1723454503648.jpg",
+      "status_code": 200,
+      "predicted": "Tomato Early Blight",
+      "expected": "Tomato Leaf Mold",
+      "confidence": 0.3824,
+      "correct_class": false,
+      "latency_ms": 2301.05,
+      "top3": [
+        [
+          "Tomato Early Blight",
+          0.3824
+        ],
+        [
+          "Tomato Septoria Leaf Spot",
+          0.2538
+        ],
+        [
+          "Tomato Mosaic Virus",
+          0.2002
+        ]
+      ]
+    },
+    {
+      "class_dir": "Tomato___Leaf_Mold",
+      "image": "1723454503809.jpg",
+      "status_code": 200,
+      "predicted": "Tomato Septoria Leaf Spot",
+      "expected": "Tomato Leaf Mold",
+      "confidence": 0.4305,
+      "correct_class": false,
+      "latency_ms": 2273.51,
+      "top3": [
+        [
+          "Tomato Septoria Leaf Spot",
+          0.4305
+        ],
+        [
+          "Tomato Mosaic Virus",
+          0.2802
+        ],
+        [
+          "Tomato Healthy",
+          0.0895
+        ]
+      ]
+    },
+    {
+      "class_dir": "Tomato___Leaf_Mold",
+      "image": "1723454503933.jpg",
+      "status_code": 200,
+      "predicted": "Tomato Septoria Leaf Spot",
+      "expected": "Tomato Leaf Mold",
+      "confidence": 0.7043,
+      "correct_class": false,
+      "latency_ms": 2244.19,
+      "top3": [
+        [
+          "Tomato Septoria Leaf Spot",
+          0.7043
+        ],
+        [
+          "Tomato Early Blight",
+          0.0909
+        ],
+        [
+          "Tomato Yellow Leaf Curl Virus",
+          0.053
+        ]
+      ]
+    },
+    {
+      "class_dir": "Tomato___Leaf_Mold",
+      "image": "1723454504013.jpg",
+      "status_code": 200,
+      "predicted": "Tomato Early Blight",
+      "expected": "Tomato Leaf Mold",
+      "confidence": 0.6162,
+      "correct_class": false,
+      "latency_ms": 2277.79,
+      "top3": [
+        [
+          "Tomato Early Blight",
+          0.6162
+        ],
+        [
+          "Tomato Septoria Leaf Spot",
+          0.2253
+        ],
+        [
+          "Tomato Yellow Leaf Curl Virus",
+          0.0538
+        ]
+      ]
+    },
+    {
+      "class_dir": "Tomato___Leaf_Mold",
+      "image": "1723454504052.jpg",
+      "status_code": 200,
+      "predicted": "Tomato Early Blight",
+      "expected": "Tomato Leaf Mold",
+      "confidence": 0.5441,
+      "correct_class": false,
+      "latency_ms": 2276.41,
+      "top3": [
+        [
+          "Tomato Early Blight",
+          0.5441
+        ],
+        [
+          "Tomato Healthy",
+          0.2128
+        ],
+        [
+          "Tomato Septoria Leaf Spot",
+          0.1755
+        ]
+      ]
+    },
+    {
+      "class_dir": "Tomato___Leaf_Mold",
+      "image": "1723454504212.jpg",
+      "status_code": 200,
+      "predicted": "Tomato Septoria Leaf Spot",
+      "expected": "Tomato Leaf Mold",
+      "confidence": 0.8651,
+      "correct_class": false,
+      "latency_ms": 2247.58,
+      "top3": [
+        [
+          "Tomato Septoria Leaf Spot",
+          0.8651
+        ],
+        [
+          "Tomato Mosaic Virus",
+          0.051
+        ],
+        [
+          "Tomato Early Blight",
+          0.0405
+        ]
+      ]
+    },
+    {
+      "class_dir": "Tomato___Leaf_Mold",
+      "image": "1723454504250.jpg",
+      "status_code": 200,
+      "predicted": "Tomato Septoria Leaf Spot",
+      "expected": "Tomato Leaf Mold",
+      "confidence": 0.6773,
+      "correct_class": false,
+      "latency_ms": 2328.55,
+      "top3": [
+        [
+          "Tomato Septoria Leaf Spot",
+          0.6773
+        ],
+        [
+          "Tomato Healthy",
+          0.1089
+        ],
+        [
+          "Tomato Early Blight",
+          0.0744
+        ]
+      ]
+    },
+    {
+      "class_dir": "Tomato___Leaf_Mold",
+      "image": "1723454504369.jpg",
+      "status_code": 200,
+      "predicted": "Tomato Early Blight",
+      "expected": "Tomato Leaf Mold",
+      "confidence": 0.7904,
+      "correct_class": false,
+      "latency_ms": 2234.45,
+      "top3": [
+        [
+          "Tomato Early Blight",
+          0.7904
+        ],
+        [
+          "Tomato Mosaic Virus",
+          0.0953
+        ],
+        [
+          "Tomato Septoria Leaf Spot",
+          0.063
+        ]
+      ]
+    },
+    {
+      "class_dir": "Tomato___Septoria_leaf_spot",
+      "image": "00f16858-f392-4d9e-ad9f-efab8049a13f___JR_Sept.L.S 8368.JPG",
+      "status_code": 200,
+      "predicted": "Tomato Septoria Leaf Spot",
+      "expected": "Tomato Septoria Leaf Spot",
+      "confidence": 0.9787,
+      "correct_class": true,
+      "latency_ms": 2236.08,
+      "top3": [
+        [
+          "Tomato Septoria Leaf Spot",
+          0.9787
+        ],
+        [
+          "Tomato Mosaic Virus",
+          0.0057
+        ],
+        [
+          "Tomato Early Blight",
+          0.004
+        ]
+      ]
+    },
+    {
+      "class_dir": "Tomato___Septoria_leaf_spot",
+      "image": "01f54ad9-9c03-4ffd-86f4-829fc2939120___Matt.S_CG 0702.JPG",
+      "status_code": 200,
+      "predicted": "Tomato Septoria Leaf Spot",
+      "expected": "Tomato Septoria Leaf Spot",
+      "confidence": 0.9334,
+      "correct_class": true,
+      "latency_ms": 2239.28,
+      "top3": [
+        [
+          "Tomato Septoria Leaf Spot",
+          0.9334
+        ],
+        [
+          "Tomato Mosaic Virus",
+          0.041
+        ],
+        [
+          "Tomato Spider Mites",
+          0.0162
+        ]
+      ]
+    },
+    {
+      "class_dir": "Tomato___Septoria_leaf_spot",
+      "image": "02ab6821-757a-401b-ac04-919fdceee1f0___Matt.S_CG 1653.JPG",
+      "status_code": 200,
+      "predicted": "Tomato Septoria Leaf Spot",
+      "expected": "Tomato Septoria Leaf Spot",
+      "confidence": 0.9913,
+      "correct_class": true,
+      "latency_ms": 2210.45,
+      "top3": [
+        [
+          "Tomato Septoria Leaf Spot",
+          0.9913
+        ],
+        [
+          "Tomato Mosaic Virus",
+          0.0032
+        ],
+        [
+          "Tomato Leaf Mold",
+          0.0018
+        ]
+      ]
+    },
+    {
+      "class_dir": "Tomato___Septoria_leaf_spot",
+      "image": "02b079eb-8c74-42bf-b956-d3aecdb9d4ad___JR_Sept.L.S 8522.JPG",
+      "status_code": 200,
+      "predicted": "Tomato Leaf Mold",
+      "expected": "Tomato Septoria Leaf Spot",
+      "confidence": 0.4308,
+      "correct_class": false,
+      "latency_ms": 2279.45,
+      "top3": [
+        [
+          "Tomato Leaf Mold",
+          0.4308
+        ],
+        [
+          "Tomato Septoria Leaf Spot",
+          0.3825
+        ],
+        [
+          "Tomato Spider Mites",
+          0.0765
+        ]
+      ]
+    },
+    {
+      "class_dir": "Tomato___Septoria_leaf_spot",
+      "image": "02d2c484-8bdb-4ef2-8d07-0bdb3ac330cc___Matt.S_CG 0975.JPG",
+      "status_code": 200,
+      "predicted": "Tomato Septoria Leaf Spot",
+      "expected": "Tomato Septoria Leaf Spot",
+      "confidence": 0.9892,
+      "correct_class": true,
+      "latency_ms": 2243.0,
+      "top3": [
+        [
+          "Tomato Septoria Leaf Spot",
+          0.9892
+        ],
+        [
+          "Tomato Early Blight",
+          0.0058
+        ],
+        [
+          "Tomato Target Spot",
+          0.0021
+        ]
+      ]
+    },
+    {
+      "class_dir": "Tomato___Septoria_leaf_spot",
+      "image": "0648ab1f-53de-4c70-9854-10f0794cb30c___Matt.S_CG 7480.JPG",
+      "status_code": 200,
+      "predicted": "Tomato Septoria Leaf Spot",
+      "expected": "Tomato Septoria Leaf Spot",
+      "confidence": 0.9855,
+      "correct_class": true,
+      "latency_ms": 2235.67,
+      "top3": [
+        [
+          "Tomato Septoria Leaf Spot",
+          0.9855
+        ],
+        [
+          "Tomato Healthy",
+          0.0048
+        ],
+        [
+          "Tomato Mosaic Virus",
+          0.0033
+        ]
+      ]
+    },
+    {
+      "class_dir": "Tomato___Septoria_leaf_spot",
+      "image": "0650f176-add9-444e-893e-707969054a43___JR_Sept.L.S 2722.JPG",
+      "status_code": 200,
+      "predicted": "Tomato Leaf Mold",
+      "expected": "Tomato Septoria Leaf Spot",
+      "confidence": 0.4637,
+      "correct_class": false,
+      "latency_ms": 2238.16,
+      "top3": [
+        [
+          "Tomato Leaf Mold",
+          0.4637
+        ],
+        [
+          "Tomato Septoria Leaf Spot",
+          0.2176
+        ],
+        [
+          "Tomato Late Blight",
+          0.1059
+        ]
+      ]
+    },
+    {
+      "class_dir": "Tomato___Septoria_leaf_spot",
+      "image": "0663ec0d-8837-4ba8-82a4-89d8a07ca206___Matt.S_CG 0714.JPG",
+      "status_code": 200,
+      "predicted": "Tomato Septoria Leaf Spot",
+      "expected": "Tomato Septoria Leaf Spot",
+      "confidence": 0.9982,
+      "correct_class": true,
+      "latency_ms": 2223.88,
+      "top3": [
+        [
+          "Tomato Septoria Leaf Spot",
+          0.9982
+        ],
+        [
+          "Tomato Mosaic Virus",
+          0.0014
+        ],
+        [
+          "Tomato Early Blight",
+          0.0001
+        ]
+      ]
+    },
+    {
+      "class_dir": "Tomato___Septoria_leaf_spot",
+      "image": "0a146952-538a-41e5-a422-b5d50e91771e___Matt.S_CG 6079.JPG",
+      "status_code": 200,
+      "predicted": "Tomato Septoria Leaf Spot",
+      "expected": "Tomato Septoria Leaf Spot",
+      "confidence": 0.9929,
+      "correct_class": true,
+      "latency_ms": 2235.79,
+      "top3": [
+        [
+          "Tomato Septoria Leaf Spot",
+          0.9929
+        ],
+        [
+          "Tomato Early Blight",
+          0.0034
+        ],
+        [
+          "Tomato Mosaic Virus",
+          0.0022
+        ]
+      ]
+    },
+    {
+      "class_dir": "Tomato___Septoria_leaf_spot",
+      "image": "0a25f893-1b5f-4845-baa1-f68ac03d96ac___Matt.S_CG 7863.JPG",
+      "status_code": 200,
+      "predicted": "Tomato Septoria Leaf Spot",
+      "expected": "Tomato Septoria Leaf Spot",
+      "confidence": 0.9731,
+      "correct_class": true,
+      "latency_ms": 2242.81,
+      "top3": [
+        [
+          "Tomato Septoria Leaf Spot",
+          0.9731
+        ],
+        [
+          "Tomato Early Blight",
+          0.0123
+        ],
+        [
+          "Tomato Target Spot",
+          0.0087
+        ]
+      ]
+    },
+    {
+      "class_dir": "Tomato___Septoria_leaf_spot",
+      "image": "0a5edec2-e297-4a25-86fc-78f03772c100___JR_Sept.L.S 8468.JPG",
+      "status_code": 200,
+      "predicted": "Tomato Septoria Leaf Spot",
+      "expected": "Tomato Septoria Leaf Spot",
+      "confidence": 0.9834,
+      "correct_class": true,
+      "latency_ms": 2262.0,
+      "top3": [
+        [
+          "Tomato Septoria Leaf Spot",
+          0.9834
+        ],
+        [
+          "Tomato Leaf Mold",
+          0.0049
+        ],
+        [
+          "Tomato Mosaic Virus",
+          0.0036
+        ]
+      ]
+    },
+    {
+      "class_dir": "Tomato___Septoria_leaf_spot",
+      "image": "0a68a294-30d1-4422-ab7e-a1909ec277f7___JR_Sept.L.S 8443.JPG",
+      "status_code": 200,
+      "predicted": "Tomato Septoria Leaf Spot",
+      "expected": "Tomato Septoria Leaf Spot",
+      "confidence": 0.997,
+      "correct_class": true,
+      "latency_ms": 2234.59,
+      "top3": [
+        [
+          "Tomato Septoria Leaf Spot",
+          0.997
+        ],
+        [
+          "Tomato Spider Mites",
+          0.0009
+        ],
+        [
+          "Tomato Mosaic Virus",
+          0.0007
+        ]
+      ]
+    },
+    {
+      "class_dir": "Tomato___Septoria_leaf_spot",
+      "image": "0a70601b-8511-4a56-9562-c95c46372874___Matt.S_CG 1032.JPG",
+      "status_code": 200,
+      "predicted": "Tomato Septoria Leaf Spot",
+      "expected": "Tomato Septoria Leaf Spot",
+      "confidence": 0.9967,
+      "correct_class": true,
+      "latency_ms": 2236.35,
+      "top3": [
+        [
+          "Tomato Septoria Leaf Spot",
+          0.9967
+        ],
+        [
+          "Tomato Late Blight",
+          0.0023
+        ],
+        [
+          "Tomato Early Blight",
+          0.0002
+        ]
+      ]
+    },
+    {
+      "class_dir": "Tomato___Septoria_leaf_spot",
+      "image": "0a76257e-6a78-459b-8f51-a266805121eb___Matt.S_CG 2527.JPG",
+      "status_code": 200,
+      "predicted": "Tomato Septoria Leaf Spot",
+      "expected": "Tomato Septoria Leaf Spot",
+      "confidence": 0.9929,
+      "correct_class": true,
+      "latency_ms": 2262.81,
+      "top3": [
+        [
+          "Tomato Septoria Leaf Spot",
+          0.9929
+        ],
+        [
+          "Tomato Target Spot",
+          0.0021
+        ],
+        [
+          "Tomato Healthy",
+          0.0017
+        ]
+      ]
+    },
+    {
+      "class_dir": "Tomato___Septoria_leaf_spot",
+      "image": "0a95b5b7-7bfb-4201-9320-dae33498081a___JR_Sept.L.S 2482.JPG",
+      "status_code": 200,
+      "predicted": "Tomato Septoria Leaf Spot",
+      "expected": "Tomato Septoria Leaf Spot",
+      "confidence": 0.9055,
+      "correct_class": true,
+      "latency_ms": 2324.39,
+      "top3": [
+        [
+          "Tomato Septoria Leaf Spot",
+          0.9055
+        ],
+        [
+          "Tomato Leaf Mold",
+          0.0329
+        ],
+        [
+          "Tomato Bacterial Spot",
+          0.0171
+        ]
+      ]
+    },
+    {
+      "class_dir": "Tomato___Septoria_leaf_spot",
+      "image": "0aa486df-97b6-4764-89a9-d193e16aabbb___Keller.St_CG 1931.JPG",
+      "status_code": 200,
+      "predicted": "Tomato Septoria Leaf Spot",
+      "expected": "Tomato Septoria Leaf Spot",
+      "confidence": 0.9798,
+      "correct_class": true,
+      "latency_ms": 2301.47,
+      "top3": [
+        [
+          "Tomato Septoria Leaf Spot",
+          0.9798
+        ],
+        [
+          "Tomato Target Spot",
+          0.008
+        ],
+        [
+          "Tomato Mosaic Virus",
+          0.0026
+        ]
+      ]
+    },
+    {
+      "class_dir": "Tomato___Septoria_leaf_spot",
+      "image": "0ab271a7-765e-4675-8bfc-e249c0c86fdd___Keller.St_CG 1778.JPG",
+      "status_code": 200,
+      "predicted": "Tomato Septoria Leaf Spot",
+      "expected": "Tomato Septoria Leaf Spot",
+      "confidence": 0.9992,
+      "correct_class": true,
+      "latency_ms": 2302.07,
+      "top3": [
+        [
+          "Tomato Septoria Leaf Spot",
+          0.9992
+        ],
+        [
+          "Tomato Spider Mites",
+          0.0004
+        ],
+        [
+          "Tomato Mosaic Virus",
+          0.0003
+        ]
+      ]
+    },
+    {
+      "class_dir": "Tomato___Septoria_leaf_spot",
+      "image": "0af9f990-ad92-4411-8623-4498ca4805ce___Keller.St_CG 1942.JPG",
+      "status_code": 200,
+      "predicted": "Tomato Septoria Leaf Spot",
+      "expected": "Tomato Septoria Leaf Spot",
+      "confidence": 0.9992,
+      "correct_class": true,
+      "latency_ms": 2331.96,
+      "top3": [
+        [
+          "Tomato Septoria Leaf Spot",
+          0.9992
+        ],
+        [
+          "Tomato Target Spot",
+          0.0006
+        ],
+        [
+          "Tomato Healthy",
+          0.0001
+        ]
+      ]
+    },
+    {
+      "class_dir": "Tomato___Septoria_leaf_spot",
+      "image": "0b23b869-cfa6-40d7-a683-f4637d91ebff___Matt.S_CG 1286.JPG",
+      "status_code": 200,
+      "predicted": "Tomato Septoria Leaf Spot",
+      "expected": "Tomato Septoria Leaf Spot",
+      "confidence": 0.9989,
+      "correct_class": true,
+      "latency_ms": 2340.59,
+      "top3": [
+        [
+          "Tomato Septoria Leaf Spot",
+          0.9989
+        ],
+        [
+          "Tomato Healthy",
+          0.0004
+        ],
+        [
+          "Tomato Bacterial Spot",
+          0.0003
+        ]
+      ]
+    },
+    {
+      "class_dir": "Tomato___Septoria_leaf_spot",
+      "image": "0b36c5a2-6c9f-40d9-af4b-d4b0e66997da___Matt.S_CG 6653.JPG",
+      "status_code": 200,
+      "predicted": "Tomato Septoria Leaf Spot",
+      "expected": "Tomato Septoria Leaf Spot",
+      "confidence": 0.9697,
+      "correct_class": true,
+      "latency_ms": 2323.09,
+      "top3": [
+        [
+          "Tomato Septoria Leaf Spot",
+          0.9697
+        ],
+        [
+          "Tomato Target Spot",
+          0.0145
+        ],
+        [
+          "Tomato Mosaic Virus",
+          0.011
+        ]
+      ]
+    },
+    {
+      "class_dir": "Tomato___Spider_mites Two-spotted_spider_mite",
+      "image": "00bc7858-1dca-4bfb-a828-225f03bd72a5___Com.G_SpM_FL 9455.JPG",
+      "status_code": 200,
+      "predicted": "Tomato Spider Mites",
+      "expected": "Tomato Spider Mites",
+      "confidence": 0.9354,
+      "correct_class": true,
+      "latency_ms": 2318.78,
+      "top3": [
+        [
+          "Tomato Spider Mites",
+          0.9354
+        ],
+        [
+          "Tomato Mosaic Virus",
+          0.0343
+        ],
+        [
+          "Tomato Target Spot",
+          0.026
+        ]
+      ]
+    },
+    {
+      "class_dir": "Tomato___Spider_mites Two-spotted_spider_mite",
+      "image": "00c8e9a0-1fb8-434b-8981-25511358ddc9___Com.G_SpM_FL 8717.JPG",
+      "status_code": 200,
+      "predicted": "Tomato Spider Mites",
+      "expected": "Tomato Spider Mites",
+      "confidence": 0.7683,
+      "correct_class": true,
+      "latency_ms": 2344.77,
+      "top3": [
+        [
+          "Tomato Spider Mites",
+          0.7683
+        ],
+        [
+          "Tomato Leaf Mold",
+          0.0653
+        ],
+        [
+          "Tomato Healthy",
+          0.0542
+        ]
+      ]
+    },
+    {
+      "class_dir": "Tomato___Spider_mites Two-spotted_spider_mite",
+      "image": "00fa99e8-2605-4d72-be69-98277587d84b___Com.G_SpM_FL 1453.JPG",
+      "status_code": 200,
+      "predicted": "Tomato Healthy",
+      "expected": "Tomato Spider Mites",
+      "confidence": 0.3209,
+      "correct_class": false,
+      "latency_ms": 2337.3,
+      "top3": [
+        [
+          "Tomato Healthy",
+          0.3209
+        ],
+        [
+          "Tomato Septoria Leaf Spot",
+          0.3142
+        ],
+        [
+          "Tomato Target Spot",
+          0.1206
+        ]
+      ]
+    },
+    {
+      "class_dir": "Tomato___Spider_mites Two-spotted_spider_mite",
+      "image": "02c791ab-ffc3-40d4-9b42-db946eee2413___Com.G_SpM_FL 1640.JPG",
+      "status_code": 200,
+      "predicted": "Tomato Spider Mites",
+      "expected": "Tomato Spider Mites",
+      "confidence": 0.709,
+      "correct_class": true,
+      "latency_ms": 2306.15,
+      "top3": [
+        [
+          "Tomato Spider Mites",
+          0.709
+        ],
+        [
+          "Tomato Target Spot",
+          0.2055
+        ],
+        [
+          "Tomato Healthy",
+          0.0352
+        ]
+      ]
+    },
+    {
+      "class_dir": "Tomato___Spider_mites Two-spotted_spider_mite",
+      "image": "0421a79d-5c62-43e8-a695-ae55f987c27e___Com.G_SpM_FL 1434.JPG",
+      "status_code": 200,
+      "predicted": "Tomato Spider Mites",
+      "expected": "Tomato Spider Mites",
+      "confidence": 0.7752,
+      "correct_class": true,
+      "latency_ms": 2321.91,
+      "top3": [
+        [
+          "Tomato Spider Mites",
+          0.7752
+        ],
+        [
+          "Tomato Target Spot",
+          0.0992
+        ],
+        [
+          "Tomato Healthy",
+          0.0467
+        ]
+      ]
+    },
+    {
+      "class_dir": "Tomato___Spider_mites Two-spotted_spider_mite",
+      "image": "0a167675-0317-4105-b885-b707b6ea52cf___Com.G_SpM_FL 9327.JPG",
+      "status_code": 200,
+      "predicted": "Tomato Spider Mites",
+      "expected": "Tomato Spider Mites",
+      "confidence": 0.8519,
+      "correct_class": true,
+      "latency_ms": 2365.61,
+      "top3": [
+        [
+          "Tomato Spider Mites",
+          0.8519
+        ],
+        [
+          "Tomato Mosaic Virus",
+          0.0587
+        ],
+        [
+          "Tomato Target Spot",
+          0.0405
+        ]
+      ]
+    },
+    {
+      "class_dir": "Tomato___Spider_mites Two-spotted_spider_mite",
+      "image": "0a1c03ea-1a2d-449e-bcc4-4a8b62febf88___Com.G_SpM_FL 9433.JPG",
+      "status_code": 200,
+      "predicted": "Tomato Spider Mites",
+      "expected": "Tomato Spider Mites",
+      "confidence": 0.9368,
+      "correct_class": true,
+      "latency_ms": 2299.71,
+      "top3": [
+        [
+          "Tomato Spider Mites",
+          0.9368
+        ],
+        [
+          "Tomato Target Spot",
+          0.0257
+        ],
+        [
+          "Tomato Septoria Leaf Spot",
+          0.0123
+        ]
+      ]
+    },
+    {
+      "class_dir": "Tomato___Spider_mites Two-spotted_spider_mite",
+      "image": "0a246e71-0551-4603-a017-d1dfc4ea06be___Com.G_SpM_FL 1178.JPG",
+      "status_code": 200,
+      "predicted": "Tomato Spider Mites",
+      "expected": "Tomato Spider Mites",
+      "confidence": 0.5669,
+      "correct_class": true,
+      "latency_ms": 2264.73,
+      "top3": [
+        [
+          "Tomato Spider Mites",
+          0.5669
+        ],
+        [
+          "Tomato Mosaic Virus",
+          0.2488
+        ],
+        [
+          "Tomato Healthy",
+          0.0804
+        ]
+      ]
+    },
+    {
+      "class_dir": "Tomato___Spider_mites Two-spotted_spider_mite",
+      "image": "0a2b122a-0f23-4c92-8b7a-21b274dffbe5___Com.G_SpM_FL 9350.JPG",
+      "status_code": 200,
+      "predicted": "Tomato Spider Mites",
+      "expected": "Tomato Spider Mites",
+      "confidence": 0.9526,
+      "correct_class": true,
+      "latency_ms": 2264.57,
+      "top3": [
+        [
+          "Tomato Spider Mites",
+          0.9526
+        ],
+        [
+          "Tomato Target Spot",
+          0.0246
+        ],
+        [
+          "Tomato Septoria Leaf Spot",
+          0.0113
+        ]
+      ]
+    },
+    {
+      "class_dir": "Tomato___Spider_mites Two-spotted_spider_mite",
+      "image": "0a3ec09c-ccf4-49ab-bae2-f82f913aa9c8___Com.G_SpM_FL 9444.JPG",
+      "status_code": 200,
+      "predicted": "Tomato Target Spot",
+      "expected": "Tomato Spider Mites",
+      "confidence": 0.5102,
+      "correct_class": false,
+      "latency_ms": 2246.74,
+      "top3": [
+        [
+          "Tomato Target Spot",
+          0.5102
+        ],
+        [
+          "Tomato Spider Mites",
+          0.2675
+        ],
+        [
+          "Tomato Leaf Mold",
+          0.0739
+        ]
+      ]
+    },
+    {
+      "class_dir": "Tomato___Spider_mites Two-spotted_spider_mite",
+      "image": "0a714292-45d6-483a-bbd0-2eab8fe72888___Com.G_SpM_FL 1496.JPG",
+      "status_code": 200,
+      "predicted": "Tomato Mosaic Virus",
+      "expected": "Tomato Spider Mites",
+      "confidence": 0.7407,
+      "correct_class": false,
+      "latency_ms": 2237.15,
+      "top3": [
+        [
+          "Tomato Mosaic Virus",
+          0.7407
+        ],
+        [
+          "Tomato Spider Mites",
+          0.1371
+        ],
+        [
+          "Tomato Leaf Mold",
+          0.0325
+        ]
+      ]
+    },
+    {
+      "class_dir": "Tomato___Spider_mites Two-spotted_spider_mite",
+      "image": "0a7714a4-530b-49e0-821f-be8d33c588ac___Com.G_SpM_FL 1775.JPG",
+      "status_code": 200,
+      "predicted": "Tomato Spider Mites",
+      "expected": "Tomato Spider Mites",
+      "confidence": 0.3746,
+      "correct_class": true,
+      "latency_ms": 2281.33,
+      "top3": [
+        [
+          "Tomato Spider Mites",
+          0.3746
+        ],
+        [
+          "Tomato Healthy",
+          0.3134
+        ],
+        [
+          "Tomato Target Spot",
+          0.171
+        ]
+      ]
+    },
+    {
+      "class_dir": "Tomato___Spider_mites Two-spotted_spider_mite",
+      "image": "0ac9558f-1e02-4498-9584-887627587bc0___Com.G_SpM_FL 1148.JPG",
+      "status_code": 200,
+      "predicted": "Tomato Septoria Leaf Spot",
+      "expected": "Tomato Spider Mites",
+      "confidence": 0.5741,
+      "correct_class": false,
+      "latency_ms": 2271.6,
+      "top3": [
+        [
+          "Tomato Septoria Leaf Spot",
+          0.5741
+        ],
+        [
+          "Tomato Spider Mites",
+          0.1721
+        ],
+        [
+          "Tomato Mosaic Virus",
+          0.121
+        ]
+      ]
+    },
+    {
+      "class_dir": "Tomato___Spider_mites Two-spotted_spider_mite",
+      "image": "0ad80523-3f34-41ae-aec8-e676546ddde5___Com.G_SpM_FL 8489.JPG",
+      "status_code": 200,
+      "predicted": "Tomato Spider Mites",
+      "expected": "Tomato Spider Mites",
+      "confidence": 0.4772,
+      "correct_class": true,
+      "latency_ms": 2275.52,
+      "top3": [
+        [
+          "Tomato Spider Mites",
+          0.4772
+        ],
+        [
+          "Tomato Target Spot",
+          0.3781
+        ],
+        [
+          "Tomato Leaf Mold",
+          0.0886
+        ]
+      ]
+    },
+    {
+      "class_dir": "Tomato___Spider_mites Two-spotted_spider_mite",
+      "image": "0ade19e4-c48b-4e58-bddf-153d44d48c3e___Com.G_SpM_FL 9449.JPG",
+      "status_code": 200,
+      "predicted": "Tomato Spider Mites",
+      "expected": "Tomato Spider Mites",
+      "confidence": 0.9771,
+      "correct_class": true,
+      "latency_ms": 2249.85,
+      "top3": [
+        [
+          "Tomato Spider Mites",
+          0.9771
+        ],
+        [
+          "Tomato Mosaic Virus",
+          0.0089
+        ],
+        [
+          "Tomato Target Spot",
+          0.0076
+        ]
+      ]
+    },
+    {
+      "class_dir": "Tomato___Spider_mites Two-spotted_spider_mite",
+      "image": "0af13d73-170d-4b37-bddf-51a14e597905___Com.G_SpM_FL 1438.JPG",
+      "status_code": 200,
+      "predicted": "Tomato Spider Mites",
+      "expected": "Tomato Spider Mites",
+      "confidence": 0.5948,
+      "correct_class": true,
+      "latency_ms": 2260.92,
+      "top3": [
+        [
+          "Tomato Spider Mites",
+          0.5948
+        ],
+        [
+          "Tomato Mosaic Virus",
+          0.1784
+        ],
+        [
+          "Tomato Leaf Mold",
+          0.1584
+        ]
+      ]
+    },
+    {
+      "class_dir": "Tomato___Spider_mites Two-spotted_spider_mite",
+      "image": "0b17e71c-fee6-4b5e-9a7d-8ba44d29215f___Com.G_SpM_FL 8549.JPG",
+      "status_code": 200,
+      "predicted": "Tomato Target Spot",
+      "expected": "Tomato Spider Mites",
+      "confidence": 0.6501,
+      "correct_class": false,
+      "latency_ms": 2278.23,
+      "top3": [
+        [
+          "Tomato Target Spot",
+          0.6501
+        ],
+        [
+          "Tomato Spider Mites",
+          0.2711
+        ],
+        [
+          "Tomato Healthy",
+          0.0197
+        ]
+      ]
+    },
+    {
+      "class_dir": "Tomato___Spider_mites Two-spotted_spider_mite",
+      "image": "0b437fa8-c1c8-45f4-b608-bdc6f7e09f84___Com.G_SpM_FL 1137.JPG",
+      "status_code": 200,
+      "predicted": "Tomato Spider Mites",
+      "expected": "Tomato Spider Mites",
+      "confidence": 0.4256,
+      "correct_class": true,
+      "latency_ms": 2232.61,
+      "top3": [
+        [
+          "Tomato Spider Mites",
+          0.4256
+        ],
+        [
+          "Tomato Healthy",
+          0.1887
+        ],
+        [
+          "Tomato Early Blight",
+          0.1768
+        ]
+      ]
+    },
+    {
+      "class_dir": "Tomato___Spider_mites Two-spotted_spider_mite",
+      "image": "0b5cda10-da2f-4647-b159-69647b42212f___Com.G_SpM_FL 1784.JPG",
+      "status_code": 200,
+      "predicted": "Tomato Spider Mites",
+      "expected": "Tomato Spider Mites",
+      "confidence": 0.714,
+      "correct_class": true,
+      "latency_ms": 2276.61,
+      "top3": [
+        [
+          "Tomato Spider Mites",
+          0.714
+        ],
+        [
+          "Tomato Mosaic Virus",
+          0.1776
+        ],
+        [
+          "Tomato Healthy",
+          0.066
+        ]
+      ]
+    },
+    {
+      "class_dir": "Tomato___Spider_mites Two-spotted_spider_mite",
+      "image": "0b891169-2116-431d-968f-d2a36bb69243___Com.G_SpM_FL 1743.JPG",
+      "status_code": 200,
+      "predicted": "Tomato Mosaic Virus",
+      "expected": "Tomato Spider Mites",
+      "confidence": 0.3609,
+      "correct_class": false,
+      "latency_ms": 2252.15,
+      "top3": [
+        [
+          "Tomato Mosaic Virus",
+          0.3609
+        ],
+        [
+          "Tomato Healthy",
+          0.3189
+        ],
+        [
+          "Tomato Spider Mites",
+          0.1799
+        ]
+      ]
+    },
+    {
+      "class_dir": "Tomato___Target_Spot",
+      "image": "0044d10f-7062-4655-8abd-9fffc5b2f152___Com.G_TgS_FL 7908.JPG",
+      "status_code": 200,
+      "predicted": "Tomato Target Spot",
+      "expected": "Tomato Target Spot",
+      "confidence": 0.711,
+      "correct_class": true,
+      "latency_ms": 2221.89,
+      "top3": [
+        [
+          "Tomato Target Spot",
+          0.711
+        ],
+        [
+          "Tomato Septoria Leaf Spot",
+          0.2034
+        ],
+        [
+          "Tomato Early Blight",
+          0.0452
+        ]
+      ]
+    },
+    {
+      "class_dir": "Tomato___Target_Spot",
+      "image": "01b2013e-4030-4cd0-843c-2dbacf5f3758___Com.G_TgS_FL 8398.JPG",
+      "status_code": 200,
+      "predicted": "Tomato Target Spot",
+      "expected": "Tomato Target Spot",
+      "confidence": 0.9601,
+      "correct_class": true,
+      "latency_ms": 2248.82,
+      "top3": [
+        [
+          "Tomato Target Spot",
+          0.9601
+        ],
+        [
+          "Tomato Healthy",
+          0.0185
+        ],
+        [
+          "Tomato Early Blight",
+          0.0095
+        ]
+      ]
+    },
+    {
+      "class_dir": "Tomato___Target_Spot",
+      "image": "01e0b8b1-e713-4c6d-973b-f7636280c58a___Com.G_TgS_FL 9816.JPG",
+      "status_code": 200,
+      "predicted": "Tomato Target Spot",
+      "expected": "Tomato Target Spot",
+      "confidence": 0.828,
+      "correct_class": true,
+      "latency_ms": 2245.01,
+      "top3": [
+        [
+          "Tomato Target Spot",
+          0.828
+        ],
+        [
+          "Tomato Spider Mites",
+          0.0591
+        ],
+        [
+          "Tomato Healthy",
+          0.0287
+        ]
+      ]
+    },
+    {
+      "class_dir": "Tomato___Target_Spot",
+      "image": "01f0e0cb-83a7-4190-9645-bd06b70c8d65___Com.G_TgS_FL 8318.JPG",
+      "status_code": 200,
+      "predicted": "Tomato Target Spot",
+      "expected": "Tomato Target Spot",
+      "confidence": 0.7153,
+      "correct_class": true,
+      "latency_ms": 2242.67,
+      "top3": [
+        [
+          "Tomato Target Spot",
+          0.7153
+        ],
+        [
+          "Tomato Spider Mites",
+          0.2437
+        ],
+        [
+          "Tomato Early Blight",
+          0.0149
+        ]
+      ]
+    },
+    {
+      "class_dir": "Tomato___Target_Spot",
+      "image": "0a2de4c5-d688-4f9d-9107-ace1d281c307___Com.G_TgS_FL 7941.JPG",
+      "status_code": 200,
+      "predicted": "Tomato Target Spot",
+      "expected": "Tomato Target Spot",
+      "confidence": 0.9908,
+      "correct_class": true,
+      "latency_ms": 2261.87,
+      "top3": [
+        [
+          "Tomato Target Spot",
+          0.9908
+        ],
+        [
+          "Tomato Healthy",
+          0.0037
+        ],
+        [
+          "Tomato Septoria Leaf Spot",
+          0.0021
+        ]
+      ]
+    },
+    {
+      "class_dir": "Tomato___Target_Spot",
+      "image": "0a3b6099-c254-4bc3-8360-53a9f558a0c4___Com.G_TgS_FL 8259.JPG",
+      "status_code": 200,
+      "predicted": "Tomato Target Spot",
+      "expected": "Tomato Target Spot",
+      "confidence": 0.6265,
+      "correct_class": true,
+      "latency_ms": 2209.2,
+      "top3": [
+        [
+          "Tomato Target Spot",
+          0.6265
+        ],
+        [
+          "Tomato Early Blight",
+          0.1421
+        ],
+        [
+          "Tomato Healthy",
+          0.119
+        ]
+      ]
+    },
+    {
+      "class_dir": "Tomato___Target_Spot",
+      "image": "0a458dfc-b513-44f2-a3ce-dab4c3adb939___Com.G_TgS_FL 8166.JPG",
+      "status_code": 200,
+      "predicted": "Tomato Target Spot",
+      "expected": "Tomato Target Spot",
+      "confidence": 0.8718,
+      "correct_class": true,
+      "latency_ms": 2291.37,
+      "top3": [
+        [
+          "Tomato Target Spot",
+          0.8718
+        ],
+        [
+          "Tomato Spider Mites",
+          0.091
+        ],
+        [
+          "Tomato Mosaic Virus",
+          0.0117
+        ]
+      ]
+    },
+    {
+      "class_dir": "Tomato___Target_Spot",
+      "image": "0a51617c-ecb5-42ce-9d34-300307be3465___Com.G_TgS_FL 0976.JPG",
+      "status_code": 200,
+      "predicted": "Tomato Target Spot",
+      "expected": "Tomato Target Spot",
+      "confidence": 0.7469,
+      "correct_class": true,
+      "latency_ms": 2240.47,
+      "top3": [
+        [
+          "Tomato Target Spot",
+          0.7469
+        ],
+        [
+          "Tomato Healthy",
+          0.1782
+        ],
+        [
+          "Tomato Septoria Leaf Spot",
+          0.029
+        ]
+      ]
+    },
+    {
+      "class_dir": "Tomato___Target_Spot",
+      "image": "0a578317-a98b-4e26-b17b-cd2930330375___Com.G_TgS_FL 0785.JPG",
+      "status_code": 200,
+      "predicted": "Tomato Target Spot",
+      "expected": "Tomato Target Spot",
+      "confidence": 0.7098,
+      "correct_class": true,
+      "latency_ms": 2266.31,
+      "top3": [
+        [
+          "Tomato Target Spot",
+          0.7098
+        ],
+        [
+          "Tomato Spider Mites",
+          0.1425
+        ],
+        [
+          "Tomato Leaf Mold",
+          0.0976
+        ]
+      ]
+    },
+    {
+      "class_dir": "Tomato___Target_Spot",
+      "image": "0a610d40-f5b8-4580-8e32-cc90b3620017___Com.G_TgS_FL 8191.JPG",
+      "status_code": 200,
+      "predicted": "Tomato Target Spot",
+      "expected": "Tomato Target Spot",
+      "confidence": 0.9058,
+      "correct_class": true,
+      "latency_ms": 2258.97,
+      "top3": [
+        [
+          "Tomato Target Spot",
+          0.9058
+        ],
+        [
+          "Tomato Septoria Leaf Spot",
+          0.0566
+        ],
+        [
+          "Tomato Healthy",
+          0.0271
+        ]
+      ]
+    },
+    {
+      "class_dir": "Tomato___Target_Spot",
+      "image": "0abb0bf0-8a1e-4699-80ee-c434385d9514___Com.G_TgS_FL 8115.JPG",
+      "status_code": 200,
+      "predicted": "Tomato Target Spot",
+      "expected": "Tomato Target Spot",
+      "confidence": 0.8888,
+      "correct_class": true,
+      "latency_ms": 2228.38,
+      "top3": [
+        [
+          "Tomato Target Spot",
+          0.8888
+        ],
+        [
+          "Tomato Septoria Leaf Spot",
+          0.0497
+        ],
+        [
+          "Tomato Healthy",
+          0.0411
+        ]
+      ]
+    },
+    {
+      "class_dir": "Tomato___Target_Spot",
+      "image": "0ac9e61f-8dda-4628-bbf9-4fd81012b7a3___Com.G_TgS_FL 8245.JPG",
+      "status_code": 200,
+      "predicted": "Tomato Target Spot",
+      "expected": "Tomato Target Spot",
+      "confidence": 0.8033,
+      "correct_class": true,
+      "latency_ms": 2248.27,
+      "top3": [
+        [
+          "Tomato Target Spot",
+          0.8033
+        ],
+        [
+          "Tomato Healthy",
+          0.0877
+        ],
+        [
+          "Tomato Septoria Leaf Spot",
+          0.0538
+        ]
+      ]
+    },
+    {
+      "class_dir": "Tomato___Target_Spot",
+      "image": "0adf2e61-79af-4129-aae0-f41f73b1725f___Com.G_TgS_FL 8275.JPG",
+      "status_code": 200,
+      "predicted": "Tomato Target Spot",
+      "expected": "Tomato Target Spot",
+      "confidence": 0.9822,
+      "correct_class": true,
+      "latency_ms": 2227.0,
+      "top3": [
+        [
+          "Tomato Target Spot",
+          0.9822
+        ],
+        [
+          "Tomato Healthy",
+          0.0071
+        ],
+        [
+          "Tomato Early Blight",
+          0.0062
+        ]
+      ]
+    },
+    {
+      "class_dir": "Tomato___Target_Spot",
+      "image": "0b0e5158-180e-487c-b4a7-1ee496473147___Com.G_TgS_FL 9932.JPG",
+      "status_code": 200,
+      "predicted": "Tomato Target Spot",
+      "expected": "Tomato Target Spot",
+      "confidence": 0.8443,
+      "correct_class": true,
+      "latency_ms": 2267.96,
+      "top3": [
+        [
+          "Tomato Target Spot",
+          0.8443
+        ],
+        [
+          "Tomato Mosaic Virus",
+          0.0644
+        ],
+        [
+          "Tomato Healthy",
+          0.0555
+        ]
+      ]
+    },
+    {
+      "class_dir": "Tomato___Target_Spot",
+      "image": "0b126ce6-af82-477f-8f4e-1de79d84a6dd___Com.G_TgS_FL 8294.JPG",
+      "status_code": 200,
+      "predicted": "Tomato Target Spot",
+      "expected": "Tomato Target Spot",
+      "confidence": 0.7461,
+      "correct_class": true,
+      "latency_ms": 2218.24,
+      "top3": [
+        [
+          "Tomato Target Spot",
+          0.7461
+        ],
+        [
+          "Tomato Healthy",
+          0.1
+        ],
+        [
+          "Tomato Spider Mites",
+          0.0477
+        ]
+      ]
+    },
+    {
+      "class_dir": "Tomato___Target_Spot",
+      "image": "0b6c4305-0cdc-4150-914b-5d7a5acb7881___Com.G_TgS_FL 8257.JPG",
+      "status_code": 200,
+      "predicted": "Tomato Target Spot",
+      "expected": "Tomato Target Spot",
+      "confidence": 0.5637,
+      "correct_class": true,
+      "latency_ms": 2236.4,
+      "top3": [
+        [
+          "Tomato Target Spot",
+          0.5637
+        ],
+        [
+          "Tomato Healthy",
+          0.3803
+        ],
+        [
+          "Tomato Septoria Leaf Spot",
+          0.0221
+        ]
+      ]
+    },
+    {
+      "class_dir": "Tomato___Target_Spot",
+      "image": "0c2bd887-092f-410d-ac56-9b96110665c8___Com.G_TgS_FL 8285.JPG",
+      "status_code": 200,
+      "predicted": "Tomato Target Spot",
+      "expected": "Tomato Target Spot",
+      "confidence": 0.9231,
+      "correct_class": true,
+      "latency_ms": 2286.18,
+      "top3": [
+        [
+          "Tomato Target Spot",
+          0.9231
+        ],
+        [
+          "Tomato Healthy",
+          0.0464
+        ],
+        [
+          "Tomato Septoria Leaf Spot",
+          0.0142
+        ]
+      ]
+    },
+    {
+      "class_dir": "Tomato___Target_Spot",
+      "image": "0c4c7140-1059-4e3a-a6e2-15c4bdd46743___Com.G_TgS_FL 8142.JPG",
+      "status_code": 200,
+      "predicted": "Tomato Target Spot",
+      "expected": "Tomato Target Spot",
+      "confidence": 0.9564,
+      "correct_class": true,
+      "latency_ms": 2274.75,
+      "top3": [
+        [
+          "Tomato Target Spot",
+          0.9564
+        ],
+        [
+          "Tomato Healthy",
+          0.019
+        ],
+        [
+          "Tomato Early Blight",
+          0.0082
+        ]
+      ]
+    },
+    {
+      "class_dir": "Tomato___Target_Spot",
+      "image": "0c80eea7-7c6f-4f3c-be3d-6cca9ec30c1b___Com.G_TgS_FL 0991.JPG",
+      "status_code": 200,
+      "predicted": "Tomato Target Spot",
+      "expected": "Tomato Target Spot",
+      "confidence": 0.9207,
+      "correct_class": true,
+      "latency_ms": 2277.12,
+      "top3": [
+        [
+          "Tomato Target Spot",
+          0.9207
+        ],
+        [
+          "Tomato Early Blight",
+          0.0438
+        ],
+        [
+          "Tomato Healthy",
+          0.0149
+        ]
+      ]
+    },
+    {
+      "class_dir": "Tomato___Target_Spot",
+      "image": "0c91af09-0ad7-46a1-844b-edfd6af34df2___Com.G_TgS_FL 9776.JPG",
+      "status_code": 200,
+      "predicted": "Tomato Healthy",
+      "expected": "Tomato Target Spot",
+      "confidence": 0.6138,
+      "correct_class": false,
+      "latency_ms": 2246.75,
+      "top3": [
+        [
+          "Tomato Healthy",
+          0.6138
+        ],
+        [
+          "Tomato Target Spot",
+          0.2206
+        ],
+        [
+          "Tomato Septoria Leaf Spot",
+          0.1018
+        ]
+      ]
+    },
+    {
+      "class_dir": "Tomato___Tomato_Yellow_Leaf_Curl_Virus",
+      "image": "1723454502799.jpg",
+      "status_code": 200,
+      "predicted": "Tomato Late Blight",
+      "expected": "Tomato Yellow Leaf Curl Virus",
+      "confidence": 0.5362,
+      "correct_class": false,
+      "latency_ms": 2299.32,
+      "top3": [
+        [
+          "Tomato Late Blight",
+          0.5362
+        ],
+        [
+          "Tomato Septoria Leaf Spot",
+          0.252
+        ],
+        [
+          "Tomato Early Blight",
+          0.0768
+        ]
+      ]
+    },
+    {
+      "class_dir": "Tomato___Tomato_Yellow_Leaf_Curl_Virus",
+      "image": "1723454502881.jpg",
+      "status_code": 200,
+      "predicted": "Tomato Early Blight",
+      "expected": "Tomato Yellow Leaf Curl Virus",
+      "confidence": 0.329,
+      "correct_class": false,
+      "latency_ms": 2307.96,
+      "top3": [
+        [
+          "Tomato Early Blight",
+          0.329
+        ],
+        [
+          "Tomato Septoria Leaf Spot",
+          0.2709
+        ],
+        [
+          "Tomato Late Blight",
+          0.2632
+        ]
+      ]
+    },
+    {
+      "class_dir": "Tomato___Tomato_Yellow_Leaf_Curl_Virus",
+      "image": "1af07f2b-027b-4792-80c5-2c20a4ed538c___YLCV_NREC 0179.JPG",
+      "status_code": 200,
+      "predicted": "Tomato Yellow Leaf Curl Virus",
+      "expected": "Tomato Yellow Leaf Curl Virus",
+      "confidence": 0.8993,
+      "correct_class": true,
+      "latency_ms": 2225.7,
+      "top3": [
+        [
+          "Tomato Yellow Leaf Curl Virus",
+          0.8993
+        ],
+        [
+          "Tomato Target Spot",
+          0.0404
+        ],
+        [
+          "Tomato Septoria Leaf Spot",
+          0.0296
+        ]
+      ]
+    },
+    {
+      "class_dir": "Tomato___Tomato_Yellow_Leaf_Curl_Virus",
+      "image": "1af287e6-9d1e-4501-a113-d1a2b7c54b62___YLCV_GCREC 5321.JPG",
+      "status_code": 200,
+      "predicted": "Tomato Yellow Leaf Curl Virus",
+      "expected": "Tomato Yellow Leaf Curl Virus",
+      "confidence": 0.9244,
+      "correct_class": true,
+      "latency_ms": 2256.2,
+      "top3": [
+        [
+          "Tomato Yellow Leaf Curl Virus",
+          0.9244
+        ],
+        [
+          "Tomato Mosaic Virus",
+          0.0401
+        ],
+        [
+          "Tomato Septoria Leaf Spot",
+          0.0193
+        ]
+      ]
+    },
+    {
+      "class_dir": "Tomato___Tomato_Yellow_Leaf_Curl_Virus",
+      "image": "1af87bdf-0bd0-4146-93e5-cc5f97d98b05___UF.GRC_YLCV_Lab 01968.JPG",
+      "status_code": 200,
+      "predicted": "Tomato Yellow Leaf Curl Virus",
+      "expected": "Tomato Yellow Leaf Curl Virus",
+      "confidence": 0.9254,
+      "correct_class": true,
+      "latency_ms": 2259.18,
+      "top3": [
+        [
+          "Tomato Yellow Leaf Curl Virus",
+          0.9254
+        ],
+        [
+          "Tomato Mosaic Virus",
+          0.0595
+        ],
+        [
+          "Tomato Septoria Leaf Spot",
+          0.0049
+        ]
+      ]
+    },
+    {
+      "class_dir": "Tomato___Tomato_Yellow_Leaf_Curl_Virus",
+      "image": "1afbcb6f-91b5-444d-a383-2f32223b6bf0___YLCV_GCREC 2184.JPG",
+      "status_code": 200,
+      "predicted": "Tomato Yellow Leaf Curl Virus",
+      "expected": "Tomato Yellow Leaf Curl Virus",
+      "confidence": 0.9657,
+      "correct_class": true,
+      "latency_ms": 2281.04,
+      "top3": [
+        [
+          "Tomato Yellow Leaf Curl Virus",
+          0.9657
+        ],
+        [
+          "Tomato Mosaic Virus",
+          0.0118
+        ],
+        [
+          "Tomato Septoria Leaf Spot",
+          0.0078
+        ]
+      ]
+    },
+    {
+      "class_dir": "Tomato___Tomato_Yellow_Leaf_Curl_Virus",
+      "image": "1b02f13d-08c6-4f7b-b0ae-2bc026a92759___YLCV_NREC 2961.JPG",
+      "status_code": 200,
+      "predicted": "Tomato Yellow Leaf Curl Virus",
+      "expected": "Tomato Yellow Leaf Curl Virus",
+      "confidence": 0.8133,
+      "correct_class": true,
+      "latency_ms": 2211.24,
+      "top3": [
+        [
+          "Tomato Yellow Leaf Curl Virus",
+          0.8133
+        ],
+        [
+          "Tomato Mosaic Virus",
+          0.0432
+        ],
+        [
+          "Tomato Leaf Mold",
+          0.0427
+        ]
+      ]
+    },
+    {
+      "class_dir": "Tomato___Tomato_Yellow_Leaf_Curl_Virus",
+      "image": "1b13e94c-da43-4bf4-9e31-d3740505b8c1___YLCV_GCREC 2662.JPG",
+      "status_code": 200,
+      "predicted": "Tomato Yellow Leaf Curl Virus",
+      "expected": "Tomato Yellow Leaf Curl Virus",
+      "confidence": 0.9268,
+      "correct_class": true,
+      "latency_ms": 2208.1,
+      "top3": [
+        [
+          "Tomato Yellow Leaf Curl Virus",
+          0.9268
+        ],
+        [
+          "Tomato Mosaic Virus",
+          0.0584
+        ],
+        [
+          "Tomato Septoria Leaf Spot",
+          0.0062
+        ]
+      ]
+    },
+    {
+      "class_dir": "Tomato___Tomato_Yellow_Leaf_Curl_Virus",
+      "image": "1b1762b5-7aef-463c-ab99-bcc49246407a___UF.GRC_YLCV_Lab 01470.JPG",
+      "status_code": 200,
+      "predicted": "Tomato Yellow Leaf Curl Virus",
+      "expected": "Tomato Yellow Leaf Curl Virus",
+      "confidence": 0.9314,
+      "correct_class": true,
+      "latency_ms": 2238.57,
+      "top3": [
+        [
+          "Tomato Yellow Leaf Curl Virus",
+          0.9314
+        ],
+        [
+          "Tomato Target Spot",
+          0.0222
+        ],
+        [
+          "Tomato Mosaic Virus",
+          0.0195
+        ]
+      ]
+    },
+    {
+      "class_dir": "Tomato___Tomato_Yellow_Leaf_Curl_Virus",
+      "image": "1b273914-1083-497e-a4fb-4a515ea53296___UF.GRC_YLCV_Lab 08552.JPG",
+      "status_code": 200,
+      "predicted": "Tomato Yellow Leaf Curl Virus",
+      "expected": "Tomato Yellow Leaf Curl Virus",
+      "confidence": 0.2919,
+      "correct_class": true,
+      "latency_ms": 2300.62,
+      "top3": [
+        [
+          "Tomato Yellow Leaf Curl Virus",
+          0.2919
+        ],
+        [
+          "Tomato Spider Mites",
+          0.2508
+        ],
+        [
+          "Tomato Septoria Leaf Spot",
+          0.178
+        ]
+      ]
+    },
+    {
+      "class_dir": "Tomato___Tomato_Yellow_Leaf_Curl_Virus",
+      "image": "1b2e12ce-3b2e-4747-85f8-de80a3d5dd35___UF.GRC_YLCV_Lab 08565.JPG",
+      "status_code": 200,
+      "predicted": "Tomato Yellow Leaf Curl Virus",
+      "expected": "Tomato Yellow Leaf Curl Virus",
+      "confidence": 0.7945,
+      "correct_class": true,
+      "latency_ms": 2274.77,
+      "top3": [
+        [
+          "Tomato Yellow Leaf Curl Virus",
+          0.7945
+        ],
+        [
+          "Tomato Bacterial Spot",
+          0.0705
+        ],
+        [
+          "Tomato Mosaic Virus",
+          0.0647
+        ]
+      ]
+    },
+    {
+      "class_dir": "Tomato___Tomato_Yellow_Leaf_Curl_Virus",
+      "image": "1b2e9df8-8584-4ec3-bdee-a24b054a3529___YLCV_GCREC 2127.JPG",
+      "status_code": 200,
+      "predicted": "Tomato Yellow Leaf Curl Virus",
+      "expected": "Tomato Yellow Leaf Curl Virus",
+      "confidence": 0.9755,
+      "correct_class": true,
+      "latency_ms": 2215.83,
+      "top3": [
+        [
+          "Tomato Yellow Leaf Curl Virus",
+          0.9755
+        ],
+        [
+          "Tomato Target Spot",
+          0.0129
+        ],
+        [
+          "Tomato Mosaic Virus",
+          0.0063
+        ]
+      ]
+    },
+    {
+      "class_dir": "Tomato___Tomato_Yellow_Leaf_Curl_Virus",
+      "image": "1b4ded19-b85b-4916-a158-6d8203062996___YLCV_GCREC 2230.JPG",
+      "status_code": 200,
+      "predicted": "Tomato Yellow Leaf Curl Virus",
+      "expected": "Tomato Yellow Leaf Curl Virus",
+      "confidence": 0.9636,
+      "correct_class": true,
+      "latency_ms": 2269.85,
+      "top3": [
+        [
+          "Tomato Yellow Leaf Curl Virus",
+          0.9636
+        ],
+        [
+          "Tomato Mosaic Virus",
+          0.0154
+        ],
+        [
+          "Tomato Late Blight",
+          0.0107
+        ]
+      ]
+    },
+    {
+      "class_dir": "Tomato___Tomato_Yellow_Leaf_Curl_Virus",
+      "image": "1b55735a-c10e-4ea9-969d-8fb3fac8622f___UF.GRC_YLCV_Lab 02818.JPG",
+      "status_code": 200,
+      "predicted": "Tomato Yellow Leaf Curl Virus",
+      "expected": "Tomato Yellow Leaf Curl Virus",
+      "confidence": 0.7787,
+      "correct_class": true,
+      "latency_ms": 2226.29,
+      "top3": [
+        [
+          "Tomato Yellow Leaf Curl Virus",
+          0.7787
+        ],
+        [
+          "Tomato Mosaic Virus",
+          0.135
+        ],
+        [
+          "Tomato Leaf Mold",
+          0.0669
+        ]
+      ]
+    },
+    {
+      "class_dir": "Tomato___Tomato_Yellow_Leaf_Curl_Virus",
+      "image": "1b568289-2f14-4019-b028-3f02ffe3752b___YLCV_NREC 2254.JPG",
+      "status_code": 200,
+      "predicted": "Tomato Yellow Leaf Curl Virus",
+      "expected": "Tomato Yellow Leaf Curl Virus",
+      "confidence": 0.8536,
+      "correct_class": true,
+      "latency_ms": 2274.02,
+      "top3": [
+        [
+          "Tomato Yellow Leaf Curl Virus",
+          0.8536
+        ],
+        [
+          "Tomato Spider Mites",
+          0.0914
+        ],
+        [
+          "Tomato Septoria Leaf Spot",
+          0.02
+        ]
+      ]
+    },
+    {
+      "class_dir": "Tomato___Tomato_Yellow_Leaf_Curl_Virus",
+      "image": "1b7cabad-63f8-4022-8133-e972c9600b56___YLCV_NREC 2726.JPG",
+      "status_code": 200,
+      "predicted": "Tomato Yellow Leaf Curl Virus",
+      "expected": "Tomato Yellow Leaf Curl Virus",
+      "confidence": 0.8963,
+      "correct_class": true,
+      "latency_ms": 2218.02,
+      "top3": [
+        [
+          "Tomato Yellow Leaf Curl Virus",
+          0.8963
+        ],
+        [
+          "Tomato Mosaic Virus",
+          0.0333
+        ],
+        [
+          "Tomato Septoria Leaf Spot",
+          0.0278
+        ]
+      ]
+    },
+    {
+      "class_dir": "Tomato___Tomato_Yellow_Leaf_Curl_Virus",
+      "image": "1b80b934-9b73-4c3b-8306-8058b59e766b___YLCV_GCREC 2027.JPG",
+      "status_code": 200,
+      "predicted": "Tomato Yellow Leaf Curl Virus",
+      "expected": "Tomato Yellow Leaf Curl Virus",
+      "confidence": 0.9827,
+      "correct_class": true,
+      "latency_ms": 2235.39,
+      "top3": [
+        [
+          "Tomato Yellow Leaf Curl Virus",
+          0.9827
+        ],
+        [
+          "Tomato Mosaic Virus",
+          0.013
+        ],
+        [
+          "Tomato Late Blight",
+          0.0027
+        ]
+      ]
+    },
+    {
+      "class_dir": "Tomato___Tomato_Yellow_Leaf_Curl_Virus",
+      "image": "1b85c0b1-e76a-4bfb-9bb2-576103e7a5bb___UF.GRC_YLCV_Lab 01824.JPG",
+      "status_code": 200,
+      "predicted": "Tomato Yellow Leaf Curl Virus",
+      "expected": "Tomato Yellow Leaf Curl Virus",
+      "confidence": 0.9707,
+      "correct_class": true,
+      "latency_ms": 2247.32,
+      "top3": [
+        [
+          "Tomato Yellow Leaf Curl Virus",
+          0.9707
+        ],
+        [
+          "Tomato Mosaic Virus",
+          0.0119
+        ],
+        [
+          "Tomato Target Spot",
+          0.007
+        ]
+      ]
+    },
+    {
+      "class_dir": "Tomato___Tomato_Yellow_Leaf_Curl_Virus",
+      "image": "1b94c436-a664-4e2a-af62-8e4d3761754a___YLCV_GCREC 2343.JPG",
+      "status_code": 200,
+      "predicted": "Tomato Yellow Leaf Curl Virus",
+      "expected": "Tomato Yellow Leaf Curl Virus",
+      "confidence": 0.8747,
+      "correct_class": true,
+      "latency_ms": 2277.48,
+      "top3": [
+        [
+          "Tomato Yellow Leaf Curl Virus",
+          0.8747
+        ],
+        [
+          "Tomato Spider Mites",
+          0.0875
+        ],
+        [
+          "Tomato Mosaic Virus",
+          0.0143
+        ]
+      ]
+    },
+    {
+      "class_dir": "Tomato___Tomato_Yellow_Leaf_Curl_Virus",
+      "image": "1b951a13-a6af-48f7-8d4c-fbdf2d4d0c7c___UF.GRC_YLCV_Lab 02208.JPG",
+      "status_code": 200,
+      "predicted": "Tomato Yellow Leaf Curl Virus",
+      "expected": "Tomato Yellow Leaf Curl Virus",
+      "confidence": 0.8346,
+      "correct_class": true,
+      "latency_ms": 2257.06,
+      "top3": [
+        [
+          "Tomato Yellow Leaf Curl Virus",
+          0.8346
+        ],
+        [
+          "Tomato Mosaic Virus",
+          0.0991
+        ],
+        [
+          "Tomato Septoria Leaf Spot",
+          0.0364
+        ]
+      ]
+    },
+    {
+      "class_dir": "Tomato___Tomato_mosaic_virus",
+      "image": "000ec6ea-9063-4c33-8abe-d58ca8a88878___PSU_CG 2169.JPG",
+      "status_code": 200,
+      "predicted": "Tomato Mosaic Virus",
+      "expected": "Tomato Mosaic Virus",
+      "confidence": 0.9879,
+      "correct_class": true,
+      "latency_ms": 2273.29,
+      "top3": [
+        [
+          "Tomato Mosaic Virus",
+          0.9879
+        ],
+        [
+          "Tomato Spider Mites",
+          0.0084
+        ],
+        [
+          "Tomato Target Spot",
+          0.0015
+        ]
+      ]
+    },
+    {
+      "class_dir": "Tomato___Tomato_mosaic_virus",
+      "image": "006e354b-c054-4b72-a83c-e3feb038942e___PSU_CG 2330.JPG",
+      "status_code": 200,
+      "predicted": "Tomato Mosaic Virus",
+      "expected": "Tomato Mosaic Virus",
+      "confidence": 0.9516,
+      "correct_class": true,
+      "latency_ms": 2205.4,
+      "top3": [
+        [
+          "Tomato Mosaic Virus",
+          0.9516
+        ],
+        [
+          "Tomato Target Spot",
+          0.0334
+        ],
+        [
+          "Tomato Septoria Leaf Spot",
+          0.0067
+        ]
+      ]
+    },
+    {
+      "class_dir": "Tomato___Tomato_mosaic_virus",
+      "image": "00c07a77-15e6-4815-92d4-8d1e1afb7f3c___PSU_CG 2052.JPG",
+      "status_code": 200,
+      "predicted": "Tomato Mosaic Virus",
+      "expected": "Tomato Mosaic Virus",
+      "confidence": 0.774,
+      "correct_class": true,
+      "latency_ms": 2252.07,
+      "top3": [
+        [
+          "Tomato Mosaic Virus",
+          0.774
+        ],
+        [
+          "Tomato Leaf Mold",
+          0.106
+        ],
+        [
+          "Tomato Spider Mites",
+          0.0846
+        ]
+      ]
+    },
+    {
+      "class_dir": "Tomato___Tomato_mosaic_virus",
+      "image": "01b32f27-2b9b-4961-805b-8066bf4d90f1___PSU_CG 2417.JPG",
+      "status_code": 200,
+      "predicted": "Tomato Mosaic Virus",
+      "expected": "Tomato Mosaic Virus",
+      "confidence": 0.8225,
+      "correct_class": true,
+      "latency_ms": 2249.8,
+      "top3": [
+        [
+          "Tomato Mosaic Virus",
+          0.8225
+        ],
+        [
+          "Tomato Septoria Leaf Spot",
+          0.1384
+        ],
+        [
+          "Tomato Target Spot",
+          0.0121
+        ]
+      ]
+    },
+    {
+      "class_dir": "Tomato___Tomato_mosaic_virus",
+      "image": "021accd9-bbb2-4777-8f94-93295e6de49e___PSU_CG 2075.JPG",
+      "status_code": 200,
+      "predicted": "Tomato Mosaic Virus",
+      "expected": "Tomato Mosaic Virus",
+      "confidence": 0.9894,
+      "correct_class": true,
+      "latency_ms": 2355.56,
+      "top3": [
+        [
+          "Tomato Mosaic Virus",
+          0.9894
+        ],
+        [
+          "Tomato Early Blight",
+          0.0033
+        ],
+        [
+          "Tomato Septoria Leaf Spot",
+          0.0029
+        ]
+      ]
+    },
+    {
+      "class_dir": "Tomato___Tomato_mosaic_virus",
+      "image": "046a2559-23b4-4018-a3db-337347ceb391___PSU_CG 2321.JPG",
+      "status_code": 200,
+      "predicted": "Tomato Mosaic Virus",
+      "expected": "Tomato Mosaic Virus",
+      "confidence": 0.9352,
+      "correct_class": true,
+      "latency_ms": 2274.61,
+      "top3": [
+        [
+          "Tomato Mosaic Virus",
+          0.9352
+        ],
+        [
+          "Tomato Septoria Leaf Spot",
+          0.029
+        ],
+        [
+          "Tomato Healthy",
+          0.0242
+        ]
+      ]
+    },
+    {
+      "class_dir": "Tomato___Tomato_mosaic_virus",
+      "image": "05a31ee3-d097-4e32-a1fe-ef11f84ff374___PSU_CG 2149.JPG",
+      "status_code": 200,
+      "predicted": "Tomato Mosaic Virus",
+      "expected": "Tomato Mosaic Virus",
+      "confidence": 0.9905,
+      "correct_class": true,
+      "latency_ms": 2223.24,
+      "top3": [
+        [
+          "Tomato Mosaic Virus",
+          0.9905
+        ],
+        [
+          "Tomato Septoria Leaf Spot",
+          0.0057
+        ],
+        [
+          "Tomato Healthy",
+          0.0013
+        ]
+      ]
+    },
+    {
+      "class_dir": "Tomato___Tomato_mosaic_virus",
+      "image": "08e45674-8d1e-4c3c-804a-663d9fef1ead___PSU_CG 2249.JPG",
+      "status_code": 200,
+      "predicted": "Tomato Mosaic Virus",
+      "expected": "Tomato Mosaic Virus",
+      "confidence": 0.9601,
+      "correct_class": true,
+      "latency_ms": 2265.56,
+      "top3": [
+        [
+          "Tomato Mosaic Virus",
+          0.9601
+        ],
+        [
+          "Tomato Septoria Leaf Spot",
+          0.0203
+        ],
+        [
+          "Tomato Target Spot",
+          0.009
+        ]
+      ]
+    },
+    {
+      "class_dir": "Tomato___Tomato_mosaic_virus",
+      "image": "0a7cc59f-b2b0-4201-9c4a-d91eca5c03a3___PSU_CG 2230.JPG",
+      "status_code": 200,
+      "predicted": "Tomato Mosaic Virus",
+      "expected": "Tomato Mosaic Virus",
+      "confidence": 0.9818,
+      "correct_class": true,
+      "latency_ms": 2257.39,
+      "top3": [
+        [
+          "Tomato Mosaic Virus",
+          0.9818
+        ],
+        [
+          "Tomato Septoria Leaf Spot",
+          0.0053
+        ],
+        [
+          "Tomato Early Blight",
+          0.004
+        ]
+      ]
+    },
+    {
+      "class_dir": "Tomato___Tomato_mosaic_virus",
+      "image": "0a91f50b-1263-4b2c-a8c1-f2a6025b82f3___PSU_CG 2136.JPG",
+      "status_code": 200,
+      "predicted": "Tomato Mosaic Virus",
+      "expected": "Tomato Mosaic Virus",
+      "confidence": 0.9961,
+      "correct_class": true,
+      "latency_ms": 2259.19,
+      "top3": [
+        [
+          "Tomato Mosaic Virus",
+          0.9961
+        ],
+        [
+          "Tomato Spider Mites",
+          0.0022
+        ],
+        [
+          "Tomato Healthy",
+          0.0005
+        ]
+      ]
+    },
+    {
+      "class_dir": "Tomato___Tomato_mosaic_virus",
+      "image": "0b5e2269-7b37-43ac-9a96-c62b9bba2383___PSU_CG 2243.JPG",
+      "status_code": 200,
+      "predicted": "Tomato Mosaic Virus",
+      "expected": "Tomato Mosaic Virus",
+      "confidence": 0.9805,
+      "correct_class": true,
+      "latency_ms": 2247.02,
+      "top3": [
+        [
+          "Tomato Mosaic Virus",
+          0.9805
+        ],
+        [
+          "Tomato Spider Mites",
+          0.0063
+        ],
+        [
+          "Tomato Septoria Leaf Spot",
+          0.0054
+        ]
+      ]
+    },
+    {
+      "class_dir": "Tomato___Tomato_mosaic_virus",
+      "image": "0befa341-0db3-49f4-b4fc-beeb05854bff___PSU_CG 2338.JPG",
+      "status_code": 200,
+      "predicted": "Tomato Mosaic Virus",
+      "expected": "Tomato Mosaic Virus",
+      "confidence": 0.9906,
+      "correct_class": true,
+      "latency_ms": 2273.41,
+      "top3": [
+        [
+          "Tomato Mosaic Virus",
+          0.9906
+        ],
+        [
+          "Tomato Yellow Leaf Curl Virus",
+          0.0021
+        ],
+        [
+          "Tomato Septoria Leaf Spot",
+          0.002
+        ]
+      ]
+    },
+    {
+      "class_dir": "Tomato___Tomato_mosaic_virus",
+      "image": "0bf3eb4c-e2cd-4e72-8834-4fc045bd67ae___PSU_CG 2414.JPG",
+      "status_code": 200,
+      "predicted": "Tomato Mosaic Virus",
+      "expected": "Tomato Mosaic Virus",
+      "confidence": 0.6596,
+      "correct_class": true,
+      "latency_ms": 2217.57,
+      "top3": [
+        [
+          "Tomato Mosaic Virus",
+          0.6596
+        ],
+        [
+          "Tomato Septoria Leaf Spot",
+          0.2368
+        ],
+        [
+          "Tomato Leaf Mold",
+          0.033
+        ]
+      ]
+    },
+    {
+      "class_dir": "Tomato___Tomato_mosaic_virus",
+      "image": "0c05f5bb-e38d-422f-8b1c-632d8c0d730c___PSU_CG 2133.JPG",
+      "status_code": 200,
+      "predicted": "Tomato Mosaic Virus",
+      "expected": "Tomato Mosaic Virus",
+      "confidence": 0.9977,
+      "correct_class": true,
+      "latency_ms": 2270.34,
+      "top3": [
+        [
+          "Tomato Mosaic Virus",
+          0.9977
+        ],
+        [
+          "Tomato Septoria Leaf Spot",
+          0.0006
+        ],
+        [
+          "Tomato Healthy",
+          0.0006
+        ]
+      ]
+    },
+    {
+      "class_dir": "Tomato___Tomato_mosaic_virus",
+      "image": "0c676b36-7985-42e8-b550-83e2b1c55535___PSU_CG 2177.JPG",
+      "status_code": 200,
+      "predicted": "Tomato Mosaic Virus",
+      "expected": "Tomato Mosaic Virus",
+      "confidence": 0.9839,
+      "correct_class": true,
+      "latency_ms": 2247.89,
+      "top3": [
+        [
+          "Tomato Mosaic Virus",
+          0.9839
+        ],
+        [
+          "Tomato Leaf Mold",
+          0.0076
+        ],
+        [
+          "Tomato Septoria Leaf Spot",
+          0.0046
+        ]
+      ]
+    },
+    {
+      "class_dir": "Tomato___Tomato_mosaic_virus",
+      "image": "0c779116-043c-4715-b080-16be2e8d2552___PSU_CG 2285.JPG",
+      "status_code": 200,
+      "predicted": "Tomato Mosaic Virus",
+      "expected": "Tomato Mosaic Virus",
+      "confidence": 0.9675,
+      "correct_class": true,
+      "latency_ms": 2219.34,
+      "top3": [
+        [
+          "Tomato Mosaic Virus",
+          0.9675
+        ],
+        [
+          "Tomato Target Spot",
+          0.014
+        ],
+        [
+          "Tomato Septoria Leaf Spot",
+          0.0116
+        ]
+      ]
+    },
+    {
+      "class_dir": "Tomato___Tomato_mosaic_virus",
+      "image": "0ce34f26-3bd6-420e-ba31-0373b465f267___PSU_CG 2099.JPG",
+      "status_code": 200,
+      "predicted": "Tomato Mosaic Virus",
+      "expected": "Tomato Mosaic Virus",
+      "confidence": 0.9819,
+      "correct_class": true,
+      "latency_ms": 2240.65,
+      "top3": [
+        [
+          "Tomato Mosaic Virus",
+          0.9819
+        ],
+        [
+          "Tomato Septoria Leaf Spot",
+          0.0069
+        ],
+        [
+          "Tomato Early Blight",
+          0.0043
+        ]
+      ]
+    },
+    {
+      "class_dir": "Tomato___Tomato_mosaic_virus",
+      "image": "0d9accf3-1285-4356-b69b-2ae132c5f145___PSU_CG 2337.JPG",
+      "status_code": 200,
+      "predicted": "Tomato Mosaic Virus",
+      "expected": "Tomato Mosaic Virus",
+      "confidence": 0.9062,
+      "correct_class": true,
+      "latency_ms": 2234.31,
+      "top3": [
+        [
+          "Tomato Mosaic Virus",
+          0.9062
+        ],
+        [
+          "Tomato Leaf Mold",
+          0.0424
+        ],
+        [
+          "Tomato Late Blight",
+          0.0194
+        ]
+      ]
+    },
+    {
+      "class_dir": "Tomato___Tomato_mosaic_virus",
+      "image": "0dae2780-43e7-40ac-ae45-95e5318c8f32___PSU_CG 2290.JPG",
+      "status_code": 200,
+      "predicted": "Tomato Mosaic Virus",
+      "expected": "Tomato Mosaic Virus",
+      "confidence": 0.9426,
+      "correct_class": true,
+      "latency_ms": 2237.81,
+      "top3": [
+        [
+          "Tomato Mosaic Virus",
+          0.9426
+        ],
+        [
+          "Tomato Septoria Leaf Spot",
+          0.0309
+        ],
+        [
+          "Tomato Healthy",
+          0.0065
+        ]
+      ]
+    },
+    {
+      "class_dir": "Tomato___Tomato_mosaic_virus",
+      "image": "0e56889c-7e80-49f3-8da3-3a437244e8fd___PSU_CG 2140.JPG",
+      "status_code": 200,
+      "predicted": "Tomato Mosaic Virus",
+      "expected": "Tomato Mosaic Virus",
+      "confidence": 0.8764,
+      "correct_class": true,
+      "latency_ms": 2243.29,
+      "top3": [
+        [
+          "Tomato Mosaic Virus",
+          0.8764
+        ],
+        [
+          "Tomato Spider Mites",
+          0.0788
+        ],
+        [
+          "Tomato Septoria Leaf Spot",
+          0.0236
+        ]
+      ]
+    },
+    {
+      "class_dir": "Tomato___healthy",
+      "image": "1723454500827.jpg",
+      "status_code": 200,
+      "predicted": "Tomato Late Blight",
+      "expected": "Tomato Healthy",
+      "confidence": 0.7816,
+      "correct_class": false,
+      "latency_ms": 2268.3,
+      "top3": [
+        [
+          "Tomato Late Blight",
+          0.7816
+        ],
+        [
+          "Tomato Early Blight",
+          0.1915
+        ],
+        [
+          "Tomato Healthy",
+          0.007
+        ]
+      ]
+    },
+    {
+      "class_dir": "Tomato___healthy",
+      "image": "1723454500906.jpg",
+      "status_code": 200,
+      "predicted": "Tomato Early Blight",
+      "expected": "Tomato Healthy",
+      "confidence": 0.2884,
+      "correct_class": false,
+      "latency_ms": 2250.59,
+      "top3": [
+        [
+          "Tomato Early Blight",
+          0.2884
+        ],
+        [
+          "Tomato Septoria Leaf Spot",
+          0.2842
+        ],
+        [
+          "Tomato Late Blight",
+          0.1638
+        ]
+      ]
+    },
+    {
+      "class_dir": "Tomato___healthy",
+      "image": "1723454501499.jpg",
+      "status_code": 200,
+      "predicted": "Tomato Mosaic Virus",
+      "expected": "Tomato Healthy",
+      "confidence": 0.3846,
+      "correct_class": false,
+      "latency_ms": 2271.69,
+      "top3": [
+        [
+          "Tomato Mosaic Virus",
+          0.3846
+        ],
+        [
+          "Tomato Early Blight",
+          0.2271
+        ],
+        [
+          "Tomato Septoria Leaf Spot",
+          0.1688
+        ]
+      ]
+    },
+    {
+      "class_dir": "Tomato___healthy",
+      "image": "1723454502215.jpg",
+      "status_code": 200,
+      "predicted": "Tomato Yellow Leaf Curl Virus",
+      "expected": "Tomato Healthy",
+      "confidence": 0.4004,
+      "correct_class": false,
+      "latency_ms": 2278.87,
+      "top3": [
+        [
+          "Tomato Yellow Leaf Curl Virus",
+          0.4004
+        ],
+        [
+          "Tomato Late Blight",
+          0.1678
+        ],
+        [
+          "Tomato Target Spot",
+          0.1058
+        ]
+      ]
+    },
+    {
+      "class_dir": "Tomato___healthy",
+      "image": "1723454502331.jpg",
+      "status_code": 200,
+      "predicted": "Tomato Early Blight",
+      "expected": "Tomato Healthy",
+      "confidence": 0.6563,
+      "correct_class": false,
+      "latency_ms": 2267.01,
+      "top3": [
+        [
+          "Tomato Early Blight",
+          0.6563
+        ],
+        [
+          "Tomato Late Blight",
+          0.2392
+        ],
+        [
+          "Tomato Mosaic Virus",
+          0.0657
+        ]
+      ]
+    },
+    {
+      "class_dir": "Tomato___healthy",
+      "image": "1723454502526.jpg",
+      "status_code": 200,
+      "predicted": "Tomato Septoria Leaf Spot",
+      "expected": "Tomato Healthy",
+      "confidence": 0.41,
+      "correct_class": false,
+      "latency_ms": 2293.41,
+      "top3": [
+        [
+          "Tomato Septoria Leaf Spot",
+          0.41
+        ],
+        [
+          "Tomato Early Blight",
+          0.3311
+        ],
+        [
+          "Tomato Late Blight",
+          0.1255
+        ]
+      ]
+    },
+    {
+      "class_dir": "Tomato___healthy",
+      "image": "1723454502603.jpg",
+      "status_code": 200,
+      "predicted": "Tomato Mosaic Virus",
+      "expected": "Tomato Healthy",
+      "confidence": 0.3556,
+      "correct_class": false,
+      "latency_ms": 2266.18,
+      "top3": [
+        [
+          "Tomato Mosaic Virus",
+          0.3556
+        ],
+        [
+          "Tomato Early Blight",
+          0.2052
+        ],
+        [
+          "Tomato Yellow Leaf Curl Virus",
+          0.2018
+        ]
+      ]
+    },
+    {
+      "class_dir": "Tomato___healthy",
+      "image": "1723454502681.jpg",
+      "status_code": 200,
+      "predicted": "Tomato Late Blight",
+      "expected": "Tomato Healthy",
+      "confidence": 0.6365,
+      "correct_class": false,
+      "latency_ms": 2227.06,
+      "top3": [
+        [
+          "Tomato Late Blight",
+          0.6365
+        ],
+        [
+          "Tomato Early Blight",
+          0.3073
+        ],
+        [
+          "Tomato Leaf Mold",
+          0.018
+        ]
+      ]
+    },
+    {
+      "class_dir": "Tomato___healthy",
+      "image": "1723454502920.jpg",
+      "status_code": 200,
+      "predicted": "Tomato Early Blight",
+      "expected": "Tomato Healthy",
+      "confidence": 0.3103,
+      "correct_class": false,
+      "latency_ms": 2336.7,
+      "top3": [
+        [
+          "Tomato Early Blight",
+          0.3103
+        ],
+        [
+          "Tomato Septoria Leaf Spot",
+          0.2401
+        ],
+        [
+          "Tomato Mosaic Virus",
+          0.156
+        ]
+      ]
+    },
+    {
+      "class_dir": "Tomato___healthy",
+      "image": "1723454505617.jpg",
+      "status_code": 200,
+      "predicted": "Tomato Early Blight",
+      "expected": "Tomato Healthy",
+      "confidence": 0.3146,
+      "correct_class": false,
+      "latency_ms": 2389.56,
+      "top3": [
+        [
+          "Tomato Early Blight",
+          0.3146
+        ],
+        [
+          "Tomato Septoria Leaf Spot",
+          0.2511
+        ],
+        [
+          "Tomato Mosaic Virus",
+          0.2326
+        ]
+      ]
+    },
+    {
+      "class_dir": "Tomato___healthy",
+      "image": "1723454505656.jpg",
+      "status_code": 200,
+      "predicted": "Tomato Early Blight",
+      "expected": "Tomato Healthy",
+      "confidence": 0.4378,
+      "correct_class": false,
+      "latency_ms": 2409.32,
+      "top3": [
+        [
+          "Tomato Early Blight",
+          0.4378
+        ],
+        [
+          "Tomato Septoria Leaf Spot",
+          0.2002
+        ],
+        [
+          "Tomato Mosaic Virus",
+          0.1863
+        ]
+      ]
+    },
+    {
+      "class_dir": "Tomato___healthy",
+      "image": "1723454505694.jpg",
+      "status_code": 200,
+      "predicted": "Tomato Mosaic Virus",
+      "expected": "Tomato Healthy",
+      "confidence": 0.407,
+      "correct_class": false,
+      "latency_ms": 2312.18,
+      "top3": [
+        [
+          "Tomato Mosaic Virus",
+          0.407
+        ],
+        [
+          "Tomato Early Blight",
+          0.2276
+        ],
+        [
+          "Tomato Septoria Leaf Spot",
+          0.1427
+        ]
+      ]
+    },
+    {
+      "class_dir": "Tomato___healthy",
+      "image": "1723454506490.jpg",
+      "status_code": 200,
+      "predicted": "Tomato Septoria Leaf Spot",
+      "expected": "Tomato Healthy",
+      "confidence": 0.6466,
+      "correct_class": false,
+      "latency_ms": 2441.73,
+      "top3": [
+        [
+          "Tomato Septoria Leaf Spot",
+          0.6466
+        ],
+        [
+          "Tomato Early Blight",
+          0.1229
+        ],
+        [
+          "Tomato Mosaic Virus",
+          0.0512
+        ]
+      ]
+    },
+    {
+      "class_dir": "Tomato___healthy",
+      "image": "1723454506862.jpg",
+      "status_code": 200,
+      "predicted": "Tomato Yellow Leaf Curl Virus",
+      "expected": "Tomato Healthy",
+      "confidence": 0.3083,
+      "correct_class": false,
+      "latency_ms": 2467.66,
+      "top3": [
+        [
+          "Tomato Yellow Leaf Curl Virus",
+          0.3083
+        ],
+        [
+          "Tomato Late Blight",
+          0.1831
+        ],
+        [
+          "Tomato Mosaic Virus",
+          0.16
+        ]
+      ]
+    },
+    {
+      "class_dir": "Tomato___healthy",
+      "image": "1723454506899.jpg",
+      "status_code": 200,
+      "predicted": "Tomato Late Blight",
+      "expected": "Tomato Healthy",
+      "confidence": 0.2357,
+      "correct_class": false,
+      "latency_ms": 2481.83,
+      "top3": [
+        [
+          "Tomato Late Blight",
+          0.2357
+        ],
+        [
+          "Tomato Mosaic Virus",
+          0.2335
+        ],
+        [
+          "Tomato Septoria Leaf Spot",
+          0.1878
+        ]
+      ]
+    },
+    {
+      "class_dir": "Tomato___healthy",
+      "image": "1723454507163.jpg",
+      "status_code": 200,
+      "predicted": "Tomato Septoria Leaf Spot",
+      "expected": "Tomato Healthy",
+      "confidence": 0.2101,
+      "correct_class": false,
+      "latency_ms": 2459.67,
+      "top3": [
+        [
+          "Tomato Septoria Leaf Spot",
+          0.2101
+        ],
+        [
+          "Tomato Mosaic Virus",
+          0.1801
+        ],
+        [
+          "Tomato Early Blight",
+          0.173
+        ]
+      ]
+    },
+    {
+      "class_dir": "Tomato___healthy",
+      "image": "1723454507654.jpg",
+      "status_code": 200,
+      "predicted": "Tomato Yellow Leaf Curl Virus",
+      "expected": "Tomato Healthy",
+      "confidence": 0.3177,
+      "correct_class": false,
+      "latency_ms": 2407.11,
+      "top3": [
+        [
+          "Tomato Yellow Leaf Curl Virus",
+          0.3177
+        ],
+        [
+          "Tomato Early Blight",
+          0.2632
+        ],
+        [
+          "Tomato Late Blight",
+          0.1527
+        ]
+      ]
+    },
+    {
+      "class_dir": "Tomato___healthy",
+      "image": "1723454508228.jpg",
+      "status_code": 200,
+      "predicted": "Tomato Early Blight",
+      "expected": "Tomato Healthy",
+      "confidence": 0.5234,
+      "correct_class": false,
+      "latency_ms": 2389.12,
+      "top3": [
+        [
+          "Tomato Early Blight",
+          0.5234
+        ],
+        [
+          "Tomato Mosaic Virus",
+          0.1234
+        ],
+        [
+          "Tomato Late Blight",
+          0.0866
+        ]
+      ]
+    },
+    {
+      "class_dir": "Tomato___healthy",
+      "image": "IMG-20240721-WA0048.jpg",
+      "status_code": 200,
+      "predicted": "Tomato Healthy",
+      "expected": "Tomato Healthy",
+      "confidence": 0.429,
+      "correct_class": true,
+      "latency_ms": 2524.43,
+      "top3": [
+        [
+          "Tomato Healthy",
+          0.429
+        ],
+        [
+          "Tomato Mosaic Virus",
+          0.3171
+        ],
+        [
+          "Tomato Spider Mites",
+          0.0737
+        ]
+      ]
+    },
+    {
+      "class_dir": "Tomato___healthy",
+      "image": "IMG-20240721-WA0050.jpg",
+      "status_code": 200,
+      "predicted": "Tomato Late Blight",
+      "expected": "Tomato Healthy",
+      "confidence": 0.2845,
+      "correct_class": false,
+      "latency_ms": 2474.37,
+      "top3": [
+        [
+          "Tomato Late Blight",
+          0.2845
+        ],
+        [
+          "Tomato Healthy",
+          0.2743
+        ],
+        [
+          "Tomato Mosaic Virus",
+          0.213
+        ]
+      ]
+    }
+  ],
+  "diagnosis_records": [
+    {
+      "class_dir": "Tomato___Bacterial_spot",
+      "status_code": 201,
+      "success": true,
+      "latency_ms": 2127.54,
+      "diagnosis_id": "6b092d300ca9dba14ae4fda0",
+      "disease": "Tomato Target Spot",
+      "confidence": 0.4764,
+      "risk_level": "Medium",
+      "is_healthy": false,
+      "image_url": "https://res.cloudinary.com/dqhuwttbb/image/upload/v1795763503/agritwin/diagnoses/diagnosis_1795763502441.jpg",
+      "model": "mobilenetv2"
+    },
+    {
+      "class_dir": "Tomato___Early_blight",
+      "status_code": 201,
+      "success": true,
+      "latency_ms": 2184.21,
+      "diagnosis_id": "6b092d320ca9dba14ae4fda3",
+      "disease": "Tomato Late Blight",
+      "confidence": 0.4481,
+      "risk_level": "Medium",
+      "is_healthy": false,
+      "image_url": "https://res.cloudinary.com/dqhuwttbb/image/upload/v1795763505/agritwin/diagnoses/diagnosis_1795763504587.jpg",
+      "model": "mobilenetv2"
+    },
+    {
+      "class_dir": "Tomato___Late_blight",
+      "status_code": 201,
+      "success": true,
+      "latency_ms": 1390.72,
+      "diagnosis_id": "6b092d330ca9dba14ae4fda6",
+      "disease": "Tomato Mosaic Virus",
+      "confidence": 0.4779,
+      "risk_level": "Medium",
+      "is_healthy": false,
+      "image_url": "https://res.cloudinary.com/dqhuwttbb/image/upload/v1795763506/agritwin/diagnoses/diagnosis_1795763506775.jpg",
+      "model": "mobilenetv2"
+    },
+    {
+      "class_dir": "Tomato___Leaf_Mold",
+      "status_code": 201,
+      "success": true,
+      "latency_ms": 1228.22,
+      "diagnosis_id": "6b092d350ca9dba14ae4fda9",
+      "disease": "Tomato Early Blight",
+      "confidence": 0.7172,
+      "risk_level": "High",
+      "is_healthy": false,
+      "image_url": "https://res.cloudinary.com/dqhuwttbb/image/upload/v1795763508/agritwin/diagnoses/diagnosis_1795763508209.jpg",
+      "model": "mobilenetv2"
+    },
+    {
+      "class_dir": "Tomato___Septoria_leaf_spot",
+      "status_code": 201,
+      "success": true,
+      "latency_ms": 1428.0,
+      "diagnosis_id": "6b092d360ca9dba14ae4fdac",
+      "disease": "Tomato Septoria Leaf Spot",
+      "confidence": 0.9787,
+      "risk_level": "High",
+      "is_healthy": false,
+      "image_url": "https://res.cloudinary.com/dqhuwttbb/image/upload/v1795763509/agritwin/diagnoses/diagnosis_1795763509425.jpg",
+      "model": "mobilenetv2"
+    },
+    {
+      "class_dir": "Tomato___Spider_mites Two-spotted_spider_mite",
+      "status_code": 201,
+      "success": true,
+      "latency_ms": 1329.98,
+      "diagnosis_id": "6b092d370ca9dba14ae4fdaf",
+      "disease": "Tomato Spider Mites",
+      "confidence": 0.9354,
+      "risk_level": "High",
+      "is_healthy": false,
+      "image_url": "https://res.cloudinary.com/dqhuwttbb/image/upload/v1795763510/agritwin/diagnoses/diagnosis_1795763510824.jpg",
+      "model": "mobilenetv2"
+    },
+    {
+      "class_dir": "Tomato___Target_Spot",
+      "status_code": 201,
+      "success": true,
+      "latency_ms": 1232.65,
+      "diagnosis_id": "6b092d390ca9dba14ae4fdb2",
+      "disease": "Tomato Target Spot",
+      "confidence": 0.711,
+      "risk_level": "High",
+      "is_healthy": false,
+      "image_url": "https://res.cloudinary.com/dqhuwttbb/image/upload/v1795763512/agritwin/diagnoses/diagnosis_1795763512117.jpg",
+      "model": "mobilenetv2"
+    },
+    {
+      "class_dir": "Tomato___Tomato_Yellow_Leaf_Curl_Virus",
+      "status_code": 201,
+      "success": true,
+      "latency_ms": 1528.38,
+      "diagnosis_id": "6b092d3a0ca9dba14ae4fdb5",
+      "disease": "Tomato Late Blight",
+      "confidence": 0.5362,
+      "risk_level": "Medium",
+      "is_healthy": false,
+      "image_url": "https://res.cloudinary.com/dqhuwttbb/image/upload/v1795763513/agritwin/diagnoses/diagnosis_1795763513516.jpg",
+      "model": "mobilenetv2"
+    },
+    {
+      "class_dir": "Tomato___Tomato_mosaic_virus",
+      "status_code": 201,
+      "success": true,
+      "latency_ms": 1281.18,
+      "diagnosis_id": "6b092d3b0ca9dba14ae4fdb8",
+      "disease": "Tomato Mosaic Virus",
+      "confidence": 0.9879,
+      "risk_level": "High",
+      "is_healthy": false,
+      "image_url": "https://res.cloudinary.com/dqhuwttbb/image/upload/v1795763514/agritwin/diagnoses/diagnosis_1795763514946.jpg",
+      "model": "mobilenetv2"
+    },
+    {
+      "class_dir": "Tomato___healthy",
+      "status_code": 201,
+      "success": true,
+      "latency_ms": 2404.81,
+      "diagnosis_id": "6b092d3e0ca9dba14ae4fdbb",
+      "disease": "Tomato Late Blight",
+      "confidence": 0.7816,
+      "risk_level": "High",
+      "is_healthy": false,
+      "image_url": "https://res.cloudinary.com/dqhuwttbb/image/upload/v1795763516/agritwin/diagnoses/diagnosis_1795763516197.jpg",
+      "model": "mobilenetv2"
+    }
+  ],
+  "telemetry": {
+    "submitted": [
+      {
+        "sensorType": "temperature",
+        "value": 28.5,
+        "status_code": 201,
+        "success": true
+      },
+      {
+        "sensorType": "humidity",
+        "value": 65,
+        "status_code": 201,
+        "success": true
+      },
+      {
+        "sensorType": "soil_moisture",
+        "value": 45,
+        "status_code": 201,
+        "success": true
+      },
+      {
+        "sensorType": "temperature",
+        "value": 41,
+        "status_code": 201,
+        "success": true
+      }
+    ],
+    "alerts": {
+      "status_code": 200,
+      "count": 7,
+      "sample": [
+        {
+          "title": "High temperature detected",
+          "type": "Critical",
+          "category": "Temperature",
+          "message": "Temperature is 41\u00b0C, above the 35\u00b0C safe threshold."
+        },
+        {
+          "title": "High temperature detected",
+          "type": "Critical",
+          "category": "Temperature",
+          "message": "Temperature is 41\u00b0C, above the 35\u00b0C safe threshold."
+        },
+        {
+          "title": "High temperature detected",
+          "type": "Critical",
+          "category": "Temperature",
+          "message": "Temperature is 41\u00b0C, above the 35\u00b0C safe threshold."
+        },
+        {
+          "title": "High Temperature Detected",
+          "type": "Critical",
+          "category": "Temperature",
+          "message": "Temperature has reached 32\u00b0C. Monitor the tomato plants carefully."
+        },
+        {
+          "title": "Low Soil Moisture",
+          "type": "Warning",
+          "category": "Soil Moisture",
+          "message": "Soil moisture is currently 35%. Check the irrigation requirements."
+        }
+      ]
+    }
+  },
+  "pass_fail": {
+    "ml_classes_tested": 10,
+    "ml_images_tested": 200,
+    "ml_predict_success": 200,
+    "ml_images_correct": 125,
+    "ml_accuracy": 0.625,
+    "diagnosis_tested": 10,
+    "diagnosis_success": 10,
+    "diagnosis_success_rate": 1.0,
+    "telemetry_submitted": 4,
+    "alerts_generated": 7
+  },
+  "class_summary": [
+    {
+      "class_dir": "Tomato___Bacterial_spot",
+      "expected": "Tomato Bacterial Spot",
+      "samples": 20,
+      "correct": 10,
+      "accuracy": 0.5,
+      "predictions": [
+        "Tomato Target Spot",
+        "Tomato Bacterial Spot",
+        "Tomato Bacterial Spot",
+        "Tomato Bacterial Spot",
+        "Tomato Bacterial Spot",
+        "Tomato Septoria Leaf Spot",
+        "Tomato Septoria Leaf Spot",
+        "Tomato Bacterial Spot",
+        "Tomato Bacterial Spot",
+        "Tomato Septoria Leaf Spot",
+        "Tomato Bacterial Spot",
+        "Tomato Septoria Leaf Spot",
+        "Tomato Septoria Leaf Spot",
+        "Tomato Septoria Leaf Spot",
+        "Tomato Target Spot",
+        "Tomato Bacterial Spot",
+        "Tomato Septoria Leaf Spot",
+        "Tomato Septoria Leaf Spot",
+        "Tomato Bacterial Spot",
+        "Tomato Bacterial Spot"
+      ]
+    },
+    {
+      "class_dir": "Tomato___Early_blight",
+      "expected": "Tomato Early Blight",
+      "samples": 20,
+      "correct": 8,
+      "accuracy": 0.4,
+      "predictions": [
+        "Tomato Late Blight",
+        "Tomato Septoria Leaf Spot",
+        "Tomato Early Blight",
+        "Tomato Early Blight",
+        "Tomato Septoria Leaf Spot",
+        "Tomato Early Blight",
+        "Tomato Septoria Leaf Spot",
+        "Tomato Early Blight",
+        "Tomato Septoria Leaf Spot",
+        "Tomato Late Blight",
+        "Tomato Septoria Leaf Spot",
+        "Tomato Early Blight",
+        "Tomato Septoria Leaf Spot",
+        "Tomato Septoria Leaf Spot",
+        "Tomato Early Blight",
+        "Tomato Late Blight",
+        "Tomato Early Blight",
+        "Tomato Early Blight",
+        "Tomato Septoria Leaf Spot",
+        "Tomato Septoria Leaf Spot"
+      ]
+    },
+    {
+      "class_dir": "Tomato___Late_blight",
+      "expected": "Tomato Late Blight",
+      "samples": 20,
+      "correct": 17,
+      "accuracy": 0.85,
+      "predictions": [
+        "Tomato Mosaic Virus",
+        "Tomato Late Blight",
+        "Tomato Septoria Leaf Spot",
+        "Tomato Late Blight",
+        "Tomato Late Blight",
+        "Tomato Healthy",
+        "Tomato Late Blight",
+        "Tomato Late Blight",
+        "Tomato Late Blight",
+        "Tomato Late Blight",
+        "Tomato Late Blight",
+        "Tomato Late Blight",
+        "Tomato Late Blight",
+        "Tomato Late Blight",
+        "Tomato Late Blight",
+        "Tomato Late Blight",
+        "Tomato Late Blight",
+        "Tomato Late Blight",
+        "Tomato Late Blight",
+        "Tomato Late Blight"
+      ]
+    },
+    {
+      "class_dir": "Tomato___Leaf_Mold",
+      "expected": "Tomato Leaf Mold",
+      "samples": 20,
+      "correct": 0,
+      "accuracy": 0.0,
+      "predictions": [
+        "Tomato Early Blight",
+        "Tomato Early Blight",
+        "Tomato Septoria Leaf Spot",
+        "Tomato Early Blight",
+        "Tomato Yellow Leaf Curl Virus",
+        "Tomato Septoria Leaf Spot",
+        "Tomato Septoria Leaf Spot",
+        "Tomato Mosaic Virus",
+        "Tomato Septoria Leaf Spot",
+        "Tomato Septoria Leaf Spot",
+        "Tomato Septoria Leaf Spot",
+        "Tomato Septoria Leaf Spot",
+        "Tomato Early Blight",
+        "Tomato Septoria Leaf Spot",
+        "Tomato Septoria Leaf Spot",
+        "Tomato Early Blight",
+        "Tomato Early Blight",
+        "Tomato Septoria Leaf Spot",
+        "Tomato Septoria Leaf Spot",
+        "Tomato Early Blight"
+      ]
+    },
+    {
+      "class_dir": "Tomato___Septoria_leaf_spot",
+      "expected": "Tomato Septoria Leaf Spot",
+      "samples": 20,
+      "correct": 18,
+      "accuracy": 0.9,
+      "predictions": [
+        "Tomato Septoria Leaf Spot",
+        "Tomato Septoria Leaf Spot",
+        "Tomato Septoria Leaf Spot",
+        "Tomato Leaf Mold",
+        "Tomato Septoria Leaf Spot",
+        "Tomato Septoria Leaf Spot",
+        "Tomato Leaf Mold",
+        "Tomato Septoria Leaf Spot",
+        "Tomato Septoria Leaf Spot",
+        "Tomato Septoria Leaf Spot",
+        "Tomato Septoria Leaf Spot",
+        "Tomato Septoria Leaf Spot",
+        "Tomato Septoria Leaf Spot",
+        "Tomato Septoria Leaf Spot",
+        "Tomato Septoria Leaf Spot",
+        "Tomato Septoria Leaf Spot",
+        "Tomato Septoria Leaf Spot",
+        "Tomato Septoria Leaf Spot",
+        "Tomato Septoria Leaf Spot",
+        "Tomato Septoria Leaf Spot"
+      ]
+    },
+    {
+      "class_dir": "Tomato___Spider_mites Two-spotted_spider_mite",
+      "expected": "Tomato Spider Mites",
+      "samples": 20,
+      "correct": 14,
+      "accuracy": 0.7,
+      "predictions": [
+        "Tomato Spider Mites",
+        "Tomato Spider Mites",
+        "Tomato Healthy",
+        "Tomato Spider Mites",
+        "Tomato Spider Mites",
+        "Tomato Spider Mites",
+        "Tomato Spider Mites",
+        "Tomato Spider Mites",
+        "Tomato Spider Mites",
+        "Tomato Target Spot",
+        "Tomato Mosaic Virus",
+        "Tomato Spider Mites",
+        "Tomato Septoria Leaf Spot",
+        "Tomato Spider Mites",
+        "Tomato Spider Mites",
+        "Tomato Spider Mites",
+        "Tomato Target Spot",
+        "Tomato Spider Mites",
+        "Tomato Spider Mites",
+        "Tomato Mosaic Virus"
+      ]
+    },
+    {
+      "class_dir": "Tomato___Target_Spot",
+      "expected": "Tomato Target Spot",
+      "samples": 20,
+      "correct": 19,
+      "accuracy": 0.95,
+      "predictions": [
+        "Tomato Target Spot",
+        "Tomato Target Spot",
+        "Tomato Target Spot",
+        "Tomato Target Spot",
+        "Tomato Target Spot",
+        "Tomato Target Spot",
+        "Tomato Target Spot",
+        "Tomato Target Spot",
+        "Tomato Target Spot",
+        "Tomato Target Spot",
+        "Tomato Target Spot",
+        "Tomato Target Spot",
+        "Tomato Target Spot",
+        "Tomato Target Spot",
+        "Tomato Target Spot",
+        "Tomato Target Spot",
+        "Tomato Target Spot",
+        "Tomato Target Spot",
+        "Tomato Target Spot",
+        "Tomato Healthy"
+      ]
+    },
+    {
+      "class_dir": "Tomato___Tomato_Yellow_Leaf_Curl_Virus",
+      "expected": "Tomato Yellow Leaf Curl Virus",
+      "samples": 20,
+      "correct": 18,
+      "accuracy": 0.9,
+      "predictions": [
+        "Tomato Late Blight",
+        "Tomato Early Blight",
+        "Tomato Yellow Leaf Curl Virus",
+        "Tomato Yellow Leaf Curl Virus",
+        "Tomato Yellow Leaf Curl Virus",
+        "Tomato Yellow Leaf Curl Virus",
+        "Tomato Yellow Leaf Curl Virus",
+        "Tomato Yellow Leaf Curl Virus",
+        "Tomato Yellow Leaf Curl Virus",
+        "Tomato Yellow Leaf Curl Virus",
+        "Tomato Yellow Leaf Curl Virus",
+        "Tomato Yellow Leaf Curl Virus",
+        "Tomato Yellow Leaf Curl Virus",
+        "Tomato Yellow Leaf Curl Virus",
+        "Tomato Yellow Leaf Curl Virus",
+        "Tomato Yellow Leaf Curl Virus",
+        "Tomato Yellow Leaf Curl Virus",
+        "Tomato Yellow Leaf Curl Virus",
+        "Tomato Yellow Leaf Curl Virus",
+        "Tomato Yellow Leaf Curl Virus"
+      ]
+    },
+    {
+      "class_dir": "Tomato___Tomato_mosaic_virus",
+      "expected": "Tomato Mosaic Virus",
+      "samples": 20,
+      "correct": 20,
+      "accuracy": 1.0,
+      "predictions": [
+        "Tomato Mosaic Virus",
+        "Tomato Mosaic Virus",
+        "Tomato Mosaic Virus",
+        "Tomato Mosaic Virus",
+        "Tomato Mosaic Virus",
+        "Tomato Mosaic Virus",
+        "Tomato Mosaic Virus",
+        "Tomato Mosaic Virus",
+        "Tomato Mosaic Virus",
+        "Tomato Mosaic Virus",
+        "Tomato Mosaic Virus",
+        "Tomato Mosaic Virus",
+        "Tomato Mosaic Virus",
+        "Tomato Mosaic Virus",
+        "Tomato Mosaic Virus",
+        "Tomato Mosaic Virus",
+        "Tomato Mosaic Virus",
+        "Tomato Mosaic Virus",
+        "Tomato Mosaic Virus",
+        "Tomato Mosaic Virus"
+      ]
+    },
+    {
+      "class_dir": "Tomato___healthy",
+      "expected": "Tomato Healthy",
+      "samples": 20,
+      "correct": 1,
+      "accuracy": 0.05,
+      "predictions": [
+        "Tomato Late Blight",
+        "Tomato Early Blight",
+        "Tomato Mosaic Virus",
+        "Tomato Yellow Leaf Curl Virus",
+        "Tomato Early Blight",
+        "Tomato Septoria Leaf Spot",
+        "Tomato Mosaic Virus",
+        "Tomato Late Blight",
+        "Tomato Early Blight",
+        "Tomato Early Blight",
+        "Tomato Early Blight",
+        "Tomato Mosaic Virus",
+        "Tomato Septoria Leaf Spot",
+        "Tomato Yellow Leaf Curl Virus",
+        "Tomato Late Blight",
+        "Tomato Septoria Leaf Spot",
+        "Tomato Yellow Leaf Curl Virus",
+        "Tomato Early Blight",
+        "Tomato Healthy",
+        "Tomato Late Blight"
+      ]
+    }
+  ]
+}

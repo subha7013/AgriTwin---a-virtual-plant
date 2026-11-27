@@ -1,0 +1,44 @@
+{
+  "dataset": {
+    "total_images": 10584,
+    "classes": 10,
+    "train_split": 7408,
+    "val_split": 1587,
+    "test_split": 1589
+  },
+  "models": {
+    "custom_cnn": {
+      "architecture": "4-Block Custom CNN Baseline",
+      "test_accuracy": 0.8678,
+      "macro_precision": 0.8752,
+      "macro_recall": 0.8711,
+      "macro_f1": 0.8662,
+      "gpu_latency_ms": 23.85,
+      "model_size_mb": 4.90,
+      "trainable_parameters": 422602,
+      "artifact": "ml/models/custom_cnn.keras"
+    },
+    "mobilenetv2": {
+      "architecture": "MobileNetV2 Transfer Learning (ImageNet)",
+      "test_accuracy": 0.8785,
+      "macro_precision": 0.8927,
+      "macro_recall": 0.8798,
+      "macro_f1": 0.8801,
+      "gpu_latency_ms": 109.19,
+      "model_size_mb": 22.18,
+      "trainable_parameters": 2269962,
+      "artifact": "ml/models/mobilenetv2_best.keras"
+    },
+    "environmental_risk_engine": {
+      "algorithm": "Random Forest Classifier (100 estimators)",
+      "test_accuracy": 0.9860,
+      "macro_f1": 0.9904,
+      "top_drivers": [
+        "temperature_c",
+        "relative_humidity_pct",
+        "leaf_wetness_pct"
+      ],
+      "artifact": "ml/risk_prediction/risk_model.joblib"
+    }
+  }
+}
